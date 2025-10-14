@@ -65,7 +65,10 @@ export default defineConfig({
                   title: doc?.title || "Untitled",
                   href: resolveHref("post", doc?.slug)!,
                 },
-                homeLocation,
+                {
+                  ...homeLocation,
+                  title: "Home",
+                },
               ],
             }),
           }),

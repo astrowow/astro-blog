@@ -3,7 +3,6 @@ import "../globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import {
-  VisualEditing,
   toPlainText,
   type PortableTextBlock,
 } from "next-sanity";
@@ -12,6 +11,7 @@ import { draftMode } from "next/headers";
 
 import AlertBanner from "./alert-banner";
 import PortableText from "./portable-text";
+import VisualEditingWrapper from "./visual-editing-wrapper";
 
 import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
@@ -54,6 +54,8 @@ const inter = Inter({
   subsets: ["latin"],
   display: "swap",
 });
+
+
 
 export default async function RootLayout({
   children,
@@ -101,7 +103,7 @@ export default async function RootLayout({
             </div>
           </footer>
         </section>
-        {isDraftMode && <VisualEditing />}
+        {isDraftMode && <VisualEditingWrapper />}
         <SpeedInsights />
       </body>
     </html>
