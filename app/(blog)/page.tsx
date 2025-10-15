@@ -20,7 +20,7 @@ function Intro(props: { title: string | null | undefined; description: any }) {
     ? props.description
     : demo.description;
   return (
-    <header className="relative mb-16 flex h-screen flex-col items-center justify-center">
+    <header className="relative mb-16 h-screen">
       <video
         autoPlay
         loop
@@ -30,7 +30,7 @@ function Intro(props: { title: string | null | undefined; description: any }) {
         <source src="/header.webm" type="video/webm" />
         Your browser does not support the video tag.
       </video>
-      <div className="z-10 px-5 mx-auto text-center text-white">
+      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/40 p-12 text-center text-white">
         <h1 className="text-balance text-6xl font-sans font-bold leading-tight tracking-tighter lg:pr-8 lg:text-8xl">
           {(title || demo.title).split("").map((ch, idx) => (
             <span
@@ -43,7 +43,7 @@ function Intro(props: { title: string | null | undefined; description: any }) {
         </h1>
         <h2 className="text-pretty mt-5 text-center text-lg lg:pl-8 lg:text-left">
           <PortableText
-            className="prose-lg"
+            className="prose-lg prose-invert"
             value={description?.length ? description : demo.description}
           />
         </h2>
