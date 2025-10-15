@@ -50,7 +50,7 @@ export default defineConfig({
         ]),
         locations: {
           settings: defineLocations({
-            locations: [{ ...homeLocation, key: "settings-home" }],
+            locations: [{ ...homeLocation }],
             message: "This document is used on all pages",
             tone: "caution",
           }),
@@ -64,12 +64,10 @@ export default defineConfig({
                 {
                   title: doc?.title || "Untitled",
                   href: resolveHref("post", doc?.slug)!,
-                  key: `post-${doc?.slug || 'untitled'}`,
                 },
                 {
                   ...homeLocation,
                   title: "Home",
-                  key: "post-home",
                 },
               ],
             }),
