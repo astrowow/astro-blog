@@ -31,7 +31,7 @@ function Intro(props: { title: string | null | undefined; description: any }) {
         Your browser does not support the video tag.
       </video>
       <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/40 p-12 text-center text-white">
-        <h1 className="text-balance text-6xl font-sans font-bold leading-tight tracking-tighter lg:pr-8 lg:text-8xl">
+        <h1 className="text-balance text-6xl font-sans font-bold leading-tight tracking-tighter lg:text-8xl">
           {(title || demo.title).split("").map((ch, idx) => (
             <span
               key={idx}
@@ -41,7 +41,7 @@ function Intro(props: { title: string | null | undefined; description: any }) {
             </span>
           ))}
         </h1>
-        <h2 className="text-pretty mt-5 text-center text-lg lg:pl-8 lg:text-left">
+        <h2 className="text-pretty mt-5 text-center text-lg lg:pl-8">
           <PortableText
             className="prose-lg prose-invert"
             value={description?.length ? description : demo.description}
