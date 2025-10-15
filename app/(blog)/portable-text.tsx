@@ -29,6 +29,11 @@ export default function CustomPortableText({
       h6: ({ children }) => (
         <h6 className="mb-1 text-xs font-semibold">{children}</h6>
       ),
+      blockquote: ({ children }) => (
+        <blockquote className="border-l-4 border-gray-300 pl-4 italic my-4">
+          {children}
+        </blockquote>
+      ),
     },
     marks: {
       link: ({ children, value }) => {

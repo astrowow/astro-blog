@@ -50,7 +50,7 @@ export default defineConfig({
         ]),
         locations: {
           settings: defineLocations({
-            locations: [homeLocation],
+            locations: [{ ...homeLocation, key: "settings-home" }],
             message: "This document is used on all pages",
             tone: "caution",
           }),
@@ -64,10 +64,12 @@ export default defineConfig({
                 {
                   title: doc?.title || "Untitled",
                   href: resolveHref("post", doc?.slug)!,
+                  key: `post-${doc?.slug || 'untitled'}`,
                 },
                 {
                   ...homeLocation,
                   title: "Home",
+                  key: "post-home",
                 },
               ],
             }),
@@ -86,7 +88,8 @@ export default defineConfig({
     assistWithPresets(),
     // Vision lets you query your content with GROQ in the studio
     // https://www.sanity.io/docs/the-vision-plugin
-    process.env.NODE_ENV === "development" &&
-      visionTool({ defaultApiVersion: apiVersion }),
-  ].filter(Boolean) as PluginOptions[],
+    ...(process.env.NODE_ENV === "development" 
+      ? [visionTool({ defaultApiVersion: apiVersion })] 
+      : []),
+  ],
 });
