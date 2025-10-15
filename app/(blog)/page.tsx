@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Suspense } from "react";
+import Image from "next/image";
 
 import Avatar from "./avatar";
 import CoverImage from "./cover-image";
@@ -19,24 +20,35 @@ function Intro(props: { title: string | null | undefined; description: any }) {
     ? props.description
     : demo.description;
   return (
-    <section className="mt-16 mb-16 flex flex-col items-center lg:mb-12 lg:flex-row lg:justify-between">
-      <h1 className="text-balance text-6xl font-sans font-bold leading-tight tracking-tighter lg:pr-8 lg:text-8xl">
-        {(title || demo.title).split("").map((ch, idx) => (
-          <span
-            key={idx}
-            className={["text-[#F1C21E]", "text-[#045396]", "text-[#E83B13]", "text-[#09935F]"][idx % 4]}
-          >
-            {ch}
-          </span>
-        ))}
-      </h1>
-      <h2 className="text-pretty mt-5 text-center text-lg lg:pl-8 lg:text-left">
-        <PortableText
-          className="prose-lg"
-          value={description?.length ? description : demo.description}
-        />
-      </h2>
-    </section>
+    <header className="relative mb-16 flex h-screen flex-col items-center justify-center">
+      <video
+        autoPlay
+        loop
+        muted
+        className="absolute inset-0 -z-10 h-full w-full object-cover"
+      >
+        <source src="/header.webm" type="video/webm" />
+        Your browser does not support the video tag.
+      </video>
+      <div className="z-10 px-5 mx-auto text-center text-white">
+        <h1 className="text-balance text-6xl font-sans font-bold leading-tight tracking-tighter lg:pr-8 lg:text-8xl">
+          {(title || demo.title).split("").map((ch, idx) => (
+            <span
+              key={idx}
+              className={["text-[#F1C21E]", "text-[#045396]", "text-[#E83B13]", "text-[#09935F]"][idx % 4]}
+            >
+              {ch}
+            </span>
+          ))}
+        </h1>
+        <h2 className="text-pretty mt-5 text-center text-lg lg:pl-8 lg:text-left">
+          <PortableText
+            className="prose-lg"
+            value={description?.length ? description : demo.description}
+          />
+        </h2>
+      </div>
+    </header>
   );
 }
 
@@ -89,30 +101,32 @@ export default async function Page() {
   ]);
 
   return (
-    <div className="container mx-auto px-5">
+    <>
       <Intro title={settings?.title} description={settings?.description} />
-      {heroPost ? (
-        <HeroPost
-          title={heroPost.title}
-          slug={heroPost.slug}
-          coverImage={heroPost.coverImage}
-          excerpt={heroPost.excerpt}
-          date={heroPost.date}
-          author={heroPost.author}
-        />
-      ) : (
-        <Onboarding />
-      )}
-      {heroPost?._id && (
-        <aside>
-          <h2 className="mb-8 text-6xl font-bold leading-tight tracking-tighter md:text-7xl">
-            More Stories
-          </h2>
-          <Suspense>
-            <MoreStories skip={heroPost._id} limit={100} />
-          </Suspense>
-        </aside>
-      )}
-    </div>
+      <div className="container mx-auto px-5">
+        {heroPost ? (
+          <HeroPost
+            title={heroPost.title}
+            slug={heroPost.slug}
+            coverImage={heroPost.coverImage}
+            excerpt={heroPost.excerpt}
+            date={heroPost.date}
+            author={heroPost.author}
+          />
+        ) : (
+          <Onboarding />
+        )}
+        {heroPost?._id && (
+          <aside>
+            <h2 className="mb-8 text-6xl font-bold leading-tight tracking-tighter md:text-7xl">
+              More Stories
+            </h2>
+            <Suspense>
+              <MoreStories skip={heroPost._id} limit={100} />
+            </Suspense>
+          </aside>
+        )}
+      </div>
+    </>
   );
 }
