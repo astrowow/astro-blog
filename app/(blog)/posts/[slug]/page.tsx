@@ -72,7 +72,7 @@ export default async function PostPage({ params }: Props) {
         </Link>
       </h2>
       <article>
-        <h1 className="text-balance mb-12 text-6xl font-bold leading-tight tracking-tighter md:text-7xl md:leading-none lg:text-8xl">
+        <h1 className="text-balance mb-12 text-6xl font-serif  leading-tight tracking-tighter md:text-7xl md:leading-none lg:text-8xl">
           {post.title}
         </h1>
         <div className="hidden md:mb-12 md:block">
@@ -97,7 +97,7 @@ export default async function PostPage({ params }: Props) {
         </div>
         {post.content?.length && (
           <PortableText
-            className="mx-auto max-w-2xl"
+            className="mx-auto max-w-2xl font-sans"
             value={post.content as PortableTextBlock[]}
           />
         )}
@@ -105,7 +105,7 @@ export default async function PostPage({ params }: Props) {
       <aside>
         <hr className="border-accent-2 mb-24 mt-28" />
         <h2 className="mb-8 text-6xl font-bold leading-tight tracking-tighter md:text-7xl">
-          Recent Stories
+          Recientes
         </h2>
         <Suspense>
           <MoreStories skip={post._id} limit={2} />

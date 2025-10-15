@@ -6,7 +6,8 @@ import {
   toPlainText,
   type PortableTextBlock,
 } from "next-sanity";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
+import { Lora } from "next/font/google";
 import { draftMode } from "next/headers";
 
 import AlertBanner from "./alert-banner";
@@ -49,12 +50,30 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
+const instrumentSerif = Lora({
+  variable: "--font-instrument-serif",
   display: "swap",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
 });
 
+const instrumentSans = localFont({
+  variable: "--font-instrument-sans",
+  display: "swap",
+  src: [
+    {
+      path: "../(typograhy)/Instrument-Sans/InstrumentSans-VariableFont_wdth,wght.ttf",
+      weight: "100 900",
+      style: "normal",
+    },
+    {
+      path: "../(typograhy)/Instrument-Sans/InstrumentSans-Italic-VariableFont_wdth,wght.ttf",
+      weight: "100 900",
+      style: "italic",
+    },
+  ],
+});
 
 
 export default async function RootLayout({
@@ -67,7 +86,7 @@ export default async function RootLayout({
   const { isEnabled: isDraftMode } = await draftMode();
 
   return (
-    <html lang="en" className={`${inter.variable} bg-white text-black`}>
+    <html lang="en" className={`${instrumentSerif.variable} ${instrumentSans.variable} bg-cream-100/20 text-black`}>
       <body>
         <section className="min-h-screen">
           {isDraftMode && <AlertBanner />}
@@ -81,7 +100,7 @@ export default async function RootLayout({
                 />
               ) : (
                 <div className="flex flex-col items-center py-28 lg:flex-row">
-                  <h3 className="mb-10 text-center text-4xl font-bold leading-tight tracking-tighter lg:mb-0 lg:w-1/2 lg:pr-4 lg:text-left lg:text-5xl">
+                  <h3 className="mb-10 text-center text-4xl font-sans font-bold leading-tight tracking-tighter lg:mb-0 lg:w-1/2 lg:pr-4 lg:text-left lg:text-5xl">
                     Built with Next.js.
                   </h3>
                   <div className="flex flex-col items-center justify-center lg:w-1/2 lg:flex-row lg:pl-4">

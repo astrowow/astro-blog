@@ -20,20 +20,15 @@ function Intro(props: { title: string | null | undefined; description: any }) {
     : demo.description;
   return (
     <section className="mt-16 mb-16 flex flex-col items-center lg:mb-12 lg:flex-row lg:justify-between">
-      <h1 className="text-balance text-6xl font-bold leading-tight tracking-tighter lg:pr-8 lg:text-8xl bg-gradient-to-r from-yellow-400 via-blue-500 to-red-500 bg-clip-text text-transparent">
-        {title || demo.title}
-
-        {/*
-        <h1 className="text-balance text-6xl font-bold leading-tight tracking-tighter lg:pr-8 lg:text-8xl">
+      <h1 className="text-balance text-6xl font-sans font-bold leading-tight tracking-tighter lg:pr-8 lg:text-8xl">
         {(title || demo.title).split("").map((ch, idx) => (
           <span
             key={idx}
-            className={["text-yellow-400", "text-blue-500", "text-red-500"][idx % 3]}
+            className={["text-[#F1C21E]", "text-[#045396]", "text-[#E83B13]", "text-[#09935F]"][idx % 4]}
           >
             {ch}
           </span>
         ))}
-        */}
       </h1>
       <h2 className="text-pretty mt-5 text-center text-lg lg:pl-8 lg:text-left">
         <PortableText

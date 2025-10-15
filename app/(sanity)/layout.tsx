@@ -1,12 +1,6 @@
 import "../globals.css";
 
-import { Inter } from "next/font/google";
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
+// Removed Google Inter font; we rely on local/system fonts now.
 
 export { metadata, viewport } from "next-sanity/studio";
 
@@ -16,7 +10,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en">
       <body className="min-h-screen">{children}</body>
     </html>
   );
