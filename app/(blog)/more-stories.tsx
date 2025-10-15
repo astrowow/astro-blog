@@ -23,20 +23,20 @@ export default async function MoreStories(params: {
               <Link href={`/posts/${slug}`} className="group mb-5 block">
                 <CoverImage image={coverImage} priority={false} />
               </Link>
-              <h3 className="text-balance font-serif mb-3 text-3xl leading-snug">
+              <h3 className="text-balance font-sans font-semibold mb-3 text-3xl leading-snug">
                 <Link href={`/posts/${slug}`} className="hover:underline">
                   {title}
                 </Link>
               </h3>
-              <div className="mb-4 text-lg">
-                <DateComponent dateString={post.date} />
-              </div>
-              {excerpt && (
-                <p className="text-pretty mb-4 text-lg leading-relaxed">
-                  {excerpt}
-                </p>
-              )}
-              {author && <Avatar name={author.name} picture={author.picture} />}
+                <div className="mb-4 text-lg italic text-neutral-500">
+                  <DateComponent dateString={post.date} />
+                </div>
+                {excerpt && (
+                  <p className="text-pretty mb-4 text-lg leading-relaxed text-neutral-500 font-sans">
+                    {excerpt}
+                  </p>
+                )}
+                {author && <Avatar name={author.name} picture={author.picture} />}
             </article>
           );
         })}

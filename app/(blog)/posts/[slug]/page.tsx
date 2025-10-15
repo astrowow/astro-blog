@@ -72,7 +72,7 @@ export default async function PostPage({ params }: Props) {
         </Link>
       </h2>
       <article>
-        <h1 className="text-balance mb-12 text-6xl font-serif  leading-tight tracking-tighter md:text-7xl md:leading-none lg:text-8xl">
+        <h1 className="text-balance mb-12 text-6xl leading-tight tracking-tighter md:text-7xl md:leading-none lg:text-8xl">
           {post.title}
         </h1>
         <div className="hidden md:mb-12 md:block">
@@ -90,14 +90,14 @@ export default async function PostPage({ params }: Props) {
             )}
           </div>
           <div className="mb-6 text-lg">
-            <div className="mb-4 text-lg">
+            <div className="mb-4 text-lg text-neutral-500 italic">
               <DateComponent dateString={post.date} />
             </div>
           </div>
         </div>
         {post.content?.length && (
           <PortableText
-            className="mx-auto max-w-2xl font-sans"
+            className="mx-auto max-w-2xl"
             value={post.content as PortableTextBlock[]}
           />
         )}

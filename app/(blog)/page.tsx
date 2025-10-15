@@ -75,13 +75,13 @@ function HeroPost({
               {title}
             </Link>
           </h3>
-          <div className="mb-4 text-lg md:mb-0">
+          <div className="mb-4 text-neutral-500 italic text-lg md:mb-0">
             <DateComponent dateString={date} />
           </div>
         </div>
         <div>
           {excerpt && (
-            <p className="text-pretty mb-4 text-lg leading-relaxed">
+            <p className="text-pretty font-sans text-neutral-500 mb-4 text-lg leading-relaxed">
               {excerpt}
             </p>
           )}
@@ -119,7 +119,7 @@ export default async function Page() {
         {heroPost?._id && (
           <aside>
             <h2 className="mb-8 text-6xl font-bold leading-tight tracking-tighter md:text-7xl">
-              More Stories
+              Más Publicaciones
             </h2>
             <Suspense>
               <MoreStories skip={heroPost._id} limit={100} />

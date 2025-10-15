@@ -18,6 +18,7 @@ import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { settingsQuery } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
+import Link from "next/link";
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await sanityFetch({
@@ -101,20 +102,20 @@ export default async function RootLayout({
               ) : (
                 <div className="flex flex-col items-center py-28 lg:flex-row">
                   <h3 className="mb-10 text-center text-4xl font-sans font-bold leading-tight tracking-tighter lg:mb-0 lg:w-1/2 lg:pr-4 lg:text-left lg:text-5xl">
-                    Built with Next.js.
+                    @AstroWOW!
                   </h3>
                   <div className="flex flex-col items-center justify-center lg:w-1/2 lg:flex-row lg:pl-4">
-                    <a
-                      href="https://nextjs.org/docs"
+                    <Link
+                      href="/aboutme"
                       className="mx-3 mb-6 border border-black bg-black py-3 px-12 font-bold text-white transition-colors duration-200 hover:bg-white hover:text-black lg:mb-0 lg:px-8"
                     >
-                      Read Documentation
-                    </a>
+                      Sobre nosotros
+                    </Link>
                     <a
-                      href="https://github.com/vercel/next.js/tree/canary/examples/cms-sanity"
+                      href="https://github.com/astrowow"
                       className="mx-3 font-bold hover:underline"
                     >
-                      View on GitHub
+                      Ver en GitHub
                     </a>
                   </div>
                 </div>
