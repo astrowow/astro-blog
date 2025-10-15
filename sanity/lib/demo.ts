@@ -2,7 +2,7 @@
  * Demo data used as placeholders and initial values for the blog
  */
 
-export const title = "Blog.";
+export const title = "WOW!";
 
 export const description = [
   {
@@ -13,25 +13,25 @@ export const description = [
         _key: "4a58edd077880",
         _type: "span",
         marks: [],
-        text: "A statically generated blog example using ",
+        text: "Somos un grupo de divulgación con un gran amor por la ciencia y los telescopios. Siguenos en ",
       },
       {
         _key: "4a58edd077881",
         _type: "span",
         marks: ["ec5b66c9b1e0"],
-        text: "Next.js",
+        text: "📷 Instagram",
       },
       {
         _key: "4a58edd077882",
         _type: "span",
         marks: [],
-        text: " and ",
+        text: " y ",
       },
       {
         _key: "4a58edd077883",
         _type: "span",
         marks: ["1f8991913ea8"],
-        text: "Sanity",
+        text: "▶️ YouTube",
       },
       {
         _key: "4a58edd077884",
@@ -44,16 +44,16 @@ export const description = [
       {
         _key: "ec5b66c9b1e0",
         _type: "link",
-        href: "https://nextjs.org/",
+        href: "https://instagram.com/grupoastrowow/",
       },
       {
         _key: "1f8991913ea8",
         _type: "link",
-        href: "https://sanity.io/",
+        href: "https://www.youtube.com/@grupoastrowow",
       },
     ],
     style: "normal",
   },
 ];
 
-export const ogImageTitle = "A Next.js Blog with a Native Authoring Experience";
+export const ogImageTitle = "Blog de Divulgación Científica - Universidad de Antioquia";
