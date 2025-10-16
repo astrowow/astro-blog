@@ -13,6 +13,8 @@ import {
   type PortableTextComponents,
   type PortableTextBlock,
 } from "next-sanity";
+import { urlForImage } from "@/sanity/lib/utils";
+import Image from "next/image";
 
 export default function CustomPortableText({
   className,
@@ -41,6 +43,32 @@ export default function CustomPortableText({
           <a href={value?.href} rel="noreferrer noopener">
             {children}
           </a>
+        );
+      },
+    },
+    types: {
+      contentImage: ({ value }) => {
+        if (!value?.asset?._ref) {
+          return null;
+        }
+
+        return (
+          <figure className="my-6">
+            <Image
+               src={urlForImage(value)?.width(800).height(600).fit("max").auto("format").url() || ""}
+               alt={value.alt || ""}
+               width={800}
+               height={600}
+               className="w-full h-auto shadow-md"
+               placeholder="blur"
+               blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+             />
+            {value.caption && (
+              <figcaption className="mt-2 text-sm text-gray-600 text-center italic">
+                {value.caption}
+              </figcaption>
+            )}
+          </figure>
         );
       },
     },
