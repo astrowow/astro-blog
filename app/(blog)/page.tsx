@@ -27,7 +27,7 @@ function Intro(props: { title: string | null | undefined; description: any }) {
         muted
         className="absolute inset-0 -z-10 h-full w-full object-cover"
       >
-        <source src="/header.webm" type="video/webm" />
+        <source src="/header2.webm" type="video/webm" />
         Your browser does not support the video tag.
       </video>
       <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/40 p-12 text-center text-white">
