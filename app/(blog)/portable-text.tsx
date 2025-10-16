@@ -8,6 +8,7 @@
  *
  */
 
+import React from "react";
 import {
   PortableText,
   type PortableTextComponents,
@@ -15,6 +16,30 @@ import {
 } from "next-sanity";
 import { urlForImage } from "@/sanity/lib/utils";
 import Image from "next/image";
+import { InstagramIcon, YouTubeIcon } from "./components/icons";
+
+// Función para reemplazar texto específico con iconos
+const replaceTextWithIcons = (text: string) => {
+  if (text === "📷 Instagram") {
+    return (
+      <span className="inline-flex items-center gap-1">
+        <InstagramIcon className="w-4 h-4" />
+        Instagram
+      </span>
+    );
+  }
+  
+  if (text === "▶️ YouTube") {
+    return (
+      <span className="inline-flex items-center gap-1">
+        <YouTubeIcon className="w-4 h-4" />
+        YouTube
+      </span>
+    );
+  }
+  
+  return text;
+};
 
 export default function CustomPortableText({
   className,
@@ -25,6 +50,7 @@ export default function CustomPortableText({
 }) {
   const components: PortableTextComponents = {
     block: {
+      normal: ({ children }) => <p>{children}</p>,
       h5: ({ children }) => (
         <h5 className="mb-2 text-sm font-semibold">{children}</h5>
       ),
@@ -39,13 +65,22 @@ export default function CustomPortableText({
     },
     marks: {
       link: ({ children, value }) => {
+        // Procesar children para reemplazar texto con iconos dentro de links
+        const processedChildren = React.Children.map(children, (child) => {
+          if (typeof child === 'string') {
+            return replaceTextWithIcons(child);
+          }
+          return child;
+        });
+        
         return (
           <a href={value?.href} rel="noreferrer noopener">
-            {children}
+            {processedChildren}
           </a>
         );
       },
     },
+
     types: {
       contentImage: ({ value }) => {
         if (!value?.asset?._ref) {

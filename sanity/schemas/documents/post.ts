@@ -163,9 +163,14 @@ export default defineType({
       media: "coverImage",
     },
     prepare({ title, media, author, date }) {
+      const formatDate = (dateString: string) => {
+        const formatted = format(parseISO(dateString), "LLL d, yyyy", { locale: es });
+        return formatted.charAt(0).toUpperCase() + formatted.slice(1);
+      };
+      
       const subtitles = [
         author && `por ${author}`,
-        date && `el ${format(parseISO(date), "LLL d, yyyy", { locale: es })}`,
+        date && `el ${formatDate(date)}`,
       ].filter(Boolean);
 
       return { title, media, subtitle: subtitles.join(" ") };
