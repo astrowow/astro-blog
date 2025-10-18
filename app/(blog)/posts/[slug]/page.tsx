@@ -9,7 +9,6 @@ import CoverImage from "../../cover-image";
 import DateComponent from "../../date";
 import MoreStories from "../../more-stories";
 import PortableText from "../../portable-text";
-import SiteTitle from "../../components/Menu/site-title";
 
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { postQuery } from "@/sanity/lib/queries";
@@ -63,7 +62,6 @@ export default async function PostPage({ params }: Props) {
 
   return (
     <div className="container mx-auto px-5">
-      <SiteTitle />
       <article>
         <h1 className="text-balance mb-12 text-6xl leading-tight tracking-tighter md:text-7xl md:leading-none lg:text-8xl">
           {post.title}

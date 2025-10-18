@@ -26,14 +26,6 @@ export default function MenuOverlay() {
       <div className="container mx-auto flex h-full flex-col justify-between px-5">
         {/* Top bar with close */}
         <div className="flex justify-end  mt-10">
-          <button
-            type="button"
-            onClick={closeMenu}
-            className="hover:underline text-2xl md:text-4xl font-bold "
-            aria-label="Cerrar menú"
-          >
-            Cerrar
-          </button>
         </div>
 
         {/* Items */}
@@ -55,17 +47,8 @@ export default function MenuOverlay() {
         </div>
 
         {/* Footer */}
-        <div className="flex justify-between py-6">
-          <p className="text-sm uppercase">WOW!</p>
+        <div className="flex justify-end py-6">
           <div className="flex gap-6">
-            <a
-              className="text-sm uppercase"
-              href="https://github.com/astrowow"
-              target="_blank"
-              rel="noreferrer"
-            >
-              GitHub
-            </a>
             <a
               className="text-sm uppercase"
               href="https://instagram.com/grupoastrowow"

@@ -5,7 +5,6 @@ import Avatar from "../../avatar";
 import CoverImage from "../../cover-image";
 import DateComponent from "../../date";
 import PortableText from "../../portable-text";
-import SiteTitle from "../../components/Menu/site-title";
 
 import { client } from "@/sanity/lib/client";
 import { sanityFetch } from "@/sanity/lib/fetch";
@@ -28,7 +27,6 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
 
   return (
     <div className="container mx-auto px-5">
-      <SiteTitle />
       <header className="mb-12">
         <div className="mt-6">
           <Avatar name={author.name ?? "Anónimo"} picture={author.picture} slug={(author as any)?.slug ?? null} />
@@ -45,7 +43,7 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
         {!posts?.length ? (
           <p className="text-neutral-500">Este autor aún no tiene publicaciones.</p>
         ) : (
-          <div className="grid grid-cols-1 gap-y-20 md:grid-cols-2 md:gap-x-16 md:gap-y-32 lg:gap-x-32">
+          <div className="grid grid-cols-1 mb-32 gap-y-20 md:grid-cols-2 md:gap-x-16 md:gap-y-32 lg:gap-x-32">
             {posts.map((post: any) => {
               const { _id, title, slug: postSlug, coverImage, excerpt, author: postAuthor, date } = post;
               return (

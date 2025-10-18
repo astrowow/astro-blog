@@ -10,7 +10,7 @@ import { useMenu } from "./MenuContext";
 
 export default function SiteTitle({ className }: { className?: string }) {
   const [settings, setSettings] = useState<any>(null);
-  const { openMenu } = useMenu();
+  const { isMenuOpen, toggleMenu } = useMenu();
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -20,10 +20,13 @@ export default function SiteTitle({ className }: { className?: string }) {
     fetchSettings();
   }, []);
 
+  const colorClass = isMenuOpen ? "text-[var(--cream)]" : "text-[var(--black)]";
+
   return (
     <h2
       className={[
-        "mb-16 mt-10 grid grid-cols-[1fr_auto] items-center justify-between gap-x-4 font-bold leading-tight tracking-tight text-2xl md:text-4xl md:tracking-tighter",
+        "grid grid-cols-[1fr_auto] items-center justify-between gap-x-4 py-0 font-bold tracking-tight text-2xl md:text-3xl",
+        colorClass,
         className,
       ]
         .filter(Boolean)
@@ -32,14 +35,13 @@ export default function SiteTitle({ className }: { className?: string }) {
       <Link href="/" className="hover:underline">
         {settings?.title || demo.title}
       </Link>
-      {/* Solo el texto 'Menu' como disparador del overlay */}
       <button
         type="button"
-        onClick={openMenu}
+        onClick={toggleMenu}
         className="hover:underline"
-        aria-label="Abrir menú"
+        aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
       >
-        Menu
+        {isMenuOpen ? "Cerrar" : "Menu"}
       </button>
     </h2>
   );

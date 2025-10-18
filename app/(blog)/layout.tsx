@@ -16,6 +16,8 @@ import PortableText from "./portable-text";
 import VisualEditingWrapper from "./visual-editing-wrapper";
 import MenuOverlay from "./components/Menu/MenuOverlay";
 import { MenuProvider } from "./components/Menu/MenuContext";
+import SiteTitle from "./components/Menu/site-title";
+import MainWrapper from "./components/MainWrapper";
 
 import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
@@ -96,7 +98,14 @@ export default async function RootLayout({
           <section className="min-h-screen">
             {isDraftMode && <AlertBanner />}
             <MenuOverlay />
-            <main>{children}</main>
+            <header className="fixed top-0 left-0 z-[60] w-full bg-transparent h-16 md:h-20 flex items-center">
+                  <div className="container mx-auto px-5 h-full flex items-center">
+                    <nav aria-label="Navegación principal" className="w-full">
+                      <SiteTitle />
+                    </nav>
+                  </div>
+                </header>
+              <MainWrapper>{children}</MainWrapper>
           <footer className="bg-accent-1 border-accent-2 border-t">
             <div className="container mx-auto px-5">
               {footer.length > 0 ? (
