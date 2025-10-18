@@ -5,7 +5,7 @@ import Avatar from "../../avatar";
 import CoverImage from "../../cover-image";
 import DateComponent from "../../date";
 import PortableText from "../../portable-text";
-import SiteTitle from "../../site-title";
+import SiteTitle from "../../components/Menu/site-title";
 
 import { client } from "@/sanity/lib/client";
 import { sanityFetch } from "@/sanity/lib/fetch";

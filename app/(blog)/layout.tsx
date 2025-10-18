@@ -14,6 +14,8 @@ import { draftMode } from "next/headers";
 import AlertBanner from "./alert-banner";
 import PortableText from "./portable-text";
 import VisualEditingWrapper from "./visual-editing-wrapper";
+import MenuOverlay from "./components/Menu/MenuOverlay";
+import { MenuProvider } from "./components/Menu/MenuContext";
 
 import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
@@ -90,9 +92,11 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`${instrumentSerif.variable} ${instrumentSans.variable} bg-cream-100/20 text-black`}>
       <body>
-        <section className="min-h-screen">
-          {isDraftMode && <AlertBanner />}
-          <main>{children}</main>
+        <MenuProvider>
+          <section className="min-h-screen">
+            {isDraftMode && <AlertBanner />}
+            <MenuOverlay />
+            <main>{children}</main>
           <footer className="bg-accent-1 border-accent-2 border-t">
             <div className="container mx-auto px-5">
               {footer.length > 0 ? (
@@ -123,10 +127,11 @@ export default async function RootLayout({
               )}
             </div>
           </footer>
-        </section>
-        {isDraftMode && <VisualEditingWrapper />}
-        <SpeedInsights />
-        <Analytics />
+          </section>
+          {isDraftMode && <VisualEditingWrapper />}
+          <SpeedInsights />
+          <Analytics />
+        </MenuProvider>
       </body>
     </html>
   );

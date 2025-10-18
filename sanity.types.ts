@@ -52,6 +52,25 @@ export type Post = {
     caption?: string;
     _type: "contentImage";
     _key: string;
+  } | {
+    images?: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      caption?: string;
+      _type: "image";
+      _key: string;
+    }>;
+    caption?: string;
+    _type: "imageGallery";
+    _key: string;
   }>;
   excerpt?: string;
   coverImage?: {
@@ -98,8 +117,8 @@ export type Author = {
       _type: "span";
       _key: string;
     }>;
-    style?: "normal";
-    listItem?: never;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
     markDefs?: Array<{
       href?: string;
       _type: "link";
@@ -542,6 +561,25 @@ export type HeroQueryResult = {
     caption?: string;
     _type: "contentImage";
     _key: string;
+  } | {
+    images?: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      caption?: string;
+      _type: "image";
+      _key: string;
+    }>;
+    caption?: string;
+    _type: "imageGallery";
+    _key: string;
   }> | null;
   _id: string;
   status: "draft" | "published";
@@ -654,6 +692,25 @@ export type PostQueryResult = {
     caption?: string;
     _type: "contentImage";
     _key: string;
+  } | {
+    images?: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      caption?: string;
+      _type: "image";
+      _key: string;
+    }>;
+    caption?: string;
+    _type: "imageGallery";
+    _key: string;
   }> | null;
   _id: string;
   status: "draft" | "published";
@@ -717,8 +774,8 @@ export type AuthorBySlugQueryResult = {
       _type: "span";
       _key: string;
     }>;
-    style?: "normal";
-    listItem?: never;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
     markDefs?: Array<{
       href?: string;
       _type: "link";

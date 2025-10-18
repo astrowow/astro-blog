@@ -9,7 +9,7 @@ import CoverImage from "../../cover-image";
 import DateComponent from "../../date";
 import MoreStories from "../../more-stories";
 import PortableText from "../../portable-text";
-import SiteTitle from "../../site-title";
+import SiteTitle from "../../components/Menu/site-title";
 
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { postQuery } from "@/sanity/lib/queries";

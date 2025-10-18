@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Variables mínimas para el menú (sin animaciones) */
+:root {
+  --background: #f8f8f8;
+  --foreground: #0a0a0a;
+  --cream: #f1efe6;
+  --black: #0a0a0a;
+  --rollover: #c2bfaf;
+}
+
+/* No forzamos colores, Tailwind controla la mayoría de estilos */
+/* Estas variables se usan dentro del módulo del menú */
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background: transparent;
+}
