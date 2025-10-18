@@ -173,6 +173,13 @@ export default defineType({
       initialValue: () => new Date().toISOString(),
     }),
     defineField({
+      name: "categories",
+      title: "Categorías",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "category" }] }],
+      description: "Selecciona una o más categorías para este post.",
+    }),
+    defineField({
       name: "author",
       title: "Author",
       type: "reference",
