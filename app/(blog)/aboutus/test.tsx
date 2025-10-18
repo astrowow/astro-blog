@@ -27,7 +27,7 @@ export default async function AboutMe() {
         {about?.content?.length ? (
           <PortableText className="mx-auto max-w-2xl" value={about.content as PortableTextBlock[]} />
         ) : (
-          <p className="text-neutral-600">Crea la página "about-me" en el Studio y agrega contenido.</p>
+          <p className="text-neutral-600">Crea la página &quot;about-me&quot; en el Studio y agrega contenido.</p>
         )}
       </div>
     </div>
