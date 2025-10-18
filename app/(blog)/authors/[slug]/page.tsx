@@ -18,8 +18,8 @@ export async function generateStaticParams() {
     .filter(Boolean) as { slug: string }[];
 }
 
-export default async function AuthorPage({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export default async function AuthorPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
 
   const author = await sanityFetch({ query: authorBySlugQuery, params: { slug } });
   if (!author) return notFound();

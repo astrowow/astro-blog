@@ -26,7 +26,9 @@ const postSlugs = defineQuery(
 
 export async function generateStaticParams() {
   const data = await client.fetch(postSlugs);
-  return data?.map(({ slug }: { slug: string }) => ({ slug })) ?? [];
+  return (data ?? [])
+    .map(({ slug }: { slug: string | null }) => (slug ? { slug } : null))
+    .filter(Boolean) as { slug: string }[];
 }
 
 export async function generateMetadata(
