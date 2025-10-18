@@ -51,6 +51,18 @@ export default function CustomPortableText({
   const components: PortableTextComponents = {
     block: {
       normal: ({ children }) => <p>{children}</p>,
+      h1: ({ children }) => (
+        <h1 className="mt-8 mb-4 text-4xl font-bold leading-tight">{children}</h1>
+      ),
+      h2: ({ children }) => (
+        <h2 className="mt-7 mb-3 text-3xl font-semibold leading-tight">{children}</h2>
+      ),
+      h3: ({ children }) => (
+        <h3 className="mt-6 mb-2 text-2xl font-semibold leading-snug">{children}</h3>
+      ),
+      h4: ({ children }) => (
+        <h4 className="mt-5 mb-2 text-xl font-semibold leading-snug">{children}</h4>
+      ),
       h5: ({ children }) => (
         <h5 className="mb-2 text-sm font-semibold">{children}</h5>
       ),
@@ -79,6 +91,11 @@ export default function CustomPortableText({
           </a>
         );
       },
+      code: ({ children }) => (
+        <code className="px-1 py-0.5 rounded bg-neutral-800 text-neutral-100 font-mono text-[0.9em]">
+          {children}
+        </code>
+      ),
     },
 
     types: {
