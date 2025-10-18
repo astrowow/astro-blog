@@ -123,6 +123,41 @@ export default function CustomPortableText({
           </figure>
         );
       },
+      imageGallery: ({ value }) => {
+        const images = value?.images || [];
+        if (!Array.isArray(images) || images.length === 0) {
+          return null;
+        }
+
+        return (
+          <div className="my-6">
+            <div className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-4">
+              {images.map((img: any, idx: number) => {
+                if (!img?.asset?._ref) return null;
+                return (
+                  <figure key={idx} className="snap-start shrink-0 w-full sm:w-[85%] md:w-[70%]">
+                    <Image
+                      src={urlForImage(img)?.width(1600).height(900).fit("max").auto("format").url() || ""}
+                      alt={img.alt || `Imagen ${idx + 1}`}
+                      width={1600}
+                      height={900}
+                      className="w-full h-auto rounded-md shadow-md"
+                    />
+                    {img.caption && (
+                      <figcaption className="mt-2 text-sm text-gray-600 text-center italic">
+                        {img.caption}
+                      </figcaption>
+                    )}
+                  </figure>
+                );
+              })}
+            </div>
+            {value.caption && (
+              <p className="mt-2 text-sm text-neutral-500 text-center italic">{value.caption}</p>
+            )}
+          </div>
+        );
+      },
     },
   };
 

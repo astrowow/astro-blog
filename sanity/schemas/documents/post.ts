@@ -131,6 +131,45 @@ export default defineType({
             },
           ],
         },
+        {
+          type: "object",
+          name: "imageGallery",
+          title: "Galería de imágenes",
+          fields: [
+            {
+              name: "images",
+              title: "Imágenes",
+              type: "array",
+              of: [
+                {
+                  type: "image",
+                  options: { hotspot: true },
+                  fields: [
+                    {
+                      name: "alt",
+                      type: "string",
+                      title: "Alternative text",
+                      description: "Important for SEO and accessibility.",
+                      validation: (rule: any) => rule.required(),
+                    },
+                    {
+                      name: "caption",
+                      type: "string",
+                      title: "Caption",
+                      description: "Optional caption for the image.",
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: "caption",
+              type: "string",
+              title: "Caption",
+              description: "Optional caption for the gallery.",
+            },
+          ],
+        },
       ],
     }),
     defineField({
