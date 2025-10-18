@@ -125,12 +125,13 @@ export default async function RootLayout({
                     >
                       Sobre nosotros
                     </Link>
+                    {/*
                     <a
                       href="https://github.com/astrowow"
                       className="mx-3 font-bold hover:underline"
                     >
                       Ver en GitHub
-                    </a>
+                    </a>*/}
                   </div>
                 </div>
               )}
