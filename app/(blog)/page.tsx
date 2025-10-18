@@ -85,7 +85,13 @@ function HeroPost({
               {excerpt}
             </p>
           )}
-          {author && <Avatar name={author.name} picture={author.picture} />}
+           {author && (
+             <Avatar
+               name={author.name}
+               picture={author.picture}
+               slug={(author as any)?.slug}
+             />
+           )}
         </div>
       </div>
     </article>

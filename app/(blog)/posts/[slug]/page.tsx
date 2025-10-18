@@ -1,7 +1,6 @@
 import { defineQuery } from "next-sanity";
 import type { Metadata, ResolvingMetadata } from "next";
 import { type PortableTextBlock } from "next-sanity";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
@@ -10,11 +9,12 @@ import CoverImage from "../../cover-image";
 import DateComponent from "../../date";
 import MoreStories from "../../more-stories";
 import PortableText from "../../portable-text";
+import SiteTitle from "../../site-title";
 
-import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { postQuery, settingsQuery } from "@/sanity/lib/queries";
+import { postQuery } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
+import { client } from "@/sanity/lib/client";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -25,11 +25,8 @@ const postSlugs = defineQuery(
 );
 
 export async function generateStaticParams() {
-  return await sanityFetch({
-    query: postSlugs,
-    perspective: "published",
-    stega: false,
-  });
+  const data = await client.fetch(postSlugs);
+  return data?.map(({ slug }: { slug: string }) => ({ slug })) ?? [];
 }
 
 export async function generateMetadata(
@@ -39,6 +36,7 @@ export async function generateMetadata(
   const post = await sanityFetch({
     query: postQuery,
     params,
+    perspective: "published",
     stega: false,
   });
   const previousImages = (await parent).openGraph?.images || [];
@@ -55,10 +53,7 @@ export async function generateMetadata(
 }
 
 export default async function PostPage({ params }: Props) {
-  const [post, settings] = await Promise.all([
-    sanityFetch({ query: postQuery, params }),
-    sanityFetch({ query: settingsQuery }),
-  ]);
+  const post = await sanityFetch({ query: postQuery, params });
 
   if (!post?._id) {
     return notFound();
@@ -66,18 +61,18 @@ export default async function PostPage({ params }: Props) {
 
   return (
     <div className="container mx-auto px-5">
-      <h2 className="mb-16 mt-10 text-2xl font-bold leading-tight tracking-tight md:text-4xl md:tracking-tighter">
-        <Link href="/" className="hover:underline">
-          {settings?.title || demo.title}
-        </Link>
-      </h2>
+      <SiteTitle />
       <article>
         <h1 className="text-balance mb-12 text-6xl leading-tight tracking-tighter md:text-7xl md:leading-none lg:text-8xl">
           {post.title}
         </h1>
         <div className="hidden md:mb-12 md:block">
           {post.author && (
-            <Avatar name={post.author.name} picture={post.author.picture} />
+            <Avatar
+              name={post.author.name}
+              picture={post.author.picture}
+              slug={(post.author as any)?.slug}
+            />
           )}
         </div>
         <div className="mb-8 sm:mx-0 md:mb-16">
@@ -86,7 +81,11 @@ export default async function PostPage({ params }: Props) {
         <div className="mx-auto max-w-2xl">
           <div className="mb-6 block md:hidden">
             {post.author && (
-              <Avatar name={post.author.name} picture={post.author.picture} />
+              <Avatar
+                name={post.author.name}
+                picture={post.author.picture}
+                slug={(post.author as any)?.slug}
+              />
             )}
           </div>
           <div className="mb-6 text-lg">
