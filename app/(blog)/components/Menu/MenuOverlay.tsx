@@ -56,7 +56,7 @@ export default function MenuOverlay() {
 
         {/* Footer */}
         <div className="flex justify-between py-6">
-          <p className="text-sm uppercase">© 2025 All Rights Reserved</p>
+          <p className="text-sm uppercase">WOW!</p>
           <div className="flex gap-6">
             <a
               className="text-sm uppercase"
