@@ -33,9 +33,7 @@ export default function Avatar({ name, picture, slug }: Props) {
               }
             />
           </div>
-        ) : (
-          <div className="mr-1">By </div>
-        )}
+        ) : null}
       </Wrapper>
       <div className="text-pretty text-xl font-bold">
         <Wrapper>{name}</Wrapper>

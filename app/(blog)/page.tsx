@@ -9,7 +9,7 @@ import MoreStories from "./more-stories";
 import Onboarding from "./onboarding";
 import PortableText from "./portable-text";
 
-import type { HeroQueryResult } from "@/sanity.types";
+// import type { HeroQueryResult } from "@/sanity.types"; // legacy type no longer needed
 import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { heroQuery, settingsQuery } from "@/sanity/lib/queries";
@@ -58,11 +58,15 @@ function HeroPost({
   excerpt,
   coverImage,
   date,
-  author,
-}: Pick<
-  Exclude<HeroQueryResult, null>,
-  "title" | "coverImage" | "date" | "excerpt" | "author" | "slug"
->) {
+  authors,
+}: {
+  title: string | null;
+  slug: string | null;
+  excerpt: string | null;
+  coverImage: any;
+  date: string;
+  authors: Array<{ name: string; picture: any; slug: string | null }> | null;
+}) {
   return (
     <article>
       <Link className="group mb-8 block md:mb-16" href={`/posts/${slug}`}>
@@ -85,13 +89,13 @@ function HeroPost({
               {excerpt}
             </p>
           )}
-           {author && (
-             <Avatar
-               name={author.name}
-               picture={author.picture}
-               slug={(author as any)?.slug}
-             />
-           )}
+          {authors?.length ? (
+            <div className="flex flex-wrap gap-3">
+              {authors.map((a) => (
+                <Avatar key={(a.slug || a.name) + "-hero"} name={a.name} picture={a.picture} slug={a.slug} />
+              ))}
+            </div>
+          ) : null}
         </div>
       </div>
     </article>
@@ -117,8 +121,8 @@ export default async function Page() {
             coverImage={heroPost.coverImage}
             excerpt={heroPost.excerpt}
             date={heroPost.date}
-            author={heroPost.author}
-          />
+            authors={heroPost.authors?.filter(Boolean) ?? null}
+           />
         ) : (
           <Onboarding />
         )}

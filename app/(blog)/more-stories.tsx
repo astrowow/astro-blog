@@ -17,7 +17,7 @@ export default async function MoreStories(params: {
     <>
       <div className="mb-32 grid grid-cols-1 gap-y-20 md:grid-cols-2 md:gap-x-16 md:gap-y-32 lg:gap-x-32">
         {data?.map((post: any) => {
-          const { _id, title, slug, coverImage, excerpt, author } = post;
+          const { _id, title, slug, coverImage, excerpt, authors } = post;
           return (
             <article key={_id}>
               <Link href={`/posts/${slug}`} className="group mb-5 block">
@@ -36,13 +36,13 @@ export default async function MoreStories(params: {
                     {excerpt}
                   </p>
                 )}
-                {author && (
-                  <Avatar
-                    name={author.name}
-                    picture={author.picture}
-                    slug={(author as any)?.slug}
-                  />
-                )}
+                {authors?.length ? (
+                  <div className="flex flex-wrap gap-3">
+                    {authors.map((a: any) => (
+                      <Avatar key={(a.slug || a.name) + "-list"} name={a.name} picture={a.picture} slug={a.slug} />
+                    ))}
+                  </div>
+                ) : null}
             </article>
           );
         })}

@@ -44,9 +44,11 @@ export async function generateMetadata(
   const ogImage = resolveOpenGraphImage(post?.coverImage);
 
   return {
-    authors: post?.author?.name ? [{ name: post?.author?.name }] : [],
-    title: post?.title,
-    description: post?.excerpt,
+    authors: Array.isArray(post?.authors)
+      ? post!.authors!.filter(Boolean).map((a: any) => ({ name: a?.name }))
+      : [],
+    title: post?.title ?? undefined,
+    description: post?.excerpt ?? undefined,
     openGraph: {
       images: ogImage ? [ogImage, ...previousImages] : previousImages,
     },
@@ -67,26 +69,26 @@ export default async function PostPage({ params }: Props) {
           {post.title}
         </h1>
         <div className="hidden md:mb-12 md:block">
-          {post.author && (
-            <Avatar
-              name={post.author.name}
-              picture={post.author.picture}
-              slug={(post.author as any)?.slug}
-            />
-          )}
+          {post.authors?.length ? (
+            <div className="flex flex-wrap gap-3">
+              {post.authors.map((a: any) => (
+                <Avatar key={(a.slug || a.name) + "-post-top"} name={a.name} picture={a.picture} slug={a.slug} />
+              ))}
+            </div>
+          ) : null}
         </div>
         <div className="mb-8 sm:mx-0 md:mb-16">
           <CoverImage image={post.coverImage} priority />
         </div>
         <div className="mx-auto max-w-2xl">
           <div className="mb-6 block md:hidden">
-            {post.author && (
-              <Avatar
-                name={post.author.name}
-                picture={post.author.picture}
-                slug={(post.author as any)?.slug}
-              />
-            )}
+            {post.authors?.length ? (
+              <div className="flex flex-wrap gap-3">
+                {post.authors.map((a: any) => (
+                  <Avatar key={(a.slug || a.name) + "-post-mobile"} name={a.name} picture={a.picture} slug={a.slug} />
+                ))}
+              </div>
+            ) : null}
           </div>
           <div className="mb-6 text-lg">
             <div className="mb-4 text-lg text-neutral-500 italic">

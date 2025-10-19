@@ -14,7 +14,7 @@ const postFields = /* groq */ `
   excerpt,
   coverImage,
   "date": coalesce(date, _updatedAt),
-  "author": author->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current},
+  "authors": coalesce(authors[]->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current}, []),
 `;
 
 export const heroQuery = defineQuery(`
@@ -50,7 +50,7 @@ export const authorBySlugQuery = defineQuery(`
 export const authorSlugsQuery = defineQuery(`*[_type == "author" && defined(slug.current)]{"slug": slug.current}`);
 
 export const postsByAuthorQuery = defineQuery(`
-  *[_type == "post" && defined(slug.current) && author->slug.current == $slug] | order(date desc, _updatedAt desc) {
+  *[_type == "post" && defined(slug.current) && $slug in authors[]->slug.current] | order(date desc, _updatedAt desc) {
     ${postFields}
   }
 `);

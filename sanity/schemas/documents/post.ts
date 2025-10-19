@@ -219,31 +219,41 @@ export default defineType({
       description: "Selecciona una o más categorías para este post.",
     }),
     defineField({
-      name: "author",
-      title: "Author",
-      type: "reference",
-      to: [{ type: authorType.name }],
+      name: "authors",
+      title: "Autores",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: authorType.name }] }],
+      description: "Selecciona uno o varios autores para este post.",
+      validation: (rule) => rule.min(1).error("Debe haber al menos un autor"),
     }),
   ],
   preview: {
     select: {
       title: "title",
-      author: "author.name",
+      authors: "authors",
       date: "date",
       media: "coverImage",
     },
-    prepare({ title, media, author, date }) {
+    prepare({ title, media, authors, date }) {
       const formatDate = (dateString: string) => {
         const formatted = format(parseISO(dateString), "LLL d, yyyy", { locale: es });
         return formatted.charAt(0).toUpperCase() + formatted.slice(1);
       };
-      
+
+      const authorLabel = Array.isArray(authors) && authors.length
+        ? `${authors.length} autor${authors.length > 1 ? "es" : ""}`
+        : undefined;
+
       const subtitles = [
-        author && `por ${author}`,
+        authorLabel && `por ${authorLabel}`,
         date && `el ${formatDate(date)}`,
       ].filter(Boolean);
 
-      return { title, media, subtitle: subtitles.join(" ") };
+      return {
+        title,
+        subtitle: subtitles.join(" · ") || undefined,
+        media,
+      };
     },
   },
 });

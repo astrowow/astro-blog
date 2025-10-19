@@ -45,7 +45,7 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
         ) : (
           <div className="grid grid-cols-1 mb-32 gap-y-20 md:grid-cols-2 md:gap-x-16 md:gap-y-32 lg:gap-x-32">
             {posts.map((post: any) => {
-              const { _id, title, slug: postSlug, coverImage, excerpt, author: postAuthor, date } = post;
+              const { _id, title, slug: postSlug, coverImage, excerpt, authors, date } = post;
               return (
                 <article key={_id}>
                   <Link href={`/posts/${postSlug}`} className="group mb-5 block">
@@ -64,9 +64,13 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
                       {excerpt}
                     </p>
                   )}
-                  {postAuthor && (
-                    <Avatar name={postAuthor.name ?? "Anónimo"} picture={postAuthor.picture} slug={(postAuthor as any)?.slug ?? null} />
-                  )}
+                  {authors?.length ? (
+                    <div className="flex flex-wrap gap-3">
+                      {authors.map((a: any) => (
+                        <Avatar key={(a.slug || a.name) + "-author-list"} name={a.name ?? "Anónimo"} picture={a.picture} slug={a.slug ?? null} />
+                      ))}
+                    </div>
+                  ) : null}
                 </article>
               );
             })}
