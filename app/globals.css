@@ -9,6 +9,7 @@
   --cream: #f1efe6;
   --black: #0a0a0a;
   --rollover: #c2bfaf;
+  --banner-height: 0px; /* altura del banner de drafts (por defecto 0) */
 }
 
 /* No forzamos colores, Tailwind controla la mayoría de estilos */

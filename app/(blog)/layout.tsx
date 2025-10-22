@@ -98,45 +98,48 @@ export default async function RootLayout({
           <section className="min-h-screen">
             {isDraftMode && <AlertBanner />}
             <MenuOverlay />
-            <header className="fixed top-0 left-0 z-[60] w-full bg-transparent h-16 md:h-20 flex items-center">
-                  <div className="container mx-auto px-5 h-full flex items-center">
-                    <nav aria-label="Navegación principal" className="w-full">
-                      <SiteTitle />
-                    </nav>
+            <header
+              className="fixed left-0 z-[60] w-full bg-transparent h-16 md:h-20 flex items-center"
+              style={{ top: "var(--banner-height, 0px)" }}
+            >
+              <div className="container mx-auto px-5 h-full flex items-center">
+                <nav aria-label="Navegación principal" className="w-full">
+                  <SiteTitle />
+                </nav>
+              </div>
+            </header>
+            <MainWrapper>{children}</MainWrapper>
+            <footer className="bg-accent-1 border-accent-2 border-t">
+              <div className="container mx-auto px-5">
+                {footer.length > 0 ? (
+                  <PortableText
+                    className="prose-sm text-pretty bottom-0 w-full max-w-none bg-white py-12 text-center md:py-20"
+                    value={footer as PortableTextBlock[]}
+                  />
+                ) : (
+                  <div className="flex flex-col items-center py-28 lg:flex-row">
+                    <h3 className="mb-10 text-center text-4xl font-sans font-bold leading-tight tracking-tighter lg:mb-0 lg:w-1/2 lg:pr-4 lg:text-left lg:text-5xl">
+                      @AstroWOW!
+                    </h3>
+                    <div className="flex flex-col items-center justify-center lg:w-1/2 lg:flex-row lg:pl-4">
+                      <Link
+                        href="/aboutme"
+                        className="mx-3 mb-6 border border-black bg-black py-3 px-12 font-bold text-white transition-colors duration-200 hover:bg-white hover:text-black lg:mb-0 lg:px-8"
+                      >
+                        Sobre nosotros
+                      </Link>
+                      {/*
+                      <a
+                        href="https://github.com/astrowow"
+                        className="mx-3 font-bold hover:underline"
+                      >
+                        Ver en GitHub
+                      </a>*/}
+                    </div>
                   </div>
-                </header>
-              <MainWrapper>{children}</MainWrapper>
-          <footer className="bg-accent-1 border-accent-2 border-t">
-            <div className="container mx-auto px-5">
-              {footer.length > 0 ? (
-                <PortableText
-                  className="prose-sm text-pretty bottom-0 w-full max-w-none bg-white py-12 text-center md:py-20"
-                  value={footer as PortableTextBlock[]}
-                />
-              ) : (
-                <div className="flex flex-col items-center py-28 lg:flex-row">
-                  <h3 className="mb-10 text-center text-4xl font-sans font-bold leading-tight tracking-tighter lg:mb-0 lg:w-1/2 lg:pr-4 lg:text-left lg:text-5xl">
-                    @AstroWOW!
-                  </h3>
-                  <div className="flex flex-col items-center justify-center lg:w-1/2 lg:flex-row lg:pl-4">
-                    <Link
-                      href="/aboutme"
-                      className="mx-3 mb-6 border border-black bg-black py-3 px-12 font-bold text-white transition-colors duration-200 hover:bg-white hover:text-black lg:mb-0 lg:px-8"
-                    >
-                      Sobre nosotros
-                    </Link>
-                    {/*
-                    <a
-                      href="https://github.com/astrowow"
-                      className="mx-3 font-bold hover:underline"
-                    >
-                      Ver en GitHub
-                    </a>*/}
-                  </div>
-                </div>
-              )}
-            </div>
-          </footer>
+                )}
+              </div>
+            </footer>
           </section>
           {isDraftMode && <VisualEditingWrapper />}
           <SpeedInsights />
