@@ -10,7 +10,7 @@ export default function MenuOverlay() {
 
   const links = [
     { href: "/", label: "Inicio" },
-    { href: "/aboutme", label: "Nosotros" },
+    { href: "/aboutus", label: "Nosotros" },
   ];
 
   return (
