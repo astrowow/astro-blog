@@ -1,19 +1,20 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import React, { useMemo } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function MainWrapper({ children }: { children: React.ReactNode }) {
   const rawPathname = usePathname() || "/";
+  const [needsPadding, setNeedsPadding] = useState(false);
 
-  // Normaliza el pathname para ignorar route groups (p.ej. /(blog)) y trailing slashes
-  const pathname = useMemo(() => {
+  // Evita el salto inicial: por defecto sin padding y decide tras montar
+  useEffect(() => {
     const normalized = rawPathname
       .replace(/\/\([^/]+?\)(?=\/|$)/g, "") // elimina segmentos de grupo
       .replace(/\/+$/, ""); // elimina slash final (excepto en root)
-    return normalized === "" ? "/" : normalized;
+    const path = normalized === "" ? "/" : normalized;
+    setNeedsPadding(path !== "/");
   }, [rawPathname]);
 
-  const needsPadding = pathname !== "/"; // agrega padding solo fuera de la home
   return <main className={needsPadding ? "pt-16 md:pt-20" : ""}>{children}</main>;
 }
