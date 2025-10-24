@@ -20,33 +20,41 @@ function Intro(props: { title: string | null | undefined; description: any }) {
     ? props.description
     : demo.description;
   return (
-    <header className="relative mb-16 h-screen">
-      <video
-        autoPlay
-        loop
-        muted
-        className="absolute inset-0 -z-10 h-full w-full object-cover"
-      >
-        <source src="/header2.webm" type="video/webm" />
-        Your browser does not support the video tag.
-      </video>
-      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/40 p-12 text-center text-white">
-        <h1 className="text-balance text-6xl font-sans font-bold leading-tight tracking-tighter lg:text-8xl">
-          {(title || demo.title).split("").map((ch, idx) => (
-            <span
-              key={idx}
-              className={["text-[#F1C21E]", "text-[#045396]", "text-[#E83B13]", "text-[#09935F]"][idx % 4]}
-            >
-              {ch}
-            </span>
-          ))}
-        </h1>
-        <h2 className="text-pretty mt-5 text-center text-lg lg:pl-8">
-          <PortableText
-            className="prose-lg prose-invert"
-            value={description?.length ? description : demo.description}
-          />
-        </h2>
+    <header className="relative mb-16 h-screen overflow-hidden">
+      <div className="flex h-full">
+        <div className="relative w-1/2">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 h-full w-full object-cover"
+          >
+            <source src="/header2.webm" type="video/webm" />
+            Your browser does not support the video tag.
+          </video>
+          <div className="absolute inset-0 bg-black/40"></div> {/* Overlay for video */}
+        </div>
+        <div className="flex w-1/2 items-center justify-center bg-white p-5 text-center text-black">
+          <div>
+            <h1 className="text-balance text-6xl font-sans font-bold leading-tight tracking-tighter lg:text-8xl">
+              {(title || demo.title).split("").map((ch, idx) => (
+                <span
+                  key={idx}
+                  className={["text-[#F1C21E]", "text-[#045396]", "text-[#E83B13]", "text-[#09935F]"][idx % 4]}
+                >
+                  {ch}
+                </span>
+              ))}
+            </h1>
+            <h2 className="text-pretty mt-5 text-center text-lg lg:pl-8">
+              <PortableText
+                className="prose-lg"
+                value={description?.length ? description : demo.description}
+              />
+            </h2>
+          </div>
+        </div>
       </div>
     </header>
   );

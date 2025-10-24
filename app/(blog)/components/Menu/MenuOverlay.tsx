@@ -36,7 +36,7 @@ export default function MenuOverlay() {
                 <h1
                   className={[
                     "text-[clamp(3rem,12vw,8.5rem)] leading-[0.9] font-extrabold tracking-[-0.02em] text-[var(--cream)] hover:underline",
-                    pathname === href ? "!text-[var(--rollover)]" : "",
+                    pathname === href ? "!text-[var(--rollover)] underline" : "",
                   ].join(" ")}
                 >
                   {label}
