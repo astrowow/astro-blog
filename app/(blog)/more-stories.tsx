@@ -3,6 +3,7 @@ import Link from "next/link";
 import Avatar from "./avatar";
 import CoverImage from "./cover-image";
 import DateComponent from "./date";
+import BadgeCategories from "./components/BadgeCategories";
 
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { moreStoriesQuery } from "@/sanity/lib/queries";
@@ -10,14 +11,17 @@ import { moreStoriesQuery } from "@/sanity/lib/queries";
 export default async function MoreStories(params: {
   skip: string;
   limit: number;
+  posts?: any[];
 }) {
-  const data = await sanityFetch({ query: moreStoriesQuery, params });
+  const data = params.posts
+    ? params.posts
+    : await sanityFetch({ query: moreStoriesQuery, params });
 
   return (
     <>
       <div className="mb-32 grid grid-cols-1 gap-y-20 md:grid-cols-2 md:gap-x-16 md:gap-y-32 lg:gap-x-32">
         {data?.map((post: any) => {
-          const { _id, title, slug, coverImage, excerpt, authors } = post;
+          const { _id, title, slug, coverImage, excerpt, authors, categories } = post;
           return (
             <article key={_id}>
               <Link href={`/posts/${slug}`} className="group mb-5 block">
@@ -31,6 +35,11 @@ export default async function MoreStories(params: {
                 <div className="mb-4 text-lg italic text-neutral-500">
                   <DateComponent dateString={post.date} />
                 </div>
+                {categories?.length ? (
+                  <div className="mt-4">
+                    <BadgeCategories categories={categories} />
+                  </div>
+                ) : null}
                 {excerpt && (
                   <p className="text-pretty mb-4 text-lg leading-relaxed text-neutral-500 font-sans">
                     {excerpt}

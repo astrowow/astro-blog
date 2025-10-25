@@ -8,6 +8,7 @@ import DateComponent from "./date";
 import MoreStories from "./more-stories";
 import Onboarding from "./onboarding";
 import PortableText from "./portable-text";
+import BadgeCategories from "./components/BadgeCategories";
 
 // import type { HeroQueryResult } from "@/sanity.types"; // legacy type no longer needed
 import * as demo from "@/sanity/lib/demo";
@@ -67,6 +68,7 @@ function HeroPost({
   coverImage,
   date,
   authors,
+  categories,
 }: {
   title: string | null;
   slug: string | null;
@@ -74,6 +76,7 @@ function HeroPost({
   coverImage: any;
   date: string;
   authors: Array<{ name: string; picture: any; slug: string | null }> | null;
+  categories: Array<{ name: string; slug: string }> | null;
 }) {
   return (
     <article>
@@ -90,6 +93,11 @@ function HeroPost({
           <div className="mb-4 text-neutral-500 italic text-lg md:mb-0">
             <DateComponent dateString={date} />
           </div>
+          {categories?.length ? (
+            <div className="mt-4">
+              <BadgeCategories categories={categories} />
+            </div>
+          ) : null}
         </div>
         <div>
           {excerpt && (
@@ -130,6 +138,7 @@ export default async function Page() {
             excerpt={heroPost.excerpt}
             date={heroPost.date}
             authors={heroPost.authors?.filter(Boolean) ?? null}
+            categories={heroPost.categories?.filter(Boolean) ?? null}
            />
         ) : (
           <Onboarding />

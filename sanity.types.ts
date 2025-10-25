@@ -952,9 +952,8 @@ export type PostsByAuthorQueryResult = Array<{
 }>;
 
 // Query TypeMap
-import 'next-sanity'
-
-declare module 'next-sanity' {
+import "@sanity/client";
+declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"post\" && defined(slug.current)]{\"slug\": slug.current}": PostSlugsResult;
     "*[_type == \"settings\"][0]": SettingsQueryResult;

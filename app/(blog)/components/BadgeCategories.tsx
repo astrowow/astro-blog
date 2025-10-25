@@ -1,0 +1,17 @@
+import Link from "next/link";
+
+export default function BadgeCategories({ categories }: { categories: { name: string; slug: string }[] }) {
+  return (
+    <div className="flex flex-wrap gap-2">
+      {categories.map((category) => (
+        <Link
+          key={category.slug}
+          href={`/categories/${category.slug}`}
+          className="text-xl font-semibold hover:underline"
+        >
+        #{category.name}
+        </Link>
+      ))}
+    </div>
+  );
+}

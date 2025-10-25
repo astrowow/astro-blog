@@ -3,12 +3,14 @@ import type { Metadata, ResolvingMetadata } from "next";
 import { type PortableTextBlock } from "next-sanity";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import Link from "next/link";
 
 import Avatar from "../../avatar";
 import CoverImage from "../../cover-image";
 import DateComponent from "../../date";
 import MoreStories from "../../more-stories";
 import PortableText from "../../portable-text";
+import BadgeCategories from "../../components/BadgeCategories";
 
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { postQuery } from "@/sanity/lib/queries";
@@ -76,6 +78,11 @@ export default async function PostPage({ params }: Props) {
               ))}
             </div>
           ) : null}
+          {post.categories?.length ? (
+            <div className="mt-4">
+              <BadgeCategories categories={post.categories} />
+            </div>
+          ) : null}
         </div>
         <div className="mb-8 sm:mx-0 md:mb-16">
           <CoverImage image={post.coverImage} priority />
@@ -87,6 +94,11 @@ export default async function PostPage({ params }: Props) {
                 {post.authors.map((a: any) => (
                   <Avatar key={(a.slug || a.name) + "-post-mobile"} name={a.name} picture={a.picture} slug={a.slug} />
                 ))}
+              </div>
+            ) : null}
+            {post.categories?.length ? (
+              <div className="mt-4">
+                <BadgeCategories categories={post.categories} />
               </div>
             ) : null}
           </div>
