@@ -7,7 +7,7 @@ export default function BadgeCategories({ categories }: { categories: { name: st
         <Link
           key={category.slug}
           href={`/categories/${category.slug}`}
-          className="text-xl font-semibold hover:underline"
+          className="text-lg hover:underline"
         >
         #{category.name}
         </Link>

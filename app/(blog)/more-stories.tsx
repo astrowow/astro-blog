@@ -32,14 +32,12 @@ export default async function MoreStories(params: {
                   {title}
                 </Link>
               </h3>
-                <div className="mb-4 text-lg italic text-neutral-500">
+                <div className="mb-4 flex flex-wrap items-center justify-between text-lg italic text-neutral-500">
                   <DateComponent dateString={post.date} />
-                </div>
-                {categories?.length ? (
-                  <div className="mt-4">
+                  {categories?.length ? (
                     <BadgeCategories categories={categories} />
-                  </div>
-                ) : null}
+                  ) : null}
+                </div>
                 {excerpt && (
                   <p className="text-pretty mb-4 text-lg leading-relaxed text-neutral-500 font-sans">
                     {excerpt}
