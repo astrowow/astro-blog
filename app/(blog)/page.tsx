@@ -137,8 +137,8 @@ export default async function Page() {
             coverImage={heroPost.coverImage}
             excerpt={heroPost.excerpt}
             date={heroPost.date}
-            authors={heroPost.authors?.filter(Boolean) ?? null}
-            categories={heroPost.categories?.filter(Boolean) ?? null}
+            authors={(heroPost.authors?.filter((author): author is { name: string; picture: any; slug: string } => author.name !== null && author.slug !== null && author.picture !== null) ?? [])}
+            categories={(heroPost.categories?.filter((category): category is { name: string; slug: string } => category.name !== null && category.slug !== null) ?? [])}
            />
         ) : (
           <Onboarding />

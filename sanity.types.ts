@@ -516,6 +516,13 @@ export type SanityAssetSourceData = {
 
 export type AllSanitySchemaTypes = Page | Author | Post | Category | Settings | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ./app/(blog)/categories/[slug]/test.tsx
+// Variable: categorySlugs
+// Query: *[_type == "category" && defined(slug.current)]{"slug": slug.current}
+export type CategorySlugsResult = Array<{
+  slug: string | null;
+}>;
+
 // Source: ./app/(blog)/posts/[slug]/page.tsx
 // Variable: postSlugs
 // Query: *[_type == "post" && defined(slug.current)]{"slug": slug.current}
@@ -1015,6 +1022,7 @@ export type PostsByCategoryQueryResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    "*[_type == \"category\" && defined(slug.current)]{\"slug\": slug.current}": CategorySlugsResult;
     "*[_type == \"post\" && defined(slug.current)]{\"slug\": slug.current}": PostSlugsResult;
     "*[_type == \"settings\"][0]": SettingsQueryResult;
     "\n  *[_type == \"page\" && slug.current == \"about-me\"][0]\n": AboutmeQueryResult;
