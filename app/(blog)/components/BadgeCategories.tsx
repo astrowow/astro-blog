@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function BadgeCategories({ categories }: { categories: { name: string; slug: string }[] }) {
+export default function BadgeCategories({ categories }: { categories: { name: string | null; slug: string | null }[] }) {
   return (
     <div className="flex flex-wrap gap-2">
       {categories.map((category) => (
