@@ -18,6 +18,7 @@ import MenuOverlay from "./components/Menu/MenuOverlay";
 import { MenuProvider } from "./components/Menu/MenuContext";
 import SiteTitle from "./components/Menu/site-title";
 import MainWrapper from "./components/MainWrapper";
+import CategoryLink from "./components/CategoryLink";
 
 import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
@@ -128,6 +129,7 @@ export default async function RootLayout({
                       >
                         Sobre nosotros
                       </Link>
+                       <CategoryLink />
                       {/*
                       <a
                         href="https://github.com/astrowow"

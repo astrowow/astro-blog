@@ -152,7 +152,6 @@ export default async function Page() {
             <Suspense>
               <MoreStories skip={heroPost._id} limit={100} />
             </Suspense>
-            <CategoryLink />
           </aside>
         )}
       </div>
