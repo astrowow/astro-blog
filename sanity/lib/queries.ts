@@ -65,3 +65,21 @@ export const postsByCategoryQuery = defineQuery(`
     ${postFields}
   }
 `);
+
+// Category queries
+export const allCategoriesQuery = defineQuery(`
+  *[_type == "category" && defined(slug.current)] | order(name asc) {
+    name,
+    "slug": slug.current,
+    description,
+    "postCount": count(*[_type == "post" && defined(slug.current) && references(^._id)])
+  }
+`);
+
+export const categoryBySlugQuery = defineQuery(`
+  *[_type == "category" && slug.current == $slug][0] {
+    name,
+    "slug": slug.current,
+    description
+  }
+`);

@@ -11,7 +11,7 @@ export default function MenuOverlay() {
   const links = [
     { href: "/", label: "Inicio" },
     { href: "/aboutus", label: "Nosotros" },
-    { href: "/search?category=all", label: "Categorías" },
+    { href: "/categories", label: "Categorías" },
   ];
 
   return (

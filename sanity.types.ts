@@ -516,7 +516,7 @@ export type SanityAssetSourceData = {
 
 export type AllSanitySchemaTypes = Page | Author | Post | Category | Settings | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
-// Source: ./app/(blog)/categories/[slug]/test.tsx
+// Source: ./app/(blog)/categories/[slug]/page.tsx
 // Variable: categorySlugs
 // Query: *[_type == "category" && defined(slug.current)]{"slug": slug.current}
 export type CategorySlugsResult = Array<{

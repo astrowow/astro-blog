@@ -13,7 +13,7 @@ export default function BadgeCategories({ categories }: { categories: { name: st
           href={`/categories/${category.slug}`}
           className="text-lg hover:underline"
         >
-        #{category.name}
+          #{category.name}
         </Link>
       ))}
       {remainingCategoriesCount > 0 && (

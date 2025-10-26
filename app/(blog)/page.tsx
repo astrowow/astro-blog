@@ -9,6 +9,7 @@ import MoreStories from "./more-stories";
 import Onboarding from "./onboarding";
 import PortableText from "./portable-text";
 import BadgeCategories from "./components/BadgeCategories";
+import CategoryLink from "./components/CategoryLink";
 
 // import type { HeroQueryResult } from "@/sanity.types"; // legacy type no longer needed
 import * as demo from "@/sanity/lib/demo";
@@ -151,6 +152,7 @@ export default async function Page() {
             <Suspense>
               <MoreStories skip={heroPost._id} limit={100} />
             </Suspense>
+            <CategoryLink />
           </aside>
         )}
       </div>
