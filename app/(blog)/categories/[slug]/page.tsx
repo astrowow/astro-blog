@@ -21,11 +21,12 @@ export async function generateStaticParams() {
     .filter(Boolean) as { slug: string }[];
 }
 
-export default async function CategoryPage({ params }: { params: { slug: string } }) {
+export default async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = await params;
   const [posts, categories, currentCategory] = await Promise.all([
-    sanityFetch({ query: postsByCategoryQuery, params }),
+    sanityFetch({ query: postsByCategoryQuery, params: resolvedParams }),
     sanityFetch({ query: allCategoriesQuery }),
-    sanityFetch({ query: categoryBySlugQuery, params })
+    sanityFetch({ query: categoryBySlugQuery, params: resolvedParams })
   ]);
 
   if (!posts || posts.length === 0 || !currentCategory) {
@@ -65,7 +66,10 @@ export default async function CategoryPage({ params }: { params: { slug: string 
           Otras Categorías
         </h2>
         <Suspense fallback={<div>Cargando categorías...</div>}>
-          <CategoryFilter categories={categories || []} currentCategory={params.slug} />
+          <CategoryFilter 
+            categories={(categories || []).filter(cat => cat.name && cat.slug)} 
+            currentCategory={resolvedParams.slug} 
+          />
         </Suspense>
       </div>
     </div>

@@ -4,9 +4,9 @@ import Link from "next/link";
 import { useState } from "react";
 
 interface Category {
-  name: string;
-  slug: string;
-  description?: string;
+  name: string | null;
+  slug: string | null;
+  description?: string | null;
   postCount: number;
 }
 
@@ -18,9 +18,12 @@ interface CategoryFilterProps {
 export default function CategoryFilter({ categories, currentCategory }: CategoryFilterProps) {
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredCategories = categories.filter(category =>
-    category.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Filter out categories with null names or slugs, and apply search filter
+  const filteredCategories = categories
+    .filter(category => category.name && category.slug) // Remove categories with null name or slug
+    .filter(category =>
+      category.name!.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
   return (
     <div className="mb-12">
@@ -53,8 +56,8 @@ export default function CategoryFilter({ categories, currentCategory }: Category
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredCategories.map((category) => (
           <Link
-            key={category.slug}
-            href={`/categories/${category.slug}`}
+            key={category.slug!}
+            href={`/categories/${category.slug!}`}
             className={`group block p-6 rounded-lg border transition-all duration-200 ${
               currentCategory === category.slug
                 ? "border-gray-400"
@@ -63,7 +66,7 @@ export default function CategoryFilter({ categories, currentCategory }: Category
           >
             <div className="flex items-start justify-between mb-3">
               <h3 className="text-xl font-bold transition-colors">
-                {category.name}
+                {category.name!}
               </h3>
               <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
                 {category.postCount} {category.postCount === 1 ? 'post' : 'posts'}
