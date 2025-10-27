@@ -25,7 +25,7 @@ export default async function MoreStories(params: {
           return (
             <article
               key={_id}
-              className="overflow-hidden bg-white shadow-md md:bg-transparent md:shadow-none"
+              className="overflow-hidden bg-white shadow-lg md:bg-transparent md:shadow-none"
             >
               <Link href={`/posts/${slug}`} className="group block">
                 <CoverImage image={coverImage} priority={false} />

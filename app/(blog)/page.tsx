@@ -80,11 +80,14 @@ function HeroPost({
   categories: Array<{ name: string; slug: string }> | null;
 }) {
   return (
-    <article>
-      <Link className="group mb-8 block md:mb-16" href={`/posts/${slug}`}>
+    <article className="overflow-hidden bg-white shadow-lg md:grid md:bg-transparent md:shadow-none mb-20 md:mb-28">
+      <Link
+        className="group mb-8 block md:mb-16 md:row-start-1"
+        href={`/posts/${slug}`}
+      >
         <CoverImage image={coverImage} priority />
       </Link>
-      <div className="mb-20 md:mb-28 md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8">
+      <div className="md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8 md:row-start-2 p-5 md:p-0">
         <div>
           <h3 className="text-pretty mb-4 text-4xl leading-tight lg:text-6xl">
             <Link href={`/posts/${slug}`} className="hover:underline">
