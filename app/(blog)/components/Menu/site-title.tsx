@@ -41,7 +41,7 @@ export default function SiteTitle({ className }: { className?: string }) {
         className="hover:underline"
         aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
       >
-        {isMenuOpen ? "Cerrar" : "Menu"}
+        {isMenuOpen ? "Cerrar" : "Menú"}
       </button>
     </h2>
   );
