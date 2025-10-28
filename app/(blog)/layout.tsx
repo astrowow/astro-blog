@@ -124,7 +124,7 @@ export default async function RootLayout({
                     </h3>
                     <div className="flex flex-col items-center justify-center lg:w-1/2 lg:flex-row lg:pl-4">
                       <Link
-                        href="/aboutme"
+                        href="/aboutus"
                         className="mx-3 mb-6 border border-black bg-black py-3 px-12 font-bold text-white transition-colors duration-200 hover:bg-white hover:text-black lg:mb-0 lg:px-8"
                       >
                         Sobre nosotros
