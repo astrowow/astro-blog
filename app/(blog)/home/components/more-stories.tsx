@@ -1,9 +1,9 @@
 import Link from "next/link";
 
-import Avatar from "./avatar";
-import CoverImage from "./cover-image";
-import DateComponent from "./date";
-import BadgeCategories from "./components/BadgeCategories";
+import Avatar from "../../shared/ui/avatar";
+import CoverImage from "../../shared/ui/cover-image";
+import DateComponent from "../../shared/ui/date";
+import BadgeCategories from "../../categories/components/BadgeCategories";
 
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { moreStoriesQuery } from "@/sanity/lib/queries";

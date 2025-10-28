@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import Avatar from "../../avatar";
-import CoverImage from "../../cover-image";
-import DateComponent from "../../date";
-import PortableText from "../../portable-text";
+import Avatar from "../../shared/ui/avatar";
+import CoverImage from "../../shared/ui/cover-image";
+import DateComponent from "../../shared/ui/date";
+import PortableText from "../../shared/ui/portable-text";
 
 import { client } from "@/sanity/lib/client";
 import { sanityFetch } from "@/sanity/lib/fetch";

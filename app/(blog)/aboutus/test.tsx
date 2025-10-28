@@ -1,7 +1,7 @@
 import { asciiArtHtml } from './ascii';
 import * as demo from "@/sanity/lib/demo";
 import Link from "next/link";
-import PortableText from "../portable-text";
+import PortableText from "../shared/ui/portable-text";
 import { type PortableTextBlock } from "next-sanity";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { aboutmeQuery } from "@/sanity/lib/queries";

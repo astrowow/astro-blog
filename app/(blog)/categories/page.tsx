@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import CategoryFilter from "../components/CategoryFilter";
+import CategoryFilter from "./components/CategoryFilter";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { allCategoriesQuery } from "@/sanity/lib/queries";
 

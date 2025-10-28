@@ -2,9 +2,9 @@ import { defineQuery } from "next-sanity";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
-import MoreStories from "../../more-stories";
-import BadgeCategories from "../../components/BadgeCategories";
-import CategoryFilter from "../../components/CategoryFilter";
+import MoreStories from "../../home/components/more-stories";
+import BadgeCategories from "../components/BadgeCategories";
+import CategoryFilter from "../components/CategoryFilter";
 
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { postsByCategoryQuery, allCategoriesQuery, categoryBySlugQuery } from "@/sanity/lib/queries";

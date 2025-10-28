@@ -5,12 +5,12 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import Link from "next/link";
 
-import Avatar from "../../avatar";
-import CoverImage from "../../cover-image";
-import DateComponent from "../../date";
-import MoreStories from "../../more-stories";
-import PortableText from "../../portable-text";
-import BadgeCategories from "../../components/BadgeCategories";
+import Avatar from "../../shared/ui/avatar";
+import CoverImage from "../../shared/ui/cover-image";
+import DateComponent from "../../shared/ui/date";
+import MoreStories from "../../home/components/more-stories";
+import PortableText from "../../shared/ui/portable-text";
+import BadgeCategories from "../../categories/components/BadgeCategories";
 
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { postQuery } from "@/sanity/lib/queries";

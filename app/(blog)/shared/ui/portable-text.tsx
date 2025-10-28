@@ -16,7 +16,7 @@ import {
 } from "next-sanity";
 import { urlForImage } from "@/sanity/lib/utils";
 import Image from "next/image";
-import { InstagramIcon, YouTubeIcon } from "./components/icons";
+import { InstagramIcon, YouTubeIcon } from "./icons";
 
 // Función para reemplazar texto específico con iconos
 const replaceTextWithIcons = (text: string) => {

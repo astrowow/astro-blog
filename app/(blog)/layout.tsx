@@ -11,14 +11,14 @@ import localFont from "next/font/local";
 import { Lora } from "next/font/google";
 import { draftMode } from "next/headers";
 
-import AlertBanner from "./alert-banner";
-import PortableText from "./portable-text";
-import VisualEditingWrapper from "./visual-editing-wrapper";
-import MenuOverlay from "./components/Menu/MenuOverlay";
-import { MenuProvider } from "./components/Menu/MenuContext";
-import SiteTitle from "./components/Menu/site-title";
-import MainWrapper from "./components/MainWrapper";
-import CategoryLink from "./components/CategoryLink";
+import AlertBanner from "./shared/ui/alert-banner";
+import PortableText from "./shared/ui/portable-text";
+import VisualEditingWrapper from "./shared/wrappers/visual-editing-wrapper";
+import MenuOverlay from "./shared/ui/Menu/MenuOverlay";
+import { MenuProvider } from "./shared/ui/Menu/MenuContext";
+import SiteTitle from "./shared/ui/Menu/site-title";
+import MainWrapper from "./shared/wrappers/MainWrapper";
+import CategoryLink from "./categories/components/CategoryLink";
 
 import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";

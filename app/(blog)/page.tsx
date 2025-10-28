@@ -2,14 +2,14 @@ import Link from "next/link";
 import { Suspense } from "react";
 import Image from "next/image";
 
-import Avatar from "./avatar";
-import CoverImage from "./cover-image";
-import DateComponent from "./date";
-import MoreStories from "./more-stories";
-import Onboarding from "./onboarding";
-import PortableText from "./portable-text";
-import BadgeCategories from "./components/BadgeCategories";
-import CategoryLink from "./components/CategoryLink";
+import Avatar from "./shared/ui/avatar";
+import CoverImage from "./shared/ui/cover-image";
+import DateComponent from "./shared/ui/date";
+import MoreStories from "./home/components/more-stories";
+import Onboarding from "./home/components/onboarding";
+import PortableText from "./shared/ui/portable-text";
+import BadgeCategories from "./categories/components/BadgeCategories";
+import CategoryLink from "./categories/components/CategoryLink";
 
 // import type { HeroQueryResult } from "@/sanity.types"; // legacy type no longer needed
 import * as demo from "@/sanity/lib/demo";

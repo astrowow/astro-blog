@@ -60,8 +60,8 @@ export default function CategoryFilter({ categories, currentCategory }: Category
             href={`/categories/${category.slug!}`}
             className={`group block p-6 rounded-lg border transition-all duration-200 ${
               currentCategory === category.slug
-                ? "border-gray-400"
-                : "hover:border-gray-950"
+                ? 'border-gray-400'
+                : 'hover:border-gray-950'
             }`}
           >
             <div className="flex items-start justify-between mb-3">
@@ -92,7 +92,7 @@ export default function CategoryFilter({ categories, currentCategory }: Category
       {filteredCategories.length === 0 && searchTerm && (
         <div className="text-center py-12">
           <p className="text-gray-500 text-lg">
-            No se encontraron categorías que coincidan con "{searchTerm}"
+            No se encontraron categorías que coincidan con &quot;{searchTerm}&quot;
           </p>
         </div>
       )}
