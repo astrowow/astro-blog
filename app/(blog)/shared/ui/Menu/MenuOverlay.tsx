@@ -1,18 +1,36 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useMenuBehavior } from "./useMenuBehavior";
+import { useState, useRef } from "react";
 
 export default function MenuOverlay() {
   const pathname = usePathname();
+  const router = useRouter();
   const { isMenuOpen, closeMenu } = useMenuBehavior();
+  const [searchTerm, setSearchTerm] = useState("");
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const links = [
     { href: "/", label: "Inicio" },
     { href: "/aboutus", label: "Nosotros" },
-    { href: "/categories", label: "Categorías" },
   ];
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      closeMenu();
+      router.push(`/categories?search=${encodeURIComponent(searchTerm.trim())}`);
+      setSearchTerm("");
+    }
+  };
+
+  const handleSearchKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      handleSearchSubmit(e);
+    }
+  };
 
   return (
     <div
@@ -45,6 +63,21 @@ export default function MenuOverlay() {
               </Link>
             </div>
           ))}
+          
+          {/* Search Input */}
+          <div className="mb-[1.5vh]">
+            <form onSubmit={handleSearchSubmit}>
+              <input
+                ref={searchInputRef}
+                type="text"
+                placeholder="Buscar"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={handleSearchKeyDown}
+                className="w-full bg-transparent border-b-2 border-[var(--cream)] text-[clamp(3rem,12vw,8.5rem)] leading-[0.9] font-extrabold tracking-[-0.02em] text-[var(--cream)] placeholder-[var(--cream)]/70 focus:outline-none focus:border-[var(--rollover)] transition-colors duration-200 pb-2"
+              />
+            </form>
+          </div>
         </div>
 
         {/* Footer */}
