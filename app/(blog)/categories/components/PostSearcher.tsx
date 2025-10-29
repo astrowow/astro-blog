@@ -22,7 +22,7 @@ interface Post {
   coverImage: any;
   date: string;
   authors: Array<{ name: string; picture: any; slug: string | null }> | null;
-  categories: Array<{ name: string; slug: string }> | null;
+  categories: Array<{ name: string | null; slug: string | null }> | null;
 }
 
 interface PostSearcherProps {
@@ -43,7 +43,7 @@ export default function PostSearcher({ categories, posts }: PostSearcherProps) {
         post.excerpt?.toLowerCase().includes(searchTerm.toLowerCase());
       
       const matchesCategory = !selectedCategory || 
-        post.categories?.some(cat => cat.slug === selectedCategory);
+        post.categories?.some(cat => cat.slug && cat.slug === selectedCategory);
       
       return matchesSearch && matchesCategory;
     });
@@ -129,7 +129,7 @@ export default function PostSearcher({ categories, posts }: PostSearcherProps) {
 
       {/* Posts Grid */}
       {filteredPosts.length > 0 ? (
-        <div className="mb-32 grid grid-cols-1 gap-y-20 md:grid-cols-2 md:gap-x-16 md:gap-y-32 lg:gap-x-32">
+        <div className="grid grid-cols-1 gap-y-20 md:grid-cols-2 md:gap-x-16 md:gap-y-32 lg:gap-x-32">
           {filteredPosts.map((post) => (
             <article
               key={post._id}
@@ -176,9 +176,20 @@ export default function PostSearcher({ categories, posts }: PostSearcherProps) {
           <h3 className="text-xl font-medium text-gray-900 mb-2">
             No se encontraron publicaciones
           </h3>
-          <p className="text-gray-500">
+          <p className="text-gray-500 mb-6">
             Intenta ajustar tu búsqueda o seleccionar una categoría diferente
           </p>
+          {(searchTerm || selectedCategory) && (
+            <button
+              onClick={() => {
+                setSearchTerm("");
+                setSelectedCategory("");
+              }}
+              className="px-6 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
+            >
+              Limpiar filtros
+            </button>
+          )}
         </div>
       )}
     </div>
