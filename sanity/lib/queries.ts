@@ -83,3 +83,20 @@ export const categoryBySlugQuery = defineQuery(`
     description
   }
 `);
+
+// Search posts query with optional category filter
+export const searchPostsQuery = defineQuery(`
+  *[_type == "post" && defined(slug.current) && 
+    ($searchTerm == "" || title match $searchTerm + "*" || excerpt match $searchTerm + "*") &&
+    ($categorySlug == "" || $categorySlug in categories[]->slug.current)
+  ] | order(date desc, _updatedAt desc) [0...$limit] {
+    ${postFields}
+  }
+`);
+
+// Get all posts for search (without filters)
+export const allPostsQuery = defineQuery(`
+  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {
+    ${postFields}
+  }
+`);
