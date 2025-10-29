@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo, useCallback, useRef, useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Avatar from "../../shared/ui/avatar";
 import CoverImage from "../../shared/ui/cover-image";
@@ -31,27 +32,70 @@ interface PostSearcherProps {
 }
 
 export default function PostSearcher({ categories, posts }: PostSearcherProps) {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [filteredPosts, setFilteredPosts] = useState<Post[]>(posts);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const debounceRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // Get current values from URL
+  const urlSearchTerm = searchParams.get("search") || "";
+  const selectedCategory = searchParams.get("category") || "";
+  
+  // Local state for immediate UI updates - only initialize once
+  const [localSearchTerm, setLocalSearchTerm] = useState(urlSearchTerm);
+  const [isTyping, setIsTyping] = useState(false);
+
+  // Only sync from URL when not actively typing
+  useEffect(() => {
+    if (!isTyping) {
+      setLocalSearchTerm(urlSearchTerm);
+    }
+  }, [urlSearchTerm, isTyping]);
+
+  // Function to update URL params
+  const updateURL = useCallback((newSearch: string, newCategory: string) => {
+    const params = new URLSearchParams();
+    if (newSearch) params.set("search", newSearch);
+    if (newCategory) params.set("category", newCategory);
+    
+    const queryString = params.toString();
+    const newURL = queryString ? `?${queryString}` : window.location.pathname;
+    router.push(newURL, { scroll: false });
+  }, [router]);
+
+  // Debounced search function
+  const handleSearchChange = useCallback((value: string) => {
+    setLocalSearchTerm(value);
+    setIsTyping(true);
+    
+    // Clear existing timeout
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
+    
+    // Set new timeout
+    debounceRef.current = setTimeout(() => {
+      updateURL(value, selectedCategory);
+      setIsTyping(false);
+    }, 300);
+  }, [updateURL, selectedCategory]);
+
+  const handleCategoryChange = useCallback((category: string) => {
+    updateURL(localSearchTerm, category);
+  }, [updateURL, localSearchTerm]);
 
   // Filter posts based on search term and selected category
-  const filterPosts = useMemo(() => {
-    return posts.filter(post => {
-      const matchesSearch = !searchTerm || 
-        post.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.excerpt?.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredPosts = useMemo(() => {
+    return posts.filter((post: Post) => {
+      const matchesSearch = !urlSearchTerm || 
+        post.title?.toLowerCase().includes(urlSearchTerm.toLowerCase()) ||
+        post.excerpt?.toLowerCase().includes(urlSearchTerm.toLowerCase());
       
       const matchesCategory = !selectedCategory || 
         post.categories?.some(cat => cat.slug && cat.slug === selectedCategory);
       
       return matchesSearch && matchesCategory;
     });
-  }, [posts, searchTerm, selectedCategory]);
-
-  useEffect(() => {
-    setFilteredPosts(filterPosts);
-  }, [filterPosts]);
+  }, [posts, urlSearchTerm, selectedCategory]);
 
   // Filter categories to only show those with valid names and slugs
   const validCategories = categories.filter(category => category.name && category.slug);
@@ -78,8 +122,8 @@ export default function PostSearcher({ categories, posts }: PostSearcherProps) {
             <input
               type="text"
               placeholder="Buscar por título o contenido..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              value={localSearchTerm}
+              onChange={(e) => handleSearchChange(e.target.value)}
               className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:border-gray-400 shadow-sm bg-white relative z-10 transition-all duration-300"
             />
           </div>
@@ -88,7 +132,7 @@ export default function PostSearcher({ categories, posts }: PostSearcherProps) {
         {/* Category Filter */}
         <div className="flex flex-wrap gap-3">
           <button
-            onClick={() => setSelectedCategory("")}
+            onClick={() => handleCategoryChange("")}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
               selectedCategory === ""
                 ? "bg-gray-900 text-white"
@@ -100,7 +144,7 @@ export default function PostSearcher({ categories, posts }: PostSearcherProps) {
           {validCategories.map((category) => (
             <button
               key={category.slug!}
-              onClick={() => setSelectedCategory(category.slug!)}
+              onClick={() => handleCategoryChange(category.slug!)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                 selectedCategory === category.slug
                   ? "bg-gray-900 text-white"
@@ -120,7 +164,7 @@ export default function PostSearcher({ categories, posts }: PostSearcherProps) {
             ? "No se encontraron publicaciones"
             : `${filteredPosts.length} ${filteredPosts.length === 1 ? 'publicación encontrada' : 'publicaciones encontradas'}`
           }
-          {searchTerm && ` para "${searchTerm}"`}
+          {urlSearchTerm && ` para "${urlSearchTerm}"`}
           {selectedCategory && validCategories.find(cat => cat.slug === selectedCategory) && 
             ` en la categoría "${validCategories.find(cat => cat.slug === selectedCategory)?.name}"`
           }
@@ -179,12 +223,9 @@ export default function PostSearcher({ categories, posts }: PostSearcherProps) {
           <p className="text-gray-500 mb-6">
             Intenta ajustar tu búsqueda o seleccionar una categoría diferente
           </p>
-          {(searchTerm || selectedCategory) && (
+          {(urlSearchTerm || selectedCategory) && (
             <button
-              onClick={() => {
-                setSearchTerm("");
-                setSelectedCategory("");
-              }}
+              onClick={() => updateURL("", "")}
               className="px-6 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
             >
               Limpiar filtros
