@@ -66,6 +66,22 @@ export default function MenuOverlay() {
             >
               YouTube
             </a>
+            <a
+              className="text-sm uppercase"
+              href="https://www.facebook.com/share/1Fw1L8LxVU/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Facebook
+            </a>
+            <a
+              className="text-sm uppercase"
+              href="https://www.tiktok.com/@grupoastrowow"
+              target="_blank"
+              rel="noreferrer"
+            >
+              TikTok
+            </a>
           </div>
         </div>
       </div>
