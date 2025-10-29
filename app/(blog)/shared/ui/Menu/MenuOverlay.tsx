@@ -20,8 +20,16 @@ export default function MenuOverlay() {
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchTerm.trim()) {
-      closeMenu();
-      router.push(`/categories?search=${encodeURIComponent(searchTerm.trim())}`);
+      const searchUrl = `/categories?search=${encodeURIComponent(searchTerm.trim())}&category=all`;
+      
+      // Si ya estamos en la página de categorías, usamos replace con timestamp para forzar re-render
+      if (pathname.startsWith('/categories')) {
+        // Agregamos un timestamp para forzar la navegación sin recarga completa
+        const urlWithTimestamp = `${searchUrl}&t=${Date.now()}`;
+        router.replace(urlWithTimestamp);
+      } else {
+        router.push(searchUrl);
+      }
       setSearchTerm("");
     }
   };
