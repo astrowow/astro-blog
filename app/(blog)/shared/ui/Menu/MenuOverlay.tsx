@@ -30,6 +30,9 @@ export default function MenuOverlay() {
       } else {
         router.push(searchUrl);
       }
+      
+      // Cerrar el overlay y limpiar el input
+      closeMenu();
       setSearchTerm("");
     }
   };
