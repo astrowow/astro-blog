@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState, useEffect } from "react";
 
 interface SearchInputProps {
   initialValue: string;
@@ -11,6 +11,12 @@ interface SearchInputProps {
 export default function SearchInput({ initialValue, selectedCategory }: SearchInputProps) {
   const router = useRouter();
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
+  const [searchValue, setSearchValue] = useState(initialValue);
+
+  // Sync local state with initialValue prop when it changes
+  useEffect(() => {
+    setSearchValue(initialValue);
+  }, [initialValue]);
 
   // Function to update URL params
   const updateURL = useCallback((newSearch: string) => {
@@ -23,14 +29,17 @@ export default function SearchInput({ initialValue, selectedCategory }: SearchIn
     router.push(newURL, { scroll: false });
   }, [router, selectedCategory]);
 
-  // Debounced search function - directly updates URL without local state
+  // Debounced search function - updates local state immediately and URL after delay
   const handleSearchChange = useCallback((value: string) => {
+    // Update local state immediately for responsive UI
+    setSearchValue(value);
+    
     // Clear existing timeout
     if (debounceRef.current) {
       clearTimeout(debounceRef.current);
     }
     
-    // Set new timeout
+    // Set new timeout to update URL
     debounceRef.current = setTimeout(() => {
       updateURL(value);
     }, 300);
@@ -44,7 +53,7 @@ export default function SearchInput({ initialValue, selectedCategory }: SearchIn
         <input
           type="text"
           placeholder="Buscar por título o contenido..."
-          defaultValue={initialValue}
+          value={searchValue}
           onChange={(e) => handleSearchChange(e.target.value)}
           className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:border-gray-400 shadow-sm bg-white relative z-10 transition-all duration-300"
         />
