@@ -20,17 +20,13 @@ export default function MenuOverlay() {
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchTerm.trim()) {
-      const searchUrl = `/categories?search=${encodeURIComponent(searchTerm.trim())}&category=all`;
-      
-      // Si ya estamos en la página de categorías, usamos replace con timestamp para forzar re-render
-      if (pathname.startsWith('/categories')) {
-        // Agregamos un timestamp para forzar la navegación sin recarga completa
-        const urlWithTimestamp = `${searchUrl}&t=${Date.now()}`;
-        router.replace(urlWithTimestamp);
-      } else {
-        router.push(searchUrl);
-      }
-      
+      const searchUrl = `/categories?search=${encodeURIComponent(searchTerm.trim())}`;
+      // Siempre usar router.push seguido de router.refresh para asegurar que se actualicen los datos del servidor
+      router.push(searchUrl);    
+      // Usar setTimeout para asegurar que la navegación se complete antes del refresh
+      setTimeout(() => {
+        router.refresh();
+      }, 100);
       // Cerrar el overlay y limpiar el input
       closeMenu();
       setSearchTerm("");

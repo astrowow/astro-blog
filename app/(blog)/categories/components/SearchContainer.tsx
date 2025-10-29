@@ -37,7 +37,7 @@ export default function SearchContainer({ categories, posts, searchParams }: Sea
       post.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       post.excerpt?.toLowerCase().includes(searchTerm.toLowerCase());
     
-    const matchesCategory = !selectedCategory || 
+    const matchesCategory = !selectedCategory || selectedCategory === 'all' ||
       post.categories?.some(cat => cat.slug && cat.slug === selectedCategory);
     
     return matchesSearch && matchesCategory;
