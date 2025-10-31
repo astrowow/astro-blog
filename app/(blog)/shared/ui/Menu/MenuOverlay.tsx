@@ -15,6 +15,7 @@ export default function MenuOverlay() {
   const links = [
     { href: "/", label: "Inicio" },
     { href: "/aboutus", label: "Nosotros" },
+    { href: "/categories", label: "Categorías" },
   ];
 
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -61,7 +62,7 @@ export default function MenuOverlay() {
               <Link href={href} onClick={closeMenu}>
                 <h1
                   className={[
-                    "text-[clamp(3rem,12vw,8.5rem)] leading-[0.9] font-extrabold tracking-[-0.02em] text-[var(--cream)] hover:underline",
+                    "text-[clamp(2rem,8vw,5rem)] leading-[0.9] font-extrabold tracking-[-0.02em] text-[var(--cream)] hover:underline",
                     pathname === href ? "!text-[var(--rollover)] underline" : "",
                   ].join(" ")}
                 >
@@ -81,7 +82,7 @@ export default function MenuOverlay() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={handleSearchKeyDown}
-                className="w-full bg-transparent border-b-2 border-[var(--cream)] text-[clamp(3rem,12vw,8.5rem)] leading-[0.9] font-extrabold tracking-[-0.02em] text-[var(--cream)] placeholder-[var(--cream)]/70 focus:outline-none focus:border-[var(--rollover)] transition-colors duration-200 pb-2"
+                className="w-full bg-transparent border-b-2 border-[var(--cream)] text-[clamp(2rem,8vw,5rem)] leading-[0.9] font-extrabold tracking-[-0.02em] text-[var(--cream)] placeholder-[var(--cream)]/70 focus:outline-none focus:border-[var(--rollover)] transition-colors duration-200 pb-2"
               />
             </form>
           </div>
