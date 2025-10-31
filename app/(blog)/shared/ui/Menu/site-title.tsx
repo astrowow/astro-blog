@@ -33,7 +33,14 @@ export default function SiteTitle({ className }: { className?: string }) {
         .join(" ")}
     >
       <Link href="/" className="hover:underline">
-        {settings?.title || demo.title}
+        {(settings?.title || demo.title).split("").map((ch: string, idx: number) => (
+          <span
+            key={idx}
+            className={["text-[#F1C21E]", "text-[#045396]", "text-[#E83B13]", "text-[#09935F]"][idx % 4]}
+          >
+            {ch}
+          </span>
+        ))}
       </Link>
       <button
         type="button"
