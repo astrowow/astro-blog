@@ -2,11 +2,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "predev": "npm run typegen",
-    "dev": "next --turbo",
-    "prebuild": "npm run typegen",
-    "build": "next build --webpack",
-    "start": "next start",
+    "predev": "bun run typegen",
+    "dev": "bun --bun next --turbo",
+    "prebuild": "bun run typegen",
+    "build": "bun --bun next build --webpack",
+    "start": "bun --bun next start",
     "lint": "eslint .",
     "presetup": "echo 'about to setup env variables, follow the guide here: https://github.com/vercel/next.js/tree/canary/examples/cms-sanity#using-the-sanity-cli'",
     "setup": "npx sanity@latest init --env .env.local",
@@ -52,5 +52,5 @@
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2"
   },
-  "packageManager": "pnpm@10.20.0+sha512.cf9998222162dd85864d0a8102e7892e7ba4ceadebbf5a31f9c2fce48dfce317a9c53b9f6464d1ef9042cba2e02ae02a9f7c143a2b438cd93c91840f0192b9dd"
+  "packageManager": "bun@1.2.19"
 }
