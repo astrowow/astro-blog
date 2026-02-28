@@ -1,4 +1,12 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-sans: var(--font-instrument-sans);
+  --font-serif: var(--font-instrument-serif);
+}
+
+/* For hoverOnlyWhenSupported we can use modern feature queries if needed, though Tailwind v4 handles hover intelligently */
 
 /* Variables mínimas para el menú (sin animaciones) */
 :root {
