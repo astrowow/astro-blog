@@ -10,13 +10,14 @@ interface Props {
   slug?: string | null;
 }
 
-export default function Avatar({ name, picture, slug }: Props) {
-  const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) =>
-    slug ? <Link href={`/authors/${slug}`}>{children}</Link> : <>{children}</>;
+const Wrapper: React.FC<{ children: React.ReactNode; slug?: string | null }> = ({ children, slug }) => {
+  return slug ? <Link href={`/authors/${slug}`}>{children}</Link> : <>{children}</>;
+};
 
+export default function Avatar({ name, picture, slug }: Props) {
   return (
     <div className="flex items-center text-xl">
-      <Wrapper>
+      <Wrapper slug={slug}>
         {picture?.asset?._ref ? (
           <div className="mr-4 h-12 w-12">
             <Image
@@ -36,7 +37,7 @@ export default function Avatar({ name, picture, slug }: Props) {
         ) : null}
       </Wrapper>
       <div className="text-pretty text-xl font-bold">
-        <Wrapper>{name}</Wrapper>
+        <Wrapper slug={slug}>{name}</Wrapper>
       </div>
     </div>
   );
