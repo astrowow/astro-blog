@@ -28,7 +28,7 @@ const replaceTextWithIcons = (text: string) => {
       </span>
     );
   }
-  
+
   if (text === "▶️ YouTube") {
     return (
       <span className="inline-flex items-center gap-1">
@@ -37,7 +37,7 @@ const replaceTextWithIcons = (text: string) => {
       </span>
     );
   }
-  
+
   return text;
 };
 
@@ -84,7 +84,7 @@ export default function CustomPortableText({
           }
           return child;
         });
-        
+
         return (
           <a href={value?.href} rel="noreferrer noopener">
             {processedChildren}
@@ -107,14 +107,14 @@ export default function CustomPortableText({
         return (
           <figure className="my-6">
             <Image
-               src={urlForImage(value)?.width(800).height(600).fit("max").auto("format").url() || ""}
-               alt={value.alt || ""}
-               width={800}
-               height={600}
-               className="w-full h-auto shadow-md"
-               placeholder="blur"
-               blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
-             />
+              src={urlForImage(value)?.width(800).height(600).fit("max").auto("format").url() || ""}
+              alt={value.alt || ""}
+              width={800}
+              height={600}
+              className="w-full h-auto shadow-md"
+              placeholder="blur"
+              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+            />
             {value.caption && (
               <figcaption className="mt-2 text-sm text-gray-600 text-center italic">
                 {value.caption}
@@ -132,13 +132,13 @@ export default function CustomPortableText({
         return (
           <div className="my-6">
             <div className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-4">
-              {images.map((img: any, idx: number) => {
+              {images.map((img: any, imageIndex: number) => {
                 if (!img?.asset?._ref) return null;
                 return (
-                  <figure key={idx} className="snap-start shrink-0 w-full sm:w-[85%] md:w-[70%]">
+                  <figure key={img.asset._ref} className="snap-start shrink-0 w-full sm:w-[85%] md:w-[70%]">
                     <Image
                       src={urlForImage(img)?.width(1600).height(900).fit("max").auto("format").url() || ""}
-                      alt={img.alt || `Imagen ${idx + 1}`}
+                      alt={img.alt || `Imagen ${imageIndex + 1}`}
                       width={1600}
                       height={900}
                       className="w-full h-auto rounded-md shadow-md"

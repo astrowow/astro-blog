@@ -33,10 +33,10 @@ export default function SiteTitle({ className }: { className?: string }) {
         .join(" ")}
     >
       <Link href="/" className="hover:underline">
-        {(settings?.title || demo.title).split("").map((ch: string, idx: number) => (
+        {(settings?.title || demo.title).split("").map((ch: string, charIndex: number) => (
           <span
-            key={idx}
-            className={["text-[#F1C21E]", "text-[#045396]", "text-[#E83B13]", "text-[#09935F]"][idx % 4]}
+            key={`title-${ch}-${charIndex}`}
+            className={["text-[#F1C21E]", "text-[#045396]", "text-[#E83B13]", "text-[#09935F]"][charIndex % 4]}
           >
             {ch}
           </span>
@@ -48,10 +48,10 @@ export default function SiteTitle({ className }: { className?: string }) {
         className="hover:underline"
         aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
       >
-        {(isMenuOpen ? "Cerrar" : "Menú").split("").map((ch: string, idx: number) => (
+        {(isMenuOpen ? "Cerrar" : "Menú").split("").map((ch: string, charIndex: number) => (
           <span
-            key={idx}
-            className={["text-[#F1C21E]", "text-[#045396]", "text-[#E83B13]", "text-[#09935F]"][idx % 4]}
+            key={`menu-${ch}-${charIndex}`}
+            className={["text-[#F1C21E]", "text-[#045396]", "text-[#E83B13]", "text-[#09935F]"][charIndex % 4]}
           >
             {ch}
           </span>

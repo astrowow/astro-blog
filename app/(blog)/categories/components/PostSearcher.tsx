@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useCallback, useRef, useState, ReactNode } from "react";
+import { createContext, useContext, useEffect, useMemo, useCallback, useRef, useState, ReactNode, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Avatar from "../../shared/ui/avatar";
@@ -56,7 +56,7 @@ function usePostSearcher() {
   return context;
 }
 
-export function PostSearcherProvider({
+function PostSearcherProviderContent({
   categories,
   posts,
   children
@@ -65,21 +65,13 @@ export function PostSearcherProvider({
   posts: Post[];
   children: ReactNode
 }) {
+  /* eslint-disable-next-line */
   const searchParams = useSearchParams();
   const router = useRouter();
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
   const urlSearchTerm = searchParams.get("search") || "";
   const selectedCategory = searchParams.get("category") || "";
-
-  const [localSearchTerm, setLocalSearchTerm] = useState(urlSearchTerm);
-  const [isTyping, setIsTyping] = useState(false);
-
-  useEffect(() => {
-    if (!isTyping) {
-      setLocalSearchTerm(urlSearchTerm);
-    }
-  }, [urlSearchTerm, isTyping]);
 
   const updateURL = useCallback((newSearch: string, newCategory: string) => {
     const params = new URLSearchParams();
@@ -90,6 +82,11 @@ export function PostSearcherProvider({
     const newURL = queryString ? `?${queryString}` : window.location.pathname;
     router.push(newURL, { scroll: false });
   }, [router]);
+
+  const [localSearchTerm, setLocalSearchTerm] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+
+  const displaySearchTerm = isTyping ? localSearchTerm : urlSearchTerm;
 
   const handleSearchChange = useCallback((value: string) => {
     setLocalSearchTerm(value);
@@ -106,8 +103,8 @@ export function PostSearcherProvider({
   }, [updateURL, selectedCategory]);
 
   const handleCategoryChange = useCallback((category: string) => {
-    updateURL(localSearchTerm, category);
-  }, [updateURL, localSearchTerm]);
+    updateURL(displaySearchTerm, category);
+  }, [updateURL, displaySearchTerm]);
 
   const clearFilters = useCallback(() => {
     updateURL("", "");
@@ -131,7 +128,7 @@ export function PostSearcherProvider({
   const value: PostSearcherContextValue = {
     state: {
       searchTerm: urlSearchTerm,
-      localSearchTerm,
+      localSearchTerm: displaySearchTerm,
       selectedCategory,
       filteredPosts,
       validCategories,
@@ -148,6 +145,18 @@ export function PostSearcherProvider({
     <PostSearcherContext.Provider value={value}>
       <div className="container mx-auto px-5">{children}</div>
     </PostSearcherContext.Provider>
+  );
+}
+
+export function PostSearcherProvider(props: {
+  categories: Category[];
+  posts: Post[];
+  children: ReactNode
+}) {
+  return (
+    <Suspense fallback={<div className="container mx-auto px-5" aria-hidden="true">{props.children}</div>}>
+      <PostSearcherProviderContent {...props} />
+    </Suspense>
   );
 }
 

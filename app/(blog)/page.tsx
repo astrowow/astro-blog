@@ -10,6 +10,12 @@ import Onboarding from "./home/components/onboarding";
 import PortableText from "./shared/ui/portable-text";
 import BadgeCategories from "./categories/components/BadgeCategories";
 import CategoryLink from "./categories/components/CategoryLink";
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "AstroWOW - Blog de Divulgación Científica",
+  description: "Somos un grupo de divulgación con un gran amor por la ciencia y los telescopios. Explora artículos y novedades astronómicas.",
+};
 
 // import type { HeroQueryResult } from "@/sanity.types"; // legacy type no longer needed
 import * as demo from "@/sanity/lib/demo";
@@ -42,11 +48,11 @@ function Intro(props: { title: string | null | undefined; description: any }) {
       <div className="flex w-full md:w-1/2 items-center justify-center bg-white p-5 text-center text-black h-1/2 md:h-full">
         <div>
           <h1 className="text-balance text-4xl md:text-6xl font-sans font-bold leading-tight tracking-tighter lg:text-8xl" aria-label={title || demo.title}>
-            {(title || demo.title).split("").map((ch, idx) => (
+            {(title || demo.title).split("").map((ch, charIndex) => (
               <span
-                key={idx}
+                key={`title-${ch}-${charIndex}`}
                 aria-hidden="true"
-                className={["text-[#F1C21E]", "text-[#045396]", "text-[#E83B13]", "text-[#09935F]"][idx % 4]}
+                className={["text-[#F1C21E]", "text-[#045396]", "text-[#E83B13]", "text-[#09935F]"][charIndex % 4]}
               >
                 {ch}
               </span>
