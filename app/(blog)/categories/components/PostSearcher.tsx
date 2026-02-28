@@ -154,7 +154,7 @@ export function PostSearcherProvider(props: {
   children: ReactNode
 }) {
   return (
-    <Suspense fallback={<div className="container mx-auto px-5" aria-hidden="true">{props.children}</div>}>
+    <Suspense fallback={<div className="container mx-auto px-5 py-12 text-center text-gray-500">Cargando buscador...</div>}>
       <PostSearcherProviderContent {...props} />
     </Suspense>
   );
