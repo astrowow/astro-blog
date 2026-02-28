@@ -8,17 +8,17 @@ import { useMenu } from "./MenuContext";
  * Incluye cierre automático con Escape y manejo de accesibilidad
  */
 export function useMenuBehavior() {
-  const { isMenuOpen, closeMenu } = useMenu();
+  const { state, actions } = useMenu();
 
   // Cerrar menú con tecla Escape
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && isMenuOpen) {
-        closeMenu();
+      if (event.key === "Escape" && state.isMenuOpen) {
+        actions.closeMenu();
       }
     };
 
-    if (isMenuOpen) {
+    if (state.isMenuOpen) {
       document.addEventListener("keydown", handleEscape);
       // Prevenir scroll del body cuando el menú está abierto
       document.body.style.overflow = "hidden";
@@ -30,7 +30,7 @@ export function useMenuBehavior() {
       document.removeEventListener("keydown", handleEscape);
       document.body.style.overflow = "";
     };
-  }, [isMenuOpen, closeMenu]);
+  }, [state.isMenuOpen, actions.closeMenu]);
 
-  return { isMenuOpen, closeMenu };
+  return { isMenuOpen: state.isMenuOpen, closeMenu: actions.closeMenu };
 }

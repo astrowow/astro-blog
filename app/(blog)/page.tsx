@@ -23,41 +23,43 @@ function Intro(props: { title: string | null | undefined; description: any }) {
     : demo.description;
   return (
     <header className="relative mb-16 flex h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] flex-col overflow-hidden md:flex-row">
-        <div className="relative w-full md:w-1/2 h-1/2 md:h-full">
-          <div className="w-full h-full">
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="absolute inset-0 h-full w-full object-cover"
-            >
-              <source src="/header2.webm" type="video/webm" />
-              Your browser does not support the video tag.
-            </video>
-            <div className="absolute inset-0 bg-black/40"></div> {/* Overlay for video */}
-          </div>
+      <div className="relative w-full md:w-1/2 h-1/2 md:h-full">
+        <div className="w-full h-full">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
+          >
+            <source src="/header2.webm" type="video/webm" />
+            Your browser does not support the video tag.
+          </video>
+          <div className="absolute inset-0 hidden h-full w-full bg-slate-900 motion-reduce:block"></div>
+          <div className="absolute inset-0 bg-black/40"></div> {/* Overlay for video */}
         </div>
-        <div className="flex w-full md:w-1/2 items-center justify-center bg-white p-5 text-center text-black h-1/2 md:h-full">
-          <div>
-            <h1 className="text-balance text-4xl md:text-6xl font-sans font-bold leading-tight tracking-tighter lg:text-8xl">
-              {(title || demo.title).split("").map((ch, idx) => (
-                <span
-                  key={idx}
-                  className={["text-[#F1C21E]", "text-[#045396]", "text-[#E83B13]", "text-[#09935F]"][idx % 4]}
-                >
-                  {ch}
-                </span>
-              ))}
-            </h1>
-            <h2 className="text-pretty mt-5 text-center text-base md:text-lg lg:pl-8">
-              <PortableText
-                className="prose-lg"
-                value={description?.length ? description : demo.description}
-              />
-            </h2>
-          </div>
+      </div>
+      <div className="flex w-full md:w-1/2 items-center justify-center bg-white p-5 text-center text-black h-1/2 md:h-full">
+        <div>
+          <h1 className="text-balance text-4xl md:text-6xl font-sans font-bold leading-tight tracking-tighter lg:text-8xl" aria-label={title || demo.title}>
+            {(title || demo.title).split("").map((ch, idx) => (
+              <span
+                key={idx}
+                aria-hidden="true"
+                className={["text-[#F1C21E]", "text-[#045396]", "text-[#E83B13]", "text-[#09935F]"][idx % 4]}
+              >
+                {ch}
+              </span>
+            ))}
+          </h1>
+          <h2 className="text-pretty mt-5 text-center text-base md:text-lg lg:pl-8">
+            <PortableText
+              className="prose-lg"
+              value={description?.length ? description : demo.description}
+            />
+          </h2>
         </div>
+      </div>
     </header>
   );
 }
@@ -143,7 +145,7 @@ export default async function Page() {
             date={heroPost.date}
             authors={(heroPost.authors?.filter((author): author is { name: string; picture: any; slug: string } => author.name !== null && author.slug !== null && author.picture !== null) ?? [])}
             categories={(heroPost.categories?.filter((category): category is { name: string; slug: string } => category.name !== null && category.slug !== null) ?? [])}
-           />
+          />
         ) : (
           <Onboarding />
         )}

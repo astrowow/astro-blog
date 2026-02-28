@@ -2,14 +2,22 @@
 
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
-interface MenuContextType {
+interface MenuState {
   isMenuOpen: boolean;
+}
+
+interface MenuActions {
   openMenu: () => void;
   closeMenu: () => void;
   toggleMenu: () => void;
 }
 
-const MenuContext = createContext<MenuContextType | undefined>(undefined);
+interface MenuContextValue {
+  state: MenuState;
+  actions: MenuActions;
+}
+
+const MenuContext = createContext<MenuContextValue | undefined>(undefined);
 
 interface MenuProviderProps {
   children: ReactNode;
@@ -22,11 +30,9 @@ export function MenuProvider({ children }: MenuProviderProps) {
   const closeMenu = () => setIsMenuOpen(false);
   const toggleMenu = () => setIsMenuOpen(prev => !prev);
 
-  const value: MenuContextType = {
-    isMenuOpen,
-    openMenu,
-    closeMenu,
-    toggleMenu,
+  const value: MenuContextValue = {
+    state: { isMenuOpen },
+    actions: { openMenu, closeMenu, toggleMenu },
   };
 
   return (
@@ -36,7 +42,7 @@ export function MenuProvider({ children }: MenuProviderProps) {
   );
 }
 
-export function useMenu(): MenuContextType {
+export function useMenu(): MenuContextValue {
   const context = useContext(MenuContext);
   if (context === undefined) {
     throw new Error("useMenu must be used within a MenuProvider");

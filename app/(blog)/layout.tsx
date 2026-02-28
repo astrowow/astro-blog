@@ -93,7 +93,7 @@ export default async function RootLayout({
   const { isEnabled: isDraftMode } = await draftMode();
 
   return (
-    <html lang="en" className={`${instrumentSerif.variable} ${instrumentSans.variable} bg-cream-100/20 text-black`}>
+    <html lang="es" className={`${instrumentSerif.variable} ${instrumentSans.variable} bg-cream-100/20 text-black`}>
       <body>
         <MenuProvider>
           <section className="min-h-screen">
@@ -129,7 +129,7 @@ export default async function RootLayout({
                       >
                         Sobre nosotros
                       </Link>
-                       <CategoryLink />
+                      <CategoryLink />
                       {/*
                       <a
                         href="https://github.com/astrowow"

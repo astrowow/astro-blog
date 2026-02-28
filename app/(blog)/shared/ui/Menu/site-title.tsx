@@ -10,7 +10,7 @@ import { useMenu } from "./MenuContext";
 
 export default function SiteTitle({ className }: { className?: string }) {
   const [settings, setSettings] = useState<any>(null);
-  const { isMenuOpen, toggleMenu } = useMenu();
+  const { state: { isMenuOpen }, actions: { toggleMenu } } = useMenu();
 
   useEffect(() => {
     const fetchSettings = async () => {

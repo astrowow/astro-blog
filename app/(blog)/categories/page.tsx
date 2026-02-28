@@ -1,35 +1,38 @@
 import { Suspense } from "react";
-import SearchContainer from "./components/SearchContainer";
+import {
+  PostSearcherProvider,
+  PostSearcherHeader,
+  PostSearcherInput,
+  PostSearcherCategoryFilter,
+  PostSearcherSummary,
+  PostSearcherResults
+} from "./components/PostSearcher";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { allCategoriesQuery, allPostsQuery } from "@/sanity/lib/queries";
 
-interface SearchParams {
-  search?: string;
-  category?: string;
-}
-
-export default async function CategoriesPage({ 
-  searchParams 
-}: { 
-  searchParams: Promise<SearchParams> 
-}) {
-  const resolvedSearchParams = await searchParams;
-  
+export default async function CategoriesPage() {
   const [categories, posts] = await Promise.all([
     sanityFetch({ query: allCategoriesQuery }),
-    sanityFetch({ 
-      query: allPostsQuery, 
+    sanityFetch({
+      query: allPostsQuery,
       params: { limit: 100 } // Obtener hasta 100 posts para el buscador
     })
   ]);
 
   return (
     <Suspense fallback={<div className="container mx-auto px-5 py-12">Cargando buscador...</div>}>
-      <SearchContainer 
-        categories={categories || []} 
-        posts={posts || []}
-        searchParams={resolvedSearchParams}
-      />
+      <PostSearcherProvider categories={categories || []} posts={posts || []}>
+        <PostSearcherHeader
+          title="Buscar Publicaciones"
+          description="Encuentra los artículos que más te interesen usando nuestro buscador y filtros por categoría"
+        />
+        <div className="mb-12 space-y-6">
+          <PostSearcherInput />
+          <PostSearcherCategoryFilter />
+        </div>
+        <PostSearcherSummary />
+        <PostSearcherResults />
+      </PostSearcherProvider>
     </Suspense>
   );
 }
