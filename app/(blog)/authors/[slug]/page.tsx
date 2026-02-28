@@ -20,10 +20,13 @@ export async function generateStaticParams() {
 export default async function AuthorPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
 
+  // Iniciar fetch de posts concurrentemente para evitar Waterfall
+  const postsPromise = sanityFetch({ query: postsByAuthorQuery, params: { slug } });
+
   const author = await sanityFetch({ query: authorBySlugQuery, params: { slug } });
   if (!author) return notFound();
 
-  const posts = await sanityFetch({ query: postsByAuthorQuery, params: { slug } });
+  const posts = await postsPromise;
 
   return (
     <div className="container mx-auto px-5">

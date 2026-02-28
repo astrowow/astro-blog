@@ -36,13 +36,17 @@ export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const post = await sanityFetch({
-    query: postQuery,
-    params,
-    perspective: "published",
-    stega: false,
-  });
-  const previousImages = (await parent).openGraph?.images || [];
+  const [post, resolvedParent] = await Promise.all([
+    sanityFetch({
+      query: postQuery,
+      params,
+      perspective: "published",
+      stega: false,
+    }),
+    parent
+  ]);
+
+  const previousImages = resolvedParent.openGraph?.images || [];
   const ogImage = resolveOpenGraphImage(post?.coverImage);
 
   return {

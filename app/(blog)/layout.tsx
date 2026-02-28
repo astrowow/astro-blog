@@ -88,9 +88,11 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const data = await sanityFetch({ query: settingsQuery });
+  const [data, { isEnabled: isDraftMode }] = await Promise.all([
+    sanityFetch({ query: settingsQuery }),
+    draftMode()
+  ]);
   const footer = data?.footer || [];
-  const { isEnabled: isDraftMode } = await draftMode();
 
   return (
     <html lang="es" className={`${instrumentSerif.variable} ${instrumentSans.variable} bg-cream-100/20 text-black`}>
