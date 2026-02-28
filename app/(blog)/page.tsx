@@ -23,19 +23,19 @@ function Intro(props: { title: string | null | undefined; description: any }) {
     : demo.description;
   return (
     <header className="relative mb-16 flex h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] flex-col overflow-hidden md:flex-row">
-      <div className="relative w-full md:w-1/2 h-1/2 md:h-full">
+      <div className="relative w-full md:w-1/2 h-1/2 md:h-full bg-slate-900">
         <div className="w-full h-full">
           <video
             autoPlay
             loop
             muted
             playsInline
-            className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
+            className="absolute inset-0 h-full w-full object-cover"
           >
             <source src="/header2.webm" type="video/webm" />
-            Your browser does not support the video tag.
+            <source src="/header.webm" type="video/webm" />
+            Tu navegador no soporta el formato de video.
           </video>
-          <div className="absolute inset-0 hidden h-full w-full bg-slate-900 motion-reduce:block"></div>
           <div className="absolute inset-0 bg-black/40"></div> {/* Overlay for video */}
         </div>
       </div>
