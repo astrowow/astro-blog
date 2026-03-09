@@ -1,160 +1,64 @@
-import Link from "next/link";
 import { Suspense } from "react";
-import Image from "next/image";
+import { type Metadata } from "next";
 
-import Avatar from "./shared/ui/avatar";
-import CoverImage from "./shared/ui/cover-image";
-import DateComponent from "./shared/ui/date";
+import BentoHero from "./home/components/BentoHero";
+import CategoryChips from "./home/components/CategoryChips";
+import RecentArticlesSlider from "./home/components/RecentArticlesSlider";
 import MoreStories from "./home/components/more-stories";
 import Onboarding from "./home/components/onboarding";
-import PortableText from "./shared/ui/portable-text";
-import BadgeCategories from "./categories/components/BadgeCategories";
-import CategoryLink from "./categories/components/CategoryLink";
-import { type Metadata } from "next";
+
+import * as demo from "@/sanity/lib/demo";
+import { sanityFetch } from "@/sanity/lib/fetch";
+import { heroQuery, settingsQuery, moreStoriesQuery, allCategoriesQuery } from "@/sanity/lib/queries";
 
 export const metadata: Metadata = {
   title: "AstroWOW - Blog de Divulgación Científica",
   description: "Somos un grupo de divulgación con un gran amor por la ciencia y los telescopios. Explora artículos y novedades astronómicas.",
 };
 
-// import type { HeroQueryResult } from "@/sanity.types"; // legacy type no longer needed
-import * as demo from "@/sanity/lib/demo";
-import { sanityFetch } from "@/sanity/lib/fetch";
-import { heroQuery, settingsQuery } from "@/sanity/lib/queries";
-
-function Intro(props: { title: string | null | undefined; description: any }) {
-  const title = props.title || demo.title;
-  const description = props.description?.length
-    ? props.description
-    : demo.description;
-  return (
-    <header className="relative mb-16 flex h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] flex-col overflow-hidden md:flex-row">
-      <div className="relative w-full md:w-1/2 h-1/2 md:h-full bg-slate-900">
-        <div className="w-full h-full">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute inset-0 h-full w-full object-cover"
-          >
-            <source src="/header2.webm" type="video/webm" />
-            <source src="/header.webm" type="video/webm" />
-            Tu navegador no soporta el formato de video.
-          </video>
-          <div className="absolute inset-0 bg-black/40"></div> {/* Overlay for video */}
-        </div>
-      </div>
-      <div className="flex w-full md:w-1/2 items-center justify-center bg-white p-5 text-center text-black h-1/2 md:h-full">
-        <div>
-          <h1 className="text-balance text-4xl md:text-6xl font-sans font-bold leading-tight tracking-tighter lg:text-8xl" aria-label={title || demo.title}>
-            {(title || demo.title).split("").map((ch, charIndex) => (
-              <span
-                key={`title-${ch}-${charIndex}`}
-                aria-hidden="true"
-                className={["text-[#F1C21E]", "text-[#045396]", "text-[#E83B13]", "text-[#09935F]"][charIndex % 4]}
-              >
-                {ch}
-              </span>
-            ))}
-          </h1>
-          <h2 className="text-pretty mt-5 text-center text-base md:text-lg lg:pl-8">
-            <PortableText
-              className="prose-lg"
-              value={description?.length ? description : demo.description}
-            />
-          </h2>
-        </div>
-      </div>
-    </header>
-  );
-}
-
-function HeroPost({
-  title,
-  slug,
-  excerpt,
-  coverImage,
-  date,
-  authors,
-  categories,
-}: {
-  title: string | null;
-  slug: string | null;
-  excerpt: string | null;
-  coverImage: any;
-  date: string;
-  authors: Array<{ name: string; picture: any; slug: string | null }> | null;
-  categories: Array<{ name: string; slug: string }> | null;
-}) {
-  return (
-    <article className="group overflow-hidden rounded-2xl bg-neutral-100 transition-shadow duration-300 hover:shadow-xl mb-20 md:mb-28">
-      {/* Text content */}
-      <div className="p-6 md:p-10">
-        <div className="md:grid md:grid-cols-2 md:gap-x-12">
-          <div>
-            <div className="mb-3 flex flex-wrap items-center gap-4 text-sm text-neutral-500">
-              <DateComponent dateString={date} />
-              {categories?.length ? (
-                <BadgeCategories categories={categories} />
-              ) : null}
-            </div>
-            <h3 className="text-pretty mb-4 text-3xl font-semibold leading-tight lg:text-4xl">
-              <Link href={`/posts/${slug}`} className="hover:underline">
-                {title}
-              </Link>
-            </h3>
-          </div>
-          <div className="flex flex-col justify-between">
-            {excerpt && (
-              <p className="text-pretty font-sans text-neutral-600 mb-4 text-[1.16rem] lg:text-[1.39rem] leading-relaxed">
-                {excerpt}
-              </p>
-            )}
-            {authors?.length ? (
-              <div className="flex flex-wrap gap-3">
-                {authors.map((a) => (
-                  <Avatar key={(a.slug || a.name) + "-hero"} name={a.name} picture={a.picture} slug={a.slug} />
-                ))}
-              </div>
-            ) : null}
-          </div>
-        </div>
-      </div>
-      {/* Cover image at bottom */}
-      <Link href={`/posts/${slug}`} className="block">
-        <CoverImage image={coverImage} priority className="overflow-hidden" />
-      </Link>
-    </article>
-  );
-}
-
 export default async function Page() {
-  const [settings, heroPost] = await Promise.all([
-    sanityFetch({
-      query: settingsQuery,
-    }),
+  const [settings, heroPost, categories] = await Promise.all([
+    sanityFetch({ query: settingsQuery }),
     sanityFetch({ query: heroQuery }),
+    sanityFetch({ query: allCategoriesQuery }),
   ]);
 
+  // Fetch recent articles for the slider
+  const recentPosts = heroPost?._id
+    ? await sanityFetch({
+      query: moreStoriesQuery,
+      params: { skip: heroPost._id, limit: 6 },
+    })
+    : [];
+
+  const sliderPosts = [
+    ...(heroPost ? [heroPost] : []),
+    ...(recentPosts || []),
+  ].slice(0, 6);
+
   return (
-    <>
-      <Intro title={settings?.title} description={settings?.description} />
-      <div className="container mx-auto px-5">
+    <div className="bg-neutral-50">
+      {/* ═══════ VIEWPORT SECTION — fits in h-screen ═══════ */}
+      <section className="flex h-screen flex-col pt-6 pb-4 md:pt-10 md:pb-6">
         {heroPost ? (
-          <HeroPost
-            title={heroPost.title}
-            slug={heroPost.slug}
-            coverImage={heroPost.coverImage}
-            excerpt={heroPost.excerpt}
-            date={heroPost.date}
-            authors={(heroPost.authors?.filter((author): author is { name: string; picture: any; slug: string } => author.name !== null && author.slug !== null && author.picture !== null) ?? [])}
-            categories={(heroPost.categories?.filter((category): category is { name: string; slug: string } => category.name !== null && category.slug !== null) ?? [])}
+          <BentoHero
+            title={settings?.title}
+            description={settings?.description}
+            heroPost={heroPost}
           />
         ) : (
           <Onboarding />
         )}
-        {heroPost?._id && (
+
+        <CategoryChips categories={categories || []} />
+      </section>
+
+      {/* ═══════ BELOW THE FOLD ═══════ */}
+      <RecentArticlesSlider posts={sliderPosts} />
+
+      {/* Masonry cards section */}
+      {heroPost?._id && (
+        <div className="container mx-auto px-5">
           <aside>
             <h2 className="mb-8 text-6xl font-bold leading-tight tracking-tighter md:text-7xl">
               Más Publicaciones
@@ -163,8 +67,8 @@ export default async function Page() {
               <MoreStories skip={heroPost._id} limit={100} />
             </Suspense>
           </aside>
-        )}
-      </div>
-    </>
+        </div>
+      )}
+    </div>
   );
 }
