@@ -58,9 +58,9 @@ export default async function Page() {
 
       {/* Masonry cards section */}
       {heroPost?._id && (
-        <div className="container mx-auto px-5">
+        <div className="mx-auto max-w-7xl px-6 md:px-10">
           <aside>
-            <h2 className="mb-8 text-6xl font-bold leading-tight tracking-tighter md:text-7xl">
+            <h2 className="mb-8 text-sm font-semibold uppercase tracking-widest text-neutral-400">
               Más Publicaciones
             </h2>
             <Suspense>
