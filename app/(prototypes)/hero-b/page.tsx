@@ -37,14 +37,8 @@ export default async function HeroBPage() {
     return (
         <div className="min-h-screen bg-neutral-50">
             {/* ═══════ VIEWPORT SECTION — fits in h-screen ═══════ */}
-            <section className="flex h-screen flex-col">
+            <section className="flex h-screen flex-col pt-6 pb-4 md:pt-10 md:pb-6">
                 {/* Navigation */}
-                <nav className="flex flex-shrink-0 items-center justify-between px-6 py-4 md:px-10">
-                    <Link href="/" className="text-neutral-500 text-sm hover:text-black transition-colors">
-                        ← Volver al inicio
-                    </Link>
-                    <span className="text-neutral-400 text-xs tracking-widest uppercase">Prototipo B</span>
-                </nav>
 
                 {/* Bento Grid — takes up most of the space */}
                 <div className="flex-1 min-h-0 px-6 md:px-10">
