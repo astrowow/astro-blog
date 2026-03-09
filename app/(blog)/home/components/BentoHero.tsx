@@ -7,8 +7,8 @@ interface BentoHeroProps {
     title: string | null | undefined;
     description: any;
     heroPost: {
-        title: string;
-        slug: string;
+        title: string | null;
+        slug: string | null;
         coverImage: any;
     } | null;
 }
