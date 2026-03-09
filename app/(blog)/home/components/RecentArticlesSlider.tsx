@@ -4,7 +4,7 @@ import CoverImage from "../../shared/ui/cover-image";
 interface Post {
     _id: string;
     title: string;
-    slug: string;
+    slug: string | null;
     coverImage: any;
 }
 
@@ -13,7 +13,8 @@ interface RecentArticlesSliderProps {
 }
 
 export default function RecentArticlesSlider({ posts }: RecentArticlesSliderProps) {
-    if (!posts || posts.length === 0) return null;
+    const validPosts = posts?.filter((p) => p.slug) ?? [];
+    if (validPosts.length === 0) return null;
 
     return (
         <div className="px-6 md:px-10 py-10" id="articulos">
@@ -28,7 +29,7 @@ export default function RecentArticlesSlider({ posts }: RecentArticlesSliderProp
                     className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory"
                     style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
                 >
-                    {posts.map((post, index) => (
+                    {validPosts.map((post, index) => (
                         <Link
                             key={post._id}
                             href={`/posts/${post.slug}`}
