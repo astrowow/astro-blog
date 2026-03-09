@@ -15,6 +15,7 @@ export default function MenuOverlay() {
   const links = [
     { href: "/", label: "Inicio" },
     { href: "/aboutus", label: "Nosotros" },
+    { href: "/team", label: "Equipo" },
     { href: "/categories", label: "Categorías" },
   ];
 
@@ -23,7 +24,7 @@ export default function MenuOverlay() {
     if (searchTerm.trim()) {
       const searchUrl = `/categories?search=${encodeURIComponent(searchTerm.trim())}`;
       // Siempre usar router.push seguido de router.refresh para asegurar que se actualicen los datos del servidor
-      router.push(searchUrl);    
+      router.push(searchUrl);
       // Usar setTimeout para asegurar que la navegación se complete antes del refresh
       setTimeout(() => {
         router.refresh();
@@ -71,7 +72,7 @@ export default function MenuOverlay() {
               </Link>
             </div>
           ))}
-          
+
           {/* Search Input */}
           <div className="mb-[1.5vh]">
             <form onSubmit={handleSearchSubmit}>

@@ -1149,6 +1149,40 @@ export type AllPostsQueryResult = Array<{
   }> | null;
 }>;
 
+// Source: sanity/lib/queries.ts
+// Variable: allAuthorsQuery
+// Query: *[_type == "author"] | order(name asc) {    name,    "slug": slug.current,    picture,    bio  }
+export type AllAuthorsQueryResult = Array<{
+  name: string | null;
+  slug: string | null;
+  picture: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  bio: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+}>;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
@@ -1168,5 +1202,6 @@ declare module "@sanity/client" {
     '\n  *[_type == "category" && slug.current == $slug][0] {\n    name,\n    "slug": slug.current,\n    description\n  }\n': CategoryBySlugQueryResult;
     '\n  *[_type == "post" && defined(slug.current) && \n    ($searchTerm == "" || title match $searchTerm + "*" || excerpt match $searchTerm + "*") &&\n    ($categorySlug == "" || $categorySlug in categories[]->slug.current)\n  ] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "authors": select(\n    count(authors) > 0 => authors[]->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current},\n    defined(author) => [author->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current}],\n    []\n  ),\n  "categories": categories[]->{name, "slug": slug.current},\n\n  }\n': SearchPostsQueryResult;
     '\n  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "authors": select(\n    count(authors) > 0 => authors[]->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current},\n    defined(author) => [author->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current}],\n    []\n  ),\n  "categories": categories[]->{name, "slug": slug.current},\n\n  }\n': AllPostsQueryResult;
+    '\n  *[_type == "author"] | order(name asc) {\n    name,\n    "slug": slug.current,\n    picture,\n    bio\n  }\n': AllAuthorsQueryResult;
   }
 }

@@ -88,44 +88,43 @@ function HeroPost({
   categories: Array<{ name: string; slug: string }> | null;
 }) {
   return (
-    <article className="overflow-hidden bg-white shadow-lg md:grid md:bg-transparent md:shadow-none mb-20 md:mb-28">
-      <Link
-        className="group mb-8 block md:mb-16 md:row-start-1"
-        href={`/posts/${slug}`}
-      >
-        <CoverImage image={coverImage} priority />
-      </Link>
-      <div className="md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8 md:row-start-2 p-5 md:p-0">
-        <div>
-          <h3 className="text-pretty mb-4 text-4xl leading-tight lg:text-6xl">
-            <Link href={`/posts/${slug}`} className="hover:underline">
-              {title}
-            </Link>
-          </h3>
-          <div className="mb-4 text-neutral-500 italic text-lg md:mb-0">
-            <DateComponent dateString={date} />
+    <article className="group overflow-hidden rounded-2xl bg-neutral-100 transition-shadow duration-300 hover:shadow-xl mb-20 md:mb-28">
+      {/* Text content */}
+      <div className="p-6 md:p-10">
+        <div className="md:grid md:grid-cols-2 md:gap-x-12">
+          <div>
+            <div className="mb-3 flex flex-wrap items-center gap-4 text-sm text-neutral-500">
+              <DateComponent dateString={date} />
+              {categories?.length ? (
+                <BadgeCategories categories={categories} />
+              ) : null}
+            </div>
+            <h3 className="text-pretty mb-4 text-3xl font-semibold leading-tight lg:text-4xl">
+              <Link href={`/posts/${slug}`} className="hover:underline">
+                {title}
+              </Link>
+            </h3>
           </div>
-          {categories?.length ? (
-            <div className="mt-4">
-              <BadgeCategories categories={categories} />
-            </div>
-          ) : null}
-        </div>
-        <div>
-          {excerpt && (
-            <p className="text-pretty font-sans text-neutral-500 mb-4 text-lg leading-relaxed">
-              {excerpt}
-            </p>
-          )}
-          {authors?.length ? (
-            <div className="flex flex-wrap gap-3">
-              {authors.map((a) => (
-                <Avatar key={(a.slug || a.name) + "-hero"} name={a.name} picture={a.picture} slug={a.slug} />
-              ))}
-            </div>
-          ) : null}
+          <div className="flex flex-col justify-between">
+            {excerpt && (
+              <p className="text-pretty font-sans text-neutral-600 mb-4 text-[1.16rem] lg:text-[1.39rem] leading-relaxed">
+                {excerpt}
+              </p>
+            )}
+            {authors?.length ? (
+              <div className="flex flex-wrap gap-3">
+                {authors.map((a) => (
+                  <Avatar key={(a.slug || a.name) + "-hero"} name={a.name} picture={a.picture} slug={a.slug} />
+                ))}
+              </div>
+            ) : null}
+          </div>
         </div>
       </div>
+      {/* Cover image at bottom */}
+      <Link href={`/posts/${slug}`} className="block">
+        <CoverImage image={coverImage} priority className="overflow-hidden" />
+      </Link>
     </article>
   );
 }

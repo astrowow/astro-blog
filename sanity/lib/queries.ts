@@ -100,3 +100,14 @@ export const allPostsQuery = defineQuery(`
     ${postFields}
   }
 `);
+
+// Team / all authors query
+export const allAuthorsQuery = defineQuery(`
+  *[_type == "author"] | order(name asc) {
+    name,
+    "slug": slug.current,
+    picture,
+    bio
+  }
+`);
+

@@ -16,6 +16,7 @@
   "dependencies": {
     "@next/eslint-plugin-next": "16.1.6",
     "@sanity/assist": "^5.0.4",
+    "@sanity/cli": "^5.13.0",
     "@sanity/icons": "^3.7.4",
     "@sanity/image-url": "^2.0.3",
     "@sanity/preview-url-secret": "^4.0.3",

@@ -5,10 +5,11 @@ import { urlForImage } from "@/sanity/lib/utils";
 interface CoverImageProps {
   image: any;
   priority?: boolean;
+  className?: string;
 }
 
 export default function CoverImage(props: CoverImageProps) {
-  const { image: source, priority } = props;
+  const { image: source, priority, className } = props;
   const image = source?.asset?._ref ? (
     <Image
       className="h-auto w-full"
@@ -24,7 +25,7 @@ export default function CoverImage(props: CoverImageProps) {
   );
 
   return (
-    <div className="shadow-md transition-shadow duration-200 group-hover:shadow-lg sm:mx-0">
+    <div className={className ?? "shadow-md transition-shadow duration-200 group-hover:shadow-lg sm:mx-0"}>
       {image}
     </div>
   );
