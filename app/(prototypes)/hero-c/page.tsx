@@ -110,7 +110,7 @@ export default async function HeroCPage() {
                     <div className="text-white/60 text-base md:text-lg leading-relaxed">
                         <PortableText
                             className="prose-base prose-invert"
-                            value={description}
+                            value={description as any}
                         />
                     </div>
                     <Link

@@ -70,7 +70,7 @@ export default async function HeroAPage() {
                 <div className="mt-6 max-w-2xl text-white/80 text-lg md:text-xl leading-relaxed">
                     <PortableText
                         className="prose-lg prose-invert"
-                        value={description}
+                        value={description as any}
                     />
                 </div>
 
