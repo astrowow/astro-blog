@@ -1,4 +1,5 @@
 import { defineQuery } from "next-sanity";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
@@ -13,6 +14,15 @@ import { client } from "@/sanity/lib/client";
 const categorySlugs = defineQuery(
   `*[_type == "category" && defined(slug.current)]{"slug": slug.current}`,
 );
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const category = await sanityFetch({ query: categoryBySlugQuery, params: { slug } });
+  return {
+    title: category?.name ? `${category.name} — Categoría` : "Categoría",
+    description: category?.description || `Publicaciones en la categoría ${category?.name || slug}`,
+  };
+}
 
 export async function generateStaticParams() {
   const data = await client.fetch(categorySlugs);

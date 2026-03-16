@@ -9,6 +9,12 @@ import {
 } from "./components/PostSearcher";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { allCategoriesQuery, allPostsQuery } from "@/sanity/lib/queries";
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Categorías — Buscar Publicaciones",
+  description: "Encuentra los artículos que más te interesen usando nuestro buscador y filtros por categoría",
+};
 
 export default async function CategoriesPage() {
   const [categories, posts] = await Promise.all([

@@ -4,7 +4,6 @@ import PortableText from "../shared/ui/portable-text";
 import { type PortableTextBlock } from "next-sanity";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { aboutmeQuery } from "@/sanity/lib/queries";
-import AsciiArtBackground from "./ascii-art-background";
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -17,7 +16,6 @@ export default async function AboutUsPage() {
 
   return (
     <div className="relative min-h-screen">
-      <AsciiArtBackground />
       <div className="relative container mx-auto px-5 z-10 flex flex-col min-h-screen text-dark">
         <h1 className="text-balance mb-12 text-6xl font-sans leading-tight tracking-tighter md:text-7xl md:leading-none lg:text-8xl">
           {about?.title || "Sobre nosotros"}

@@ -3,6 +3,7 @@ import { settingsQuery, heroQuery, moreStoriesQuery, allCategoriesQuery } from "
 import * as demo from "@/sanity/lib/demo";
 import PortableText from "../../(blog)/shared/ui/portable-text";
 import CoverImage from "../../(blog)/shared/ui/cover-image";
+import ColoredTitle from "../../(blog)/shared/ui/ColoredTitle";
 import Link from "next/link";
 
 export const metadata = {
@@ -69,20 +70,7 @@ export default async function HeroBPage() {
                                 className="text-4xl md:text-5xl lg:text-6xl font-sans font-bold leading-none tracking-tighter mb-4"
                                 aria-label={title}
                             >
-                                {(title).split("").map((ch: string, i: number) => (
-                                    <span
-                                        key={`title-b-${ch}-${i}`}
-                                        aria-hidden="true"
-                                        className={[
-                                            "text-[#F1C21E]",
-                                            "text-[#045396]",
-                                            "text-[#E83B13]",
-                                            "text-[#09935F]",
-                                        ][i % 4]}
-                                    >
-                                        {ch}
-                                    </span>
-                                ))}
+                                <ColoredTitle title={title} />
                             </h1>
                             <div className="text-neutral-600 text-sm md:text-base leading-relaxed max-w-md">
                                 <PortableText className="prose-sm" value={description as any} />

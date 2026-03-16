@@ -7,6 +7,7 @@ import * as demo from "@/sanity/lib/demo";
 import { sanityFetchClient } from "@/sanity/lib/fetch-client";
 import { settingsQuery } from "@/sanity/lib/queries";
 import { useMenu } from "./MenuContext";
+import ColoredTitle from "../ColoredTitle";
 
 export default function SiteTitle({ className }: { className?: string }) {
   const [settings, setSettings] = useState<any>(null);
@@ -33,14 +34,7 @@ export default function SiteTitle({ className }: { className?: string }) {
         .join(" ")}
     >
       <Link href="/" className="hover:underline">
-        {(settings?.title || demo.title).split("").map((ch: string, charIndex: number) => (
-          <span
-            key={`title-${ch}-${charIndex}`}
-            className={["text-[#F1C21E]", "text-[#045396]", "text-[#E83B13]", "text-[#09935F]"][charIndex % 4]}
-          >
-            {ch}
-          </span>
-        ))}
+        <ColoredTitle title={settings?.title || demo.title} />
       </Link>
       <button
         type="button"
@@ -48,14 +42,7 @@ export default function SiteTitle({ className }: { className?: string }) {
         className="hover:underline"
         aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
       >
-        {(isMenuOpen ? "Cerrar" : "Menú").split("").map((ch: string, charIndex: number) => (
-          <span
-            key={`menu-${ch}-${charIndex}`}
-            className={["text-[#F1C21E]", "text-[#045396]", "text-[#E83B13]", "text-[#09935F]"][charIndex % 4]}
-          >
-            {ch}
-          </span>
-        ))}
+        <ColoredTitle title={isMenuOpen ? "Cerrar" : "Menú"} />
       </button>
     </h2>
   );

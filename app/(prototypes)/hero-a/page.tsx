@@ -2,6 +2,7 @@ import { sanityFetch } from "@/sanity/lib/fetch";
 import { settingsQuery } from "@/sanity/lib/queries";
 import * as demo from "@/sanity/lib/demo";
 import PortableText from "../../(blog)/shared/ui/portable-text";
+import ColoredTitle from "../../(blog)/shared/ui/ColoredTitle";
 import Link from "next/link";
 
 export const metadata = {
@@ -47,23 +48,10 @@ export default async function HeroAPage() {
                     className="text-6xl md:text-8xl lg:text-[10rem] font-sans font-bold leading-none tracking-tighter"
                     aria-label={title}
                 >
-                    {(title).split("").map((ch: string, i: number) => (
-                        <span
-                            key={`title-a-${ch}-${i}`}
-                            aria-hidden="true"
-                            className={[
-                                "text-[#F1C21E]",
-                                "text-[#045396]",
-                                "text-[#E83B13]",
-                                "text-[#09935F]",
-                            ][i % 4]}
-                            style={{
-                                textShadow: "0 2px 40px rgba(0,0,0,0.5)",
-                            }}
-                        >
-                            {ch}
-                        </span>
-                    ))}
+                    <ColoredTitle
+                        title={title}
+                        style={{ textShadow: "0 2px 40px rgba(0,0,0,0.5)" }}
+                    />
                 </h1>
 
                 {/* Subtitle */}

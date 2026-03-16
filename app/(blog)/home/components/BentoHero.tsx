@@ -1,6 +1,7 @@
 import Link from "next/link";
 import CoverImage from "../../shared/ui/cover-image";
 import PortableText from "../../shared/ui/portable-text";
+import ColoredTitle from "../../shared/ui/ColoredTitle";
 import * as demo from "@/sanity/lib/demo";
 
 interface BentoHeroProps {
@@ -46,20 +47,7 @@ export default function BentoHero({ title, description, heroPost }: BentoHeroPro
                         className="text-4xl md:text-5xl lg:text-6xl font-sans font-bold leading-none tracking-tighter mb-4"
                         aria-label={displayTitle}
                     >
-                        {displayTitle.split("").map((ch: string, i: number) => (
-                            <span
-                                key={`title-${ch}-${i}`}
-                                aria-hidden="true"
-                                className={[
-                                    "text-[#F1C21E]",
-                                    "text-[#045396]",
-                                    "text-[#E83B13]",
-                                    "text-[#09935F]",
-                                ][i % 4]}
-                            >
-                                {ch}
-                            </span>
-                        ))}
+                        <ColoredTitle title={displayTitle} />
                     </h1>
                     <div className="text-neutral-600 text-sm md:text-base leading-relaxed max-w-md">
                         <PortableText className="prose-sm" value={displayDescription as any} />

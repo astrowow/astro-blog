@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import Avatar from "../../shared/ui/avatar";
@@ -9,6 +10,15 @@ import PortableText from "../../shared/ui/portable-text";
 import { client } from "@/sanity/lib/client";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { authorBySlugQuery, authorSlugsQuery, postsByAuthorQuery } from "@/sanity/lib/queries";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const author = await sanityFetch({ query: authorBySlugQuery, params: { slug } });
+  return {
+    title: author?.name ? `${author.name} — Autor` : "Autor",
+    description: `Publicaciones de ${author?.name || "autor"} en AstroWOW`,
+  };
+}
 
 export async function generateStaticParams() {
   const data = await client.fetch(authorSlugsQuery);

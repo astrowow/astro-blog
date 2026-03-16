@@ -55,5 +55,3 @@ export const description = [
     style: "normal",
   },
 ];
-
-export const ogImageTitle = "Blog de Divulgación Científica - Universidad de Antioquia";
