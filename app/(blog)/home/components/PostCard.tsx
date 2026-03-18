@@ -4,14 +4,15 @@ import Avatar from "../../shared/ui/avatar";
 import CoverImage from "../../shared/ui/cover-image";
 import DateComponent from "../../shared/ui/date";
 import BadgeCategories from "../../categories/components/BadgeCategories";
+import type { SanityImage } from "@/sanity/lib/queries";
 
 interface PostCardProps {
     title: string | null;
     slug: string | null;
     excerpt: string | null;
-    coverImage: any;
+    coverImage: SanityImage | null;
     date: string;
-    authors: Array<{ name: string; picture: any; slug: string | null }> | null;
+    authors: Array<{ name: string; picture: SanityImage | null; slug: string | null }> | null;
     categories: Array<{ name: string; slug: string }> | null;
     priority?: boolean;
 }

@@ -2,6 +2,7 @@ import { sanityFetch } from "@/sanity/lib/fetch";
 import { settingsQuery } from "@/sanity/lib/queries";
 import * as demo from "@/sanity/lib/demo";
 import PortableText from "../../(blog)/shared/ui/portable-text";
+import { type PortableTextBlock } from "next-sanity";
 import Link from "next/link";
 
 export const metadata = {
@@ -110,7 +111,7 @@ export default async function HeroCPage() {
                     <div className="text-white/60 text-base md:text-lg leading-relaxed">
                         <PortableText
                             className="prose-base prose-invert"
-                            value={description as any}
+                            value={description as PortableTextBlock[]}
                         />
                     </div>
                     <Link
@@ -127,7 +128,7 @@ export default async function HeroCPage() {
 
             {/* Bottom decorative elements */}
             <div className="relative z-10 flex justify-center gap-6 pb-10 mt-auto">
-                {["#F1C21E", "#045396", "#E83B13", "#09935F"].map((color, i) => (
+                {["#F1C21E", "#045396", "#E83B13", "#09935F"].map((color) => (
                     <div
                         key={color}
                         className="h-1 w-12 rounded-full opacity-60"

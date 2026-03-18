@@ -10,6 +10,7 @@ import PortableText from "../../shared/ui/portable-text";
 import { client } from "@/sanity/lib/client";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { authorBySlugQuery, authorSlugsQuery, postsByAuthorQuery } from "@/sanity/lib/queries";
+import type { Post, PostAuthor } from "@/sanity/lib/queries";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -42,11 +43,11 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
     <div className="container mx-auto px-5">
       <header className="mb-12">
         <div className="mt-6">
-          <Avatar name={author.name ?? "Anónimo"} picture={author.picture} slug={(author as any)?.slug ?? null} />
+          <Avatar name={author.name ?? "Anónimo"} picture={author.picture} slug={author.slug ?? null} />
         </div>
         {author.bio?.length ? (
           <div className="mt-8">
-            <PortableText className="prose" value={author.bio as any} />
+            <PortableText className="prose" value={author.bio as import("next-sanity").PortableTextBlock[]} />
           </div>
         ) : null}
       </header>
@@ -57,7 +58,7 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
           <p className="text-neutral-500">Este autor aún no tiene publicaciones.</p>
         ) : (
           <div className="grid grid-cols-1 mb-32 gap-y-20 md:grid-cols-2 md:gap-x-16 md:gap-y-32 lg:gap-x-32">
-            {posts.map((post: any) => {
+            {posts.map((post: Post) => {
               const { _id, title, slug: postSlug, coverImage, excerpt, authors, date } = post;
               return (
                 <article key={_id}>
@@ -79,7 +80,7 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
                   )}
                   {authors?.length ? (
                     <div className="flex flex-wrap gap-3">
-                      {authors.map((a: any) => (
+                      {authors.map((a: PostAuthor) => (
                         <Avatar key={(a.slug || a.name) + "-author-list"} name={a.name ?? "Anónimo"} picture={a.picture} slug={a.slug ?? null} />
                       ))}
                     </div>

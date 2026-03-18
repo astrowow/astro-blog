@@ -1,4 +1,26 @@
 import { defineQuery } from "next-sanity";
+import type {
+  SanityImageAssetReference,
+  SanityImageHotspot,
+  SanityImageCrop,
+} from "@/sanity.types";
+
+/** Reusable Sanity image object — matches the shape returned by GROQ projections. */
+export interface SanityImage {
+  asset?: SanityImageAssetReference;
+  media?: unknown;
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  alt?: string;
+  _type: "image";
+}
+
+/** Author shape returned by postFields GROQ projection. */
+export interface PostAuthor {
+  name: string;
+  picture: SanityImage | null;
+  slug: string | null;
+}
 
 export const settingsQuery = defineQuery(`*[_type == "settings"][0]`);
 
@@ -19,9 +41,9 @@ export interface Post {
   title: string | null;
   slug: string | null;
   excerpt: string | null;
-  coverImage: any;
+  coverImage: SanityImage | null;
   date: string;
-  authors: Array<{ name: string; picture: any; slug: string | null }> | null;
+  authors: PostAuthor[] | null;
   categories: Array<{ name: string | null; slug: string | null }> | null;
 }
 

@@ -97,8 +97,12 @@ export default defineType({
           type: "string",
           validation: (rule) => {
             return rule.custom((alt, context) => {
-              if ((context.document?.ogImage as any)?.asset?._ref && !alt) {
-                return "Required";
+              const img = context.document?.ogImage;
+              if (typeof img === "object" && img !== null && "asset" in img) {
+                const asset = (img as Record<string, unknown>).asset;
+                if (typeof asset === "object" && asset !== null && "_ref" in asset && !alt) {
+                  return "Required";
+                }
               }
               return true;
             });

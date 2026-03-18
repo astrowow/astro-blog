@@ -1,5 +1,3 @@
-import Link from "next/link";
-import * as demo from "@/sanity/lib/demo";
 import PortableText from "../shared/ui/portable-text";
 import { type PortableTextBlock } from "next-sanity";
 import { sanityFetch } from "@/sanity/lib/fetch";
@@ -12,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function AboutUsPage() {
-  const about = (await sanityFetch({ query: aboutmeQuery })) as any;
+  const about = await sanityFetch({ query: aboutmeQuery });
 
   return (
     <div className="relative min-h-screen">

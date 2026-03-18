@@ -5,6 +5,10 @@ import { type Metadata } from "next";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { allAuthorsQuery } from "@/sanity/lib/queries";
 import { urlForImage } from "@/sanity/lib/utils";
+import type { AllAuthorsQueryResult } from "@/sanity.types";
+
+type AuthorItem = AllAuthorsQueryResult[number];
+type BioBlock = NonNullable<AuthorItem["bio"]>[number];
 
 export const metadata: Metadata = {
     title: "Nuestro Equipo",
@@ -33,7 +37,7 @@ export default async function TeamPage() {
                 </p>
             ) : (
                 <div className="mb-32 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                    {authors.map((author: any) => (
+                    {authors.map((author: AuthorItem) => (
                         <Link
                             key={author.slug || author.name}
                             href={`/authors/${author.slug}`}
@@ -71,10 +75,10 @@ export default async function TeamPage() {
                             {author.bio?.length ? (
                                 <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-neutral-500 font-sans">
                                     {author.bio
-                                        .filter((block: any) => block._type === "block")
-                                        .map((block: any) =>
+                                        .filter((block: BioBlock) => block._type === "block")
+                                        .map((block: BioBlock) =>
                                             block.children
-                                                ?.map((child: any) => child.text)
+                                                ?.map((child: { text?: string }) => child.text)
                                                 .join("")
                                         )
                                         .join(" ")}

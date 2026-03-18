@@ -8,9 +8,10 @@ import { sanityFetchClient } from "@/sanity/lib/fetch-client";
 import { settingsQuery } from "@/sanity/lib/queries";
 import { useMenu } from "./MenuContext";
 import ColoredTitle from "../ColoredTitle";
+import type { SettingsQueryResult } from "@/sanity.types";
 
 export default function SiteTitle({ className }: { className?: string }) {
-  const [settings, setSettings] = useState<any>(null);
+  const [settings, setSettings] = useState<SettingsQueryResult>(null);
   const { state: { isMenuOpen }, actions: { toggleMenu } } = useMenu();
 
   useEffect(() => {

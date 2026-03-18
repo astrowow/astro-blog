@@ -124,7 +124,13 @@ export default function CustomPortableText({
         );
       },
       imageGallery: ({ value }) => {
-        const images = value?.images || [];
+        const images: Array<{
+          asset?: { _ref: string; _type: "reference" };
+          alt?: string;
+          caption?: string;
+          _type: string;
+          _key: string;
+        }> = value?.images || [];
         if (!Array.isArray(images) || images.length === 0) {
           return null;
         }
@@ -132,7 +138,7 @@ export default function CustomPortableText({
         return (
           <div className="my-6">
             <div className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-4">
-              {images.map((img: any, imageIndex: number) => {
+              {images.map((img, imageIndex: number) => {
                 if (!img?.asset?._ref) return null;
                 return (
                   <figure key={img.asset._ref} className="snap-start shrink-0 w-full sm:w-[85%] md:w-[70%]">

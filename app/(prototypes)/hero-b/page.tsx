@@ -2,9 +2,11 @@ import { sanityFetch } from "@/sanity/lib/fetch";
 import { settingsQuery, heroQuery, moreStoriesQuery, allCategoriesQuery } from "@/sanity/lib/queries";
 import * as demo from "@/sanity/lib/demo";
 import PortableText from "../../(blog)/shared/ui/portable-text";
+import { type PortableTextBlock } from "next-sanity";
 import CoverImage from "../../(blog)/shared/ui/cover-image";
 import ColoredTitle from "../../(blog)/shared/ui/ColoredTitle";
 import Link from "next/link";
+import type { AllCategoriesQueryResult, MoreStoriesQueryResult } from "@/sanity.types";
 
 export const metadata = {
     title: "Hero B — Bento Grid",
@@ -73,7 +75,7 @@ export default async function HeroBPage() {
                                 <ColoredTitle title={title} />
                             </h1>
                             <div className="text-neutral-600 text-sm md:text-base leading-relaxed max-w-md">
-                                <PortableText className="prose-sm" value={description as any} />
+                                <PortableText className="prose-sm" value={description as PortableTextBlock[]} />
                             </div>
                             <Link
                                 href="/"
@@ -124,7 +126,7 @@ export default async function HeroBPage() {
                                 className="flex gap-3 overflow-x-auto pb-1 snap-x"
                                 style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
                             >
-                                {categories.map((cat: any) => (
+                                {categories.map((cat: AllCategoriesQueryResult[number]) => (
                                     <Link
                                         key={cat.slug}
                                         href={`/categories/${cat.slug}`}
@@ -158,7 +160,7 @@ export default async function HeroBPage() {
                             className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory"
                             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
                         >
-                            {sliderPosts.map((post: any, index: number) => (
+                            {sliderPosts.map((post: MoreStoriesQueryResult[number], index: number) => (
                                 <Link
                                     key={post._id}
                                     href={`/posts/${post.slug}`}

@@ -1,13 +1,13 @@
 import { Suspense } from "react";
 import { type Metadata } from "next";
 
+import { type PortableTextBlock } from "next-sanity";
 import BentoHero from "./home/components/BentoHero";
 import CategoryChips from "./home/components/CategoryChips";
 import RecentArticlesSlider from "./home/components/RecentArticlesSlider";
 import MoreStories from "./home/components/more-stories";
 import Onboarding from "./home/components/onboarding";
 
-import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { heroQuery, settingsQuery, moreStoriesQuery, allCategoriesQuery } from "@/sanity/lib/queries";
 
@@ -43,7 +43,7 @@ export default async function Page() {
         {heroPost ? (
           <BentoHero
             title={settings?.title}
-            description={settings?.description}
+            description={settings?.description as PortableTextBlock[] | undefined}
             heroPost={heroPost}
           />
         ) : (

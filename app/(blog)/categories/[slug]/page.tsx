@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
 import MoreStories from "../../home/components/more-stories";
-import BadgeCategories from "../components/BadgeCategories";
 import CategoryFilter from "../components/CategoryFilter";
 
 import { sanityFetch } from "@/sanity/lib/fetch";

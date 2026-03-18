@@ -1,16 +1,18 @@
 import Link from "next/link";
+import { type PortableTextBlock } from "next-sanity";
 import CoverImage from "../../shared/ui/cover-image";
 import PortableText from "../../shared/ui/portable-text";
 import ColoredTitle from "../../shared/ui/ColoredTitle";
+import type { SanityImage } from "@/sanity/lib/queries";
 import * as demo from "@/sanity/lib/demo";
 
 interface BentoHeroProps {
     title: string | null | undefined;
-    description: any;
+    description: PortableTextBlock[] | null | undefined;
     heroPost: {
         title: string | null;
         slug: string | null;
-        coverImage: any;
+        coverImage: SanityImage | null;
     } | null;
 }
 
@@ -50,7 +52,7 @@ export default function BentoHero({ title, description, heroPost }: BentoHeroPro
                         <ColoredTitle title={displayTitle} />
                     </h1>
                     <div className="text-neutral-600 text-sm md:text-base leading-relaxed max-w-md">
-                        <PortableText className="prose-sm" value={displayDescription as any} />
+                        <PortableText className="prose-sm" value={displayDescription as PortableTextBlock[]} />
                     </div>
                     <Link
                         href="#articulos"

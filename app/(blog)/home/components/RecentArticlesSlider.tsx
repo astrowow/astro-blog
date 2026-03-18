@@ -1,11 +1,12 @@
 import Link from "next/link";
 import CoverImage from "../../shared/ui/cover-image";
+import type { SanityImage } from "@/sanity/lib/queries";
 
 interface Post {
     _id: string;
     title: string;
     slug: string | null;
-    coverImage: any;
+    coverImage: SanityImage | null;
 }
 
 interface RecentArticlesSliderProps {

@@ -2,6 +2,7 @@ import { sanityFetch } from "@/sanity/lib/fetch";
 import { settingsQuery } from "@/sanity/lib/queries";
 import * as demo from "@/sanity/lib/demo";
 import PortableText from "../../(blog)/shared/ui/portable-text";
+import { type PortableTextBlock } from "next-sanity";
 import ColoredTitle from "../../(blog)/shared/ui/ColoredTitle";
 import Link from "next/link";
 
@@ -58,7 +59,7 @@ export default async function HeroAPage() {
                 <div className="mt-6 max-w-2xl text-white/80 text-lg md:text-xl leading-relaxed">
                     <PortableText
                         className="prose-lg prose-invert"
-                        value={description as any}
+                        value={description as PortableTextBlock[]}
                     />
                 </div>
 

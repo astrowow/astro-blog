@@ -1,9 +1,10 @@
 import { Image } from "next-sanity/image";
 
+import type { SanityImage } from "@/sanity/lib/queries";
 import { urlForImage } from "@/sanity/lib/utils";
 
 interface CoverImageProps {
-  image: any;
+  image: SanityImage | null;
   priority?: boolean;
   className?: string;
 }

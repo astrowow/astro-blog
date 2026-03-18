@@ -102,8 +102,12 @@ export default defineType({
           description: "Important for SEO and accessiblity.",
           validation: (rule) => {
             return rule.custom((alt, context) => {
-              if ((context.document?.picture as any)?.asset?._ref && !alt) {
-                return "Required";
+              const pic = context.document?.picture;
+              if (typeof pic === "object" && pic !== null && "asset" in pic) {
+                const asset = (pic as Record<string, unknown>).asset;
+                if (typeof asset === "object" && asset !== null && "_ref" in asset && !alt) {
+                  return "Required";
+                }
               }
               return true;
             });

@@ -3,7 +3,6 @@ import type { Metadata, ResolvingMetadata } from "next";
 import { type PortableTextBlock } from "next-sanity";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import Link from "next/link";
 
 import Avatar from "../../shared/ui/avatar";
 import CoverImage from "../../shared/ui/cover-image";
@@ -14,6 +13,7 @@ import BadgeCategories from "../../categories/components/BadgeCategories";
 
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { postQuery } from "@/sanity/lib/queries";
+import type { PostAuthor } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
 import { client } from "@/sanity/lib/client";
 
@@ -47,11 +47,11 @@ export async function generateMetadata(
   ]);
 
   const previousImages = resolvedParent.openGraph?.images || [];
-  const ogImage = resolveOpenGraphImage(post?.coverImage);
+  const ogImage = post?.coverImage ? resolveOpenGraphImage(post.coverImage) : undefined;
 
   return {
     authors: Array.isArray(post?.authors)
-      ? post!.authors!.filter(Boolean).map((a: any) => ({ name: a?.name }))
+      ? post!.authors!.filter(Boolean).map((a: PostAuthor) => ({ name: a?.name }))
       : [],
     title: post?.title ?? undefined,
     description: post?.excerpt ?? undefined,
@@ -77,7 +77,7 @@ export default async function PostPage({ params }: Props) {
         <div className="hidden md:mb-12 md:block">
           {post.authors?.length ? (
             <div className="flex flex-wrap gap-3">
-              {post.authors.map((a: any) => (
+              {post.authors.map((a: PostAuthor) => (
                 <Avatar key={(a.slug || a.name) + "-post-top"} name={a.name} picture={a.picture} slug={a.slug} />
               ))}
             </div>
@@ -95,7 +95,7 @@ export default async function PostPage({ params }: Props) {
           <div className="mb-6 block md:hidden">
             {post.authors?.length ? (
               <div className="flex flex-wrap gap-3">
-                {post.authors.map((a: any) => (
+                {post.authors.map((a: PostAuthor) => (
                   <Avatar key={(a.slug || a.name) + "-post-mobile"} name={a.name} picture={a.picture} slug={a.slug} />
                 ))}
               </div>

@@ -14,7 +14,7 @@ export function PostSearcherProviderContent({
   categories: Category[];
   posts: Post[];
   children: ReactNode;
-  searchParams: any;
+  searchParams: ReturnType<typeof import("next/navigation").useSearchParams>;
 }) {
   const router = useRouter();
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
