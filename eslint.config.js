@@ -22,7 +22,7 @@ const eslintConfig = [
     },
     settings: {
       react: {
-        version: "detect",
+        version: "19.2.4",
       },
     },
     plugins: {
@@ -35,8 +35,10 @@ const eslintConfig = [
       ...nextPlugin.configs.recommended.rules,
       ...nextPlugin.configs["core-web-vitals"].rules,
       ...reactPlugin.configs.recommended.rules,
+      ...tsPlugin.configs.recommended.rules,
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off",
+      "@typescript-eslint/no-unused-vars": "error",
     },
   },
 ];
