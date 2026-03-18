@@ -1,32 +1,15 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useCallback, useRef, useState, ReactNode, Suspense } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { createContext, useContext, ReactNode, Suspense } from "react";
 import Link from "next/link";
+import { Category, Post } from "../../../../sanity/lib/queries";
 import Avatar from "../../shared/ui/avatar";
 import CoverImage from "../../shared/ui/cover-image";
 import DateComponent from "../../shared/ui/date";
 import BadgeCategories from "./BadgeCategories";
+import { PostSearcherLoader } from "./PostSearcherContent";
 
-export interface Category {
-  name: string | null;
-  slug: string | null;
-  description?: string | null;
-  postCount: number;
-}
-
-export interface Post {
-  _id: string;
-  title: string | null;
-  slug: string | null;
-  excerpt: string | null;
-  coverImage: any;
-  date: string;
-  authors: Array<{ name: string; picture: any; slug: string | null }> | null;
-  categories: Array<{ name: string | null; slug: string | null }> | null;
-}
-
-interface PostSearcherState {
+export interface PostSearcherState {
   searchTerm: string;
   localSearchTerm: string;
   selectedCategory: string;
@@ -35,117 +18,25 @@ interface PostSearcherState {
   isTyping: boolean;
 }
 
-interface PostSearcherActions {
+export interface PostSearcherActions {
   handleSearchChange: (value: string) => void;
   handleCategoryChange: (category: string) => void;
   clearFilters: () => void;
 }
 
-interface PostSearcherContextValue {
+export interface PostSearcherContextValue {
   state: PostSearcherState;
   actions: PostSearcherActions;
 }
 
-const PostSearcherContext = createContext<PostSearcherContextValue | null>(null);
+export const PostSearcherContext = createContext<PostSearcherContextValue | null>(null);
 
-function usePostSearcher() {
+export function usePostSearcher() {
   const context = useContext(PostSearcherContext);
   if (!context) {
     throw new Error("usePostSearcher must be used within a PostSearcher.Provider");
   }
   return context;
-}
-
-function PostSearcherProviderContent({
-  categories,
-  posts,
-  children
-}: {
-  categories: Category[];
-  posts: Post[];
-  children: ReactNode
-}) {
-  /* eslint-disable-next-line */
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const debounceRef = useRef<NodeJS.Timeout | null>(null);
-
-  const urlSearchTerm = searchParams.get("search") || "";
-  const selectedCategory = searchParams.get("category") || "";
-
-  const updateURL = useCallback((newSearch: string, newCategory: string) => {
-    const params = new URLSearchParams();
-    if (newSearch) params.set("search", newSearch);
-    if (newCategory) params.set("category", newCategory);
-
-    const queryString = params.toString();
-    const newURL = queryString ? `?${queryString}` : window.location.pathname;
-    router.push(newURL, { scroll: false });
-  }, [router]);
-
-  const [localSearchTerm, setLocalSearchTerm] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
-
-  const displaySearchTerm = isTyping ? localSearchTerm : urlSearchTerm;
-
-  const handleSearchChange = useCallback((value: string) => {
-    setLocalSearchTerm(value);
-    setIsTyping(true);
-
-    if (debounceRef.current) {
-      clearTimeout(debounceRef.current);
-    }
-
-    debounceRef.current = setTimeout(() => {
-      updateURL(value, selectedCategory);
-      setIsTyping(false);
-    }, 300);
-  }, [updateURL, selectedCategory]);
-
-  const handleCategoryChange = useCallback((category: string) => {
-    updateURL(displaySearchTerm, category);
-  }, [updateURL, displaySearchTerm]);
-
-  const clearFilters = useCallback(() => {
-    updateURL("", "");
-  }, [updateURL]);
-
-  const filteredPosts = useMemo(() => {
-    return posts.filter((post: Post) => {
-      const matchesSearch = !urlSearchTerm ||
-        post.title?.toLowerCase().includes(urlSearchTerm.toLowerCase()) ||
-        post.excerpt?.toLowerCase().includes(urlSearchTerm.toLowerCase());
-
-      const matchesCategory = !selectedCategory || selectedCategory === "all" ||
-        post.categories?.some(cat => cat.slug && cat.slug === selectedCategory);
-
-      return matchesSearch && matchesCategory;
-    });
-  }, [posts, urlSearchTerm, selectedCategory]);
-
-  const validCategories = categories.filter(category => category.name && category.slug);
-
-  const value: PostSearcherContextValue = {
-    state: {
-      searchTerm: urlSearchTerm,
-      localSearchTerm: displaySearchTerm,
-      selectedCategory,
-      filteredPosts,
-      validCategories,
-      isTyping
-    },
-    actions: {
-      handleSearchChange,
-      handleCategoryChange,
-      clearFilters,
-    }
-  };
-
-  return (
-    <PostSearcherContext.Provider value={value}>
-      <div className="container mx-auto px-5">{children}</div>
-    </PostSearcherContext.Provider>
-  );
 }
 
 export function PostSearcherProvider(props: {
@@ -155,7 +46,7 @@ export function PostSearcherProvider(props: {
 }) {
   return (
     <Suspense fallback={<div className="container mx-auto px-5 py-12 text-center text-gray-500">Cargando buscador...</div>}>
-      <PostSearcherProviderContent {...props} />
+      <PostSearcherLoader {...props} />
     </Suspense>
   );
 }

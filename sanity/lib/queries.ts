@@ -6,6 +6,25 @@ export const aboutmeQuery = defineQuery(`
   *[_type == "page" && slug.current == "about-me"][0]
 `);
 
+// Category and Post types for global use
+export interface Category {
+  name: string | null;
+  slug: string | null;
+  description?: string | null;
+  postCount?: number;
+}
+
+export interface Post {
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  excerpt: string | null;
+  coverImage: any;
+  date: string;
+  authors: Array<{ name: string; picture: any; slug: string | null }> | null;
+  categories: Array<{ name: string | null; slug: string | null }> | null;
+}
+
 const postFields = /* groq */ `
   _id,
   "status": select(_originalId in path("drafts.**") => "draft", "published"),
@@ -81,16 +100,6 @@ export const categoryBySlugQuery = defineQuery(`
     name,
     "slug": slug.current,
     description
-  }
-`);
-
-// Search posts query with optional category filter
-export const searchPostsQuery = defineQuery(`
-  *[_type == "post" && defined(slug.current) && 
-    ($searchTerm == "" || title match $searchTerm + "*" || excerpt match $searchTerm + "*") &&
-    ($categorySlug == "" || $categorySlug in categories[]->slug.current)
-  ] | order(date desc, _updatedAt desc) [0...$limit] {
-    ${postFields}
   }
 `);
 

@@ -3,12 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 
-interface Category {
-  name: string | null;
-  slug: string | null;
-  description?: string | null;
-  postCount: number;
-}
+import { Category } from "../../../../sanity/lib/queries";
 
 interface CategoryFilterProps {
   categories: Category[];

@@ -1,10 +1,5 @@
 import Link from "next/link";
-
-interface Category {
-    name: string | null;
-    slug: string | null;
-    postCount?: number;
-}
+import { Category } from "../../../sanity/lib/queries";
 
 interface CategoryChipsProps {
     categories: Category[];
