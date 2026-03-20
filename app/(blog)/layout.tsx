@@ -3,10 +3,7 @@ import "../globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
-import {
-  toPlainText,
-  type PortableTextBlock,
-} from "next-sanity";
+import { toPlainText, type PortableTextBlock } from "next-sanity";
 import localFont from "next/font/local";
 import { Lora } from "next/font/google";
 import { draftMode } from "next/headers";
@@ -82,7 +79,6 @@ const instrumentSans = localFont({
   ],
 });
 
-
 export default async function RootLayout({
   children,
 }: {
@@ -90,19 +86,22 @@ export default async function RootLayout({
 }) {
   const [data, { isEnabled: isDraftMode }] = await Promise.all([
     sanityFetch({ query: settingsQuery }),
-    draftMode()
+    draftMode(),
   ]);
   const footer = data?.footer || [];
 
   return (
-    <html lang="es" className={`${instrumentSerif.variable} ${instrumentSans.variable} bg-cream-100/20 text-black`}>
+    <html
+      lang="es"
+      className={`${instrumentSerif.variable} ${instrumentSans.variable} bg-cream-100/20 text-black`}
+    >
       <body>
         <MenuProvider>
           <section className="min-h-screen">
             {isDraftMode && <AlertBanner />}
             <MenuOverlay />
             <header
-              className="fixed left-0 z-[60] w-full bg-transparent h-16 md:h-20 flex items-center"
+              className="fixed left-0 z-60 w-full bg-transparent h-16 md:h-20 flex items-center"
               style={{ top: "var(--banner-height, 0px)" }}
             >
               <div className="container mx-auto px-5 h-full flex items-center">

@@ -44,7 +44,7 @@ export default function MenuOverlay() {
   return (
     <div
       className={[
-        "fixed inset-0 z-50 bg-[var(--black)] text-[var(--cream)] transition-opacity duration-200",
+        "fixed inset-0 z-50 bg-(--black) text-(--cream) transition-opacity duration-200",
         isMenuOpen
           ? "opacity-100 pointer-events-auto"
           : "opacity-0 pointer-events-none",
@@ -53,8 +53,7 @@ export default function MenuOverlay() {
     >
       <div className="container mx-auto flex h-full flex-col justify-between px-5">
         {/* Top bar with close */}
-        <div className="flex justify-end  mt-10">
-        </div>
+        <div className="flex justify-end  mt-10"></div>
 
         {/* Items */}
         <div className="-mt-[5vh] w-full">
@@ -63,8 +62,8 @@ export default function MenuOverlay() {
               <Link href={href} onClick={closeMenu}>
                 <h1
                   className={[
-                    "text-[clamp(2rem,8vw,5rem)] leading-[0.9] font-extrabold tracking-[-0.02em] text-[var(--cream)] hover:underline",
-                    pathname === href ? "!text-[var(--rollover)] underline" : "",
+                    "text-[clamp(2rem,8vw,5rem)] leading-[0.9] font-extrabold tracking-[-0.02em] text-(--cream) hover:underline",
+                    pathname === href ? "text-(--rollover)! underline" : "",
                   ].join(" ")}
                 >
                   {label}
@@ -83,7 +82,7 @@ export default function MenuOverlay() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={handleSearchKeyDown}
-                className="w-full bg-transparent border-b-2 border-[var(--cream)] text-[clamp(2rem,8vw,5rem)] leading-[0.9] font-extrabold tracking-[-0.02em] text-[var(--cream)] placeholder-[var(--cream)]/70 focus:outline-none focus:border-[var(--rollover)] transition-colors duration-200 pb-2"
+                className="w-full bg-transparent border-b-2 border-(--cream) text-[clamp(2rem,8vw,5rem)] leading-[0.9] font-extrabold tracking-[-0.02em] text-(--cream) placeholder-(--cream)/70 focus:outline-none focus:border-(--rollover) transition-colors duration-200 pb-2"
               />
             </form>
           </div>
