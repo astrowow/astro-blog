@@ -1,31 +1,7 @@
 import "../globals.css";
-import localFont from "next/font/local";
-import { Lora } from "next/font/google";
-
-const instrumentSerif = Lora({
-    variable: "--font-instrument-serif",
-    display: "swap",
-    subsets: ["latin"],
-    weight: ["400", "700"],
-    style: ["normal", "italic"],
-});
-
-const instrumentSans = localFont({
-    variable: "--font-instrument-sans",
-    display: "swap",
-    src: [
-        {
-            path: "../(typograhy)/Instrument-Sans/InstrumentSans-VariableFont_wdth,wght.ttf",
-            weight: "100 900",
-            style: "normal",
-        },
-        {
-            path: "../(typograhy)/Instrument-Sans/InstrumentSans-Italic-VariableFont_wdth,wght.ttf",
-            weight: "100 900",
-            style: "italic",
-        },
-    ],
-});
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
+import { GeistPixelSquare, GeistPixelGrid, GeistPixelCircle, GeistPixelTriangle, GeistPixelLine } from 'geist/font/pixel';
 
 export default function PrototypesLayout({
     children,
@@ -33,7 +9,7 @@ export default function PrototypesLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="es" className={`${instrumentSerif.variable} ${instrumentSans.variable}`}>
+        <html lang="es" className={`${GeistSans.variable} ${GeistMono.variable} ${GeistPixelSquare.variable} ${GeistPixelGrid.variable} ${GeistPixelCircle.variable} ${GeistPixelTriangle.variable} ${GeistPixelLine.variable}`}>
             <body>{children}</body>
         </html>
     );
