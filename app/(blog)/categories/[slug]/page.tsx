@@ -7,7 +7,7 @@ import MoreStories from "../../home/components/more-stories";
 import CategoryFilter from "../components/CategoryFilter";
 
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { postsByCategoryQuery, allCategoriesQuery, categoryBySlugQuery } from "@/sanity/lib/queries";
+import { postsByCategoryQuery, allCategoriesQuery, categoryBySlugQuery, type Category } from "@/sanity/lib/queries";
 import { client } from "@/sanity/lib/client";
 
 const categorySlugs = defineQuery(
@@ -76,7 +76,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
         </h2>
         <Suspense fallback={<div>Cargando categorías...</div>}>
           <CategoryFilter 
-            categories={(categories || []).filter(cat => cat.name && cat.slug)} 
+            categories={(categories || []).filter((cat: Category) => cat.name && cat.slug)} 
             currentCategory={resolvedParams.slug} 
           />
         </Suspense>
