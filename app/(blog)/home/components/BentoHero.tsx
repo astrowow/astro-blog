@@ -37,7 +37,7 @@ export default function BentoHero({ title, description, heroPost }: BentoHeroPro
                     </video>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                     <div className="absolute bottom-5 left-5">
-                        <span className="inline-block rounded-full bg-white/20 backdrop-blur-md px-4 py-1.5 text-xs text-white tracking-wider uppercase">
+                        <span className="inline-block rounded-full bg-white/20 backdrop-blur-md px-4 py-1.5 text-xs font-mono text-white tracking-widest uppercase">
                             En vivo desde el universo
                         </span>
                     </div>
@@ -56,7 +56,7 @@ export default function BentoHero({ title, description, heroPost }: BentoHeroPro
                     </div>
                     <Link
                         href="#articulos"
-                        className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-black px-5 py-2.5 text-sm text-white transition-all duration-300 hover:bg-neutral-800 hover:scale-105"
+                        className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-black px-5 py-2.5 text-sm font-mono tracking-wide text-white transition-all duration-300 hover:bg-neutral-800 hover:scale-105"
                     >
                         Explorar artículos
                         <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -82,8 +82,8 @@ export default function BentoHero({ title, description, heroPost }: BentoHeroPro
                         )}
                         <div className="absolute inset-0 bg-black/55 transition-colors duration-300 group-hover:bg-black/45" />
                         <div className="relative z-10 flex h-full flex-col justify-end p-5 text-white">
-                            <span className="text-[10px] uppercase tracking-widest text-white/60 font-sans">Último artículo</span>
-                            <h3 className="mt-1.5 text-base font-semibold leading-snug line-clamp-2 group-hover:underline">
+                            <span className="text-[10px] uppercase tracking-widest text-white/60 font-mono">Último artículo</span>
+                            <h3 className="mt-1.5 text-base font-sans font-semibold leading-snug line-clamp-2 group-hover:underline">
                                 {heroPost.title}
                             </h3>
                         </div>

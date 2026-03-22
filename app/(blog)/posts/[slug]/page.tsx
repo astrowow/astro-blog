@@ -69,55 +69,44 @@ export default async function PostPage({ params }: Props) {
   }
 
   return (
-    <div className="container mx-auto px-5">
+    <div className="container mx-auto px-4 md:px-5">
       <article>
-        <h1 className="text-balance mb-12 text-6xl leading-tight tracking-tighter md:text-7xl md:leading-none lg:text-8xl">
-          {post.title}
-        </h1>
-        <div className="hidden md:mb-12 md:block">
-          {post.authors?.length ? (
-            <div className="flex flex-wrap gap-3">
-              {post.authors.map((a: PostAuthor) => (
-                <Avatar key={(a.slug || a.name) + "-post-top"} name={a.name} picture={a.picture} slug={a.slug} />
-              ))}
+        <header className="mx-auto max-w-4xl py-10 text-center md:py-16">
+          <h1 className="text-balance mb-6 text-4xl font-sans font-light leading-tight tracking-tight md:text-5xl lg:text-5xl">
+            {post.title}
+          </h1>
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
+            <div className="text-md">
+              <DateComponent dateString={post.date} format="shortMonthYear" />
             </div>
-          ) : null}
-          {post.categories?.length ? (
-            <div className="mt-4">
-              <BadgeCategories categories={post.categories} />
-            </div>
-          ) : null}
-        </div>
+          </div>
+        </header>
         <div className="mb-8 sm:mx-0 md:mb-16">
           <CoverImage image={post.coverImage} priority />
         </div>
         <div className="mx-auto max-w-2xl">
-          <div className="mb-6 block md:hidden">
+          {post.content?.length && (
+            <PortableText
+              className="mx-auto max-w-2xl prose prose-neutral text-neutral-800 prose-headings:font-medium prose-p:leading-relaxed prose-a:text-blue-600"
+              value={post.content as PortableTextBlock[]}
+            />
+          )}
+
+          <div className="mt-12 flex flex-col gap-6 border-t border-neutral-200 pt-8 sm:flex-row sm:items-center sm:justify-between">
             {post.authors?.length ? (
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap items-center gap-3">
                 {post.authors.map((a: PostAuthor) => (
-                  <Avatar key={(a.slug || a.name) + "-post-mobile"} name={a.name} picture={a.picture} slug={a.slug} />
+                  <Avatar key={(a.slug || a.name) + "-post-bottom"} name={a.name} picture={a.picture} slug={a.slug} />
                 ))}
               </div>
-            ) : null}
+            ) : <div />}
             {post.categories?.length ? (
-              <div className="mt-4">
+              <div className="flex justify-start sm:justify-end">
                 <BadgeCategories categories={post.categories} />
               </div>
             ) : null}
           </div>
-          <div className="mb-6 text-lg">
-            <div className="mb-4 text-lg text-neutral-500 italic">
-              <DateComponent dateString={post.date} />
-            </div>
-          </div>
         </div>
-        {post.content?.length && (
-          <PortableText
-            className="mx-auto max-w-2xl"
-            value={post.content as PortableTextBlock[]}
-          />
-        )}
       </article>
       <aside>
         <hr className="border-accent-2 mb-24 mt-28" />

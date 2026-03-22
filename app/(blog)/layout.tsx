@@ -4,8 +4,9 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { toPlainText, type PortableTextBlock } from "next-sanity";
-import localFont from "next/font/local";
-import { Lora } from "next/font/google";
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
+import { GeistPixelSquare, GeistPixelGrid, GeistPixelCircle, GeistPixelTriangle, GeistPixelLine } from 'geist/font/pixel';
 import { draftMode } from "next/headers";
 
 import AlertBanner from "./shared/ui/alert-banner";
@@ -54,30 +55,6 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const instrumentSerif = Lora({
-  variable: "--font-instrument-serif",
-  display: "swap",
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  style: ["normal", "italic"],
-});
-
-const instrumentSans = localFont({
-  variable: "--font-instrument-sans",
-  display: "swap",
-  src: [
-    {
-      path: "../(typograhy)/Instrument-Sans/InstrumentSans-VariableFont_wdth,wght.ttf",
-      weight: "100 900",
-      style: "normal",
-    },
-    {
-      path: "../(typograhy)/Instrument-Sans/InstrumentSans-Italic-VariableFont_wdth,wght.ttf",
-      weight: "100 900",
-      style: "italic",
-    },
-  ],
-});
 
 export default async function RootLayout({
   children,
@@ -93,7 +70,7 @@ export default async function RootLayout({
   return (
     <html
       lang="es"
-      className={`${instrumentSerif.variable} ${instrumentSans.variable} bg-cream-100/20 text-black`}
+      className={`${GeistSans.variable} ${GeistMono.variable} ${GeistPixelSquare.variable} ${GeistPixelGrid.variable} ${GeistPixelCircle.variable} ${GeistPixelTriangle.variable} ${GeistPixelLine.variable} bg-cream-100/20 text-black`}
     >
       <body>
         <MenuProvider>

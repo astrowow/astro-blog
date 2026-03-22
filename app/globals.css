@@ -2,8 +2,8 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --font-sans: var(--font-instrument-sans);
-  --font-serif: var(--font-instrument-serif);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 }
 
 /* For hoverOnlyWhenSupported we can use modern feature queries if needed, though Tailwind v4 handles hover intelligently */

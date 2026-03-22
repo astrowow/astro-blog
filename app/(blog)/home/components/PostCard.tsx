@@ -40,7 +40,7 @@ export default function PostCard({
                 </div>
 
                 {/* Title — base level: text-2xl (24px) */}
-                <h3 className="text-balance mb-3 text-2xl font-semibold leading-snug">
+                <h3 className="text-balance mb-3 text-2xl font-sans font-semibold leading-snug">
                     <Link href={`/posts/${slug}`} className="hover:underline">
                         {title}
                     </Link>

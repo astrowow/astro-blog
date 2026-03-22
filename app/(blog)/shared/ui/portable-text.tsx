@@ -70,7 +70,7 @@ export default function CustomPortableText({
         <h6 className="mb-1 text-xs font-semibold">{children}</h6>
       ),
       blockquote: ({ children }) => (
-        <blockquote className="border-l-4 border-gray-300 pl-4 italic my-4">
+        <blockquote className="border-l-4 border-gray-300 pl-4 my-4 font-light">
           {children}
         </blockquote>
       ),

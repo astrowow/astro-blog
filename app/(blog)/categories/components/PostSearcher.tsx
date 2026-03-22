@@ -166,7 +166,7 @@ export function PostSearcherResults() {
             <CoverImage image={post.coverImage} priority={false} />
           </Link>
           <div className="p-5 md:p-0 md:pt-6">
-            <h3 className="text-balance mb-3 text-3xl leading-snug">
+            <h3 className="text-balance mb-3 text-3xl font-sans leading-snug">
               <Link href={`/posts/${post.slug}`} className="hover:underline">
                 {post.title}
               </Link>

@@ -47,10 +47,10 @@ export default function RecentArticlesSlider({ posts }: RecentArticlesSliderProp
                             )}
                             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10 transition-colors duration-300 group-hover:from-black/60" />
                             <div className="relative z-10 flex h-full flex-col justify-end p-5 text-white">
-                                <h3 className="text-base font-semibold leading-snug line-clamp-2 group-hover:underline">
+                                <h3 className="text-base font-sans font-semibold leading-snug line-clamp-2 group-hover:underline">
                                     {post.title}
                                 </h3>
-                                <span className="mt-2 text-[10px] text-white/50 uppercase tracking-wider">
+                                <span className="mt-2 text-[10px] font-mono text-white/50 uppercase tracking-widest">
                                     Leer más →
                                 </span>
                             </div>
