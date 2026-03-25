@@ -71,7 +71,7 @@ export default async function PostPage({ params }: Props) {
   return (
     <div className="container mx-auto px-4 md:px-5">
       <article>
-        <header className="mx-auto max-w-4xl py-10 text-center md:py-16">
+        <header className="mx-auto max-w-3xl py-10 text-center md:py-16">
           <h1 className="text-balance mb-6 text-4xl font-sans font-light leading-tight tracking-tight md:text-5xl lg:text-5xl">
             {post.title}
           </h1>
@@ -81,13 +81,13 @@ export default async function PostPage({ params }: Props) {
             </div>
           </div>
         </header>
-        <div className="mb-8 sm:mx-0 md:mb-16">
+        <div className="mx-auto mb-8 max-w-3xl md:mb-16">
           <CoverImage image={post.coverImage} priority />
         </div>
-        <div className="mx-auto max-w-2xl">
+        <div className="mx-auto max-w-3xl">
           {post.content?.length && (
             <PortableText
-              className="mx-auto max-w-2xl prose prose-neutral text-neutral-800 prose-headings:font-medium prose-p:leading-relaxed prose-a:text-blue-600"
+              className="prose prose-neutral max-w-none text-neutral-800 prose-headings:font-medium prose-p:leading-relaxed prose-a:text-blue-600"
               value={post.content as PortableTextBlock[]}
             />
           )}
