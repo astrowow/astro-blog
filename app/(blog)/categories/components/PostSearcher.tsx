@@ -29,12 +29,15 @@ export interface PostSearcherContextValue {
   actions: PostSearcherActions;
 }
 
-export const PostSearcherContext = createContext<PostSearcherContextValue | null>(null);
+export const PostSearcherContext =
+  createContext<PostSearcherContextValue | null>(null);
 
 export function usePostSearcher() {
   const context = useContext(PostSearcherContext);
   if (!context) {
-    throw new Error("usePostSearcher must be used within a PostSearcher.Provider");
+    throw new Error(
+      "usePostSearcher must be used within a PostSearcher.Provider",
+    );
   }
   return context;
 }
@@ -42,30 +45,43 @@ export function usePostSearcher() {
 export function PostSearcherProvider(props: {
   categories: Category[];
   posts: Post[];
-  children: ReactNode
+  children: ReactNode;
 }) {
   return (
-    <Suspense fallback={<div className="container mx-auto px-5 py-12 text-center text-gray-500">Cargando buscador...</div>}>
+    <Suspense
+      fallback={
+        <div className="container mx-auto px-5 py-12 text-center text-gray-500">
+          Cargando buscador...
+        </div>
+      }
+    >
       <PostSearcherLoader {...props} />
     </Suspense>
   );
 }
 
-export function PostSearcherHeader({ title, description }: { title: string; description: string }) {
+export function PostSearcherHeader({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) {
   return (
     <div className="mb-12">
       <h1 className="mb-4 text-4xl font-bold leading-tight tracking-tighter md:text-5xl lg:text-6xl">
         {title}
       </h1>
-      <p className="text-lg text-neutral-600 mb-8">
-        {description}
-      </p>
+      <p className="text-lg text-neutral-600 mb-8">{description}</p>
     </div>
   );
 }
 
 export function PostSearcherInput() {
-  const { state: { localSearchTerm }, actions: { handleSearchChange } } = usePostSearcher();
+  const {
+    state: { localSearchTerm },
+    actions: { handleSearchChange },
+  } = usePostSearcher();
 
   return (
     <div className="relative max-w-xl group">
@@ -84,16 +100,20 @@ export function PostSearcherInput() {
 }
 
 export function PostSearcherCategoryFilter() {
-  const { state: { validCategories, selectedCategory }, actions: { handleCategoryChange } } = usePostSearcher();
+  const {
+    state: { validCategories, selectedCategory },
+    actions: { handleCategoryChange },
+  } = usePostSearcher();
 
   return (
     <div className="flex flex-wrap gap-3">
       <button
         onClick={() => handleCategoryChange("")}
-        className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${selectedCategory === ""
-          ? "bg-gray-900 text-white"
-          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-          }`}
+        className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+          selectedCategory === ""
+            ? "bg-gray-900 text-white"
+            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+        }`}
       >
         Todas las categorías
       </button>
@@ -101,10 +121,11 @@ export function PostSearcherCategoryFilter() {
         <button
           key={category.slug!}
           onClick={() => handleCategoryChange(category.slug!)}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${selectedCategory === category.slug
-            ? "bg-gray-900 text-white"
-            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-            }`}
+          className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+            selectedCategory === category.slug
+              ? "bg-gray-900 text-white"
+              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+          }`}
         >
           {category.name} ({category.postCount})
         </button>
@@ -114,25 +135,32 @@ export function PostSearcherCategoryFilter() {
 }
 
 export function PostSearcherSummary() {
-  const { state: { filteredPosts, searchTerm, selectedCategory, validCategories } } = usePostSearcher();
+  const {
+    state: { filteredPosts, searchTerm, selectedCategory, validCategories },
+  } = usePostSearcher();
 
   if (filteredPosts.length === 0) return null;
 
   return (
     <div className="mb-8">
       <p className="text-gray-600">
-        {filteredPosts.length === 1 ? '1 publicación encontrada' : `${filteredPosts.length} publicaciones encontradas`}
+        {filteredPosts.length === 1
+          ? "1 publicación encontrada"
+          : `${filteredPosts.length} publicaciones encontradas`}
         {searchTerm && ` para "${searchTerm}"`}
-        {selectedCategory && validCategories.find(cat => cat.slug === selectedCategory) &&
-          ` en la categoría "${validCategories.find(cat => cat.slug === selectedCategory)?.name}"`
-        }
+        {selectedCategory &&
+          validCategories.find((cat) => cat.slug === selectedCategory) &&
+          ` en la categoría "${validCategories.find((cat) => cat.slug === selectedCategory)?.name}"`}
       </p>
     </div>
   );
 }
 
 export function PostSearcherResults() {
-  const { state: { filteredPosts, searchTerm, selectedCategory }, actions: { clearFilters } } = usePostSearcher();
+  const {
+    state: { filteredPosts, searchTerm, selectedCategory },
+    actions: { clearFilters },
+  } = usePostSearcher();
 
   if (filteredPosts.length === 0) {
     return (
@@ -171,7 +199,7 @@ export function PostSearcherResults() {
                 {post.title}
               </Link>
             </h3>
-            <div className="mb-4 flex flex-wrap items-center justify-between text-lg italic text-neutral-500">
+            <div className="mb-4 flex flex-col items-start gap-2 text-lg italic text-neutral-500">
               <DateComponent dateString={post.date} />
               {post.categories?.length ? (
                 <BadgeCategories categories={post.categories} />
@@ -201,13 +229,11 @@ export function PostSearcherResults() {
   );
 }
 
-
-
 export const PostSearcher = {
   Provider: PostSearcherProvider,
   Header: PostSearcherHeader,
   Input: PostSearcherInput,
   CategoryFilter: PostSearcherCategoryFilter,
   Summary: PostSearcherSummary,
-  Results: PostSearcherResults
+  Results: PostSearcherResults,
 };

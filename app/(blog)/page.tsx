@@ -9,11 +9,17 @@ import MoreStories from "./home/components/more-stories";
 import Onboarding from "./home/components/onboarding";
 
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { heroQuery, settingsQuery, moreStoriesQuery, allCategoriesQuery } from "@/sanity/lib/queries";
+import {
+  heroQuery,
+  settingsQuery,
+  moreStoriesQuery,
+  allCategoriesQuery,
+} from "@/sanity/lib/queries";
 
 export const metadata: Metadata = {
   title: "AstroWOW - Blog de Divulgación Científica",
-  description: "Somos un grupo de divulgación con un gran amor por la ciencia y los telescopios. Explora artículos y novedades astronómicas.",
+  description:
+    "Somos un grupo de divulgación con un gran amor por la ciencia y los telescopios. Explora artículos y novedades astronómicas.",
 };
 
 export default async function Page() {
@@ -26,9 +32,9 @@ export default async function Page() {
   // Fetch recent articles for the slider
   const recentPosts = heroPost?._id
     ? await sanityFetch({
-      query: moreStoriesQuery,
-      params: { skip: heroPost._id, limit: 6 },
-    })
+        query: moreStoriesQuery,
+        params: { skip: heroPost._id, limit: 6 },
+      })
     : [];
 
   const sliderPosts = [
@@ -37,13 +43,15 @@ export default async function Page() {
   ].slice(0, 6);
 
   return (
-    <div className="bg-neutral-50">
+    <div className="bg-neutral-50 flex flex-col gap-10 pb-10">
       {/* ═══════ VIEWPORT SECTION — fits in h-screen ═══════ */}
-      <section className="flex h-screen flex-col pt-6 pb-4 md:pt-10 md:pb-6">
+      <section className="flex h-screen flex-col pt-6 md:pt-10">
         {heroPost ? (
           <BentoHero
             title={settings?.title}
-            description={settings?.description as PortableTextBlock[] | undefined}
+            description={
+              settings?.description as PortableTextBlock[] | undefined
+            }
             heroPost={heroPost}
           />
         ) : (

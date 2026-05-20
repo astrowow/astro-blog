@@ -25,7 +25,7 @@ export default function CategoryChips({ categories }: CategoryChipsProps) {
               className="shrink-0 snap-start rounded-full bg-neutral-200/70 px-5 py-2 text-sm font-medium text-neutral-700 transition-all duration-200 hover:bg-neutral-900 hover:text-white"
             >
               {cat.name}
-              {cat.postCount && cat.postCount > 0 && (
+              {(cat.postCount ?? 0) > 0 && (
                 <span className="ml-1.5 text-xs text-neutral-400">
                   {cat.postCount}
                 </span>

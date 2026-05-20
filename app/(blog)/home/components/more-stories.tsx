@@ -14,26 +14,31 @@ export default async function MoreStories(params: {
     : await sanityFetch({ query: moreStoriesQuery, params });
 
   return (
-    <div className="mb-32 columns-1 gap-6 md:columns-2 lg:columns-3">
+    <div className="mb-32 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {data?.map((post: Post, index: number) => {
-        const { _id, title, slug, coverImage, excerpt, authors, categories } = post;
+        const { _id, title, slug, coverImage, excerpt, authors, categories } =
+          post;
         return (
-          <div key={_id} className="mb-6 break-inside-avoid">
-            <PostCard
-              title={title}
-              slug={slug}
-              coverImage={coverImage}
-              excerpt={excerpt}
-              date={post.date}
-              authors={authors?.filter(
-                (a: PostAuthor) => a.name !== null && a.picture !== null
-              ) ?? []}
-              categories={categories?.filter(
-                (c: { name: string | null; slug: string | null }) => c.name !== null && c.slug !== null
-              ) as Array<{ name: string; slug: string }> ?? []}
-              priority={index < 3}
-            />
-          </div>
+          <PostCard
+            key={_id}
+            title={title}
+            slug={slug}
+            coverImage={coverImage}
+            excerpt={excerpt}
+            date={post.date}
+            authors={
+              authors?.filter(
+                (a: PostAuthor) => a.name !== null && a.picture !== null,
+              ) ?? []
+            }
+            categories={
+              (categories?.filter(
+                (c: { name: string | null; slug: string | null }) =>
+                  c.name !== null && c.slug !== null,
+              ) as Array<{ name: string; slug: string }>) ?? []
+            }
+            priority={index < 3}
+          />
         );
       })}
     </div>
